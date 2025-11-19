@@ -1,9 +1,8 @@
-import Header from "./test";
-export default function bookingPage(){
-
-    return(
-        <div>
-        <Header />
-        </div>
-    );
+import { Navbar } from '../components/navbar';
+export default function bookingPage() {
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 }
