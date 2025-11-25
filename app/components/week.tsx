@@ -11,6 +11,13 @@ function CurrentWeek() {
 }
 
 export default function Week() {
-  CurrentWeek();
-  return <div></div>;
+  const days = CurrentWeek();
+
+  return (
+    <div>
+      {days.map((day: Date) => (
+        <li key={day.toISOString()}>{day.toDateString()}</li>
+      ))}
+    </div>
+  );
 }
