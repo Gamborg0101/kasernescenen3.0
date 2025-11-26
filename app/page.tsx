@@ -1,5 +1,5 @@
-import { Navbar } from './components/navbar';
-import { Login } from './components/login';
+import { Navbar } from './components/Navbar';
+import { Login } from './components/Login';
 
 export default function Home() {
   return (
