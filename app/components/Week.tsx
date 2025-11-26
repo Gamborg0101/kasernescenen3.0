@@ -28,11 +28,15 @@ function createHoursAndMins() {
   console.log(result);
 }
 
-// To do: sammensæt createHoursAndMins med CurrentWeek - så jeg laver et større objekt, hvor der er hele dagen, men også en mulighed for at gennemgå hvert minut.
-
 export default function Week() {
   const days = CurrentWeek();
   const hoursAndMins = createHoursAndMins();
+  const testObjeckt = {
+    days: days,
+    hours: hoursAndMins,
+  };
+
+  console.log(testObjeckt);
 
   return (
     <div className="flex gap-10 ">
