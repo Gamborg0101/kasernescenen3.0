@@ -2,47 +2,54 @@ import {
   eachDayOfInterval,
   startOfWeek,
   endOfWeek,
-  addMinutes,
   eachMinuteOfInterval,
 } from 'date-fns';
-import { step } from 'next/dist/experimental/testmode/playwright/step';
+import { allowedDisplayValues } from 'next/dist/compiled/@next/font/dist/constants';
 
-function CurrentWeek() {
+function CreateWeek() {
   const currentDate = new Date();
 
   const start = startOfWeek(currentDate, { weekStartsOn: 1 });
   const end = endOfWeek(currentDate, { weekStartsOn: 1 });
 
-  return eachDayOfInterval({ start, end });
+  const days = eachDayOfInterval({ start, end });
+  const hours = CreateHoursAndMins();
+
+  const week = days.map((day) => ({
+    day,
+    hours,
+  }));
+
+  console.log(week);
+  return week;
 }
 
-function createHoursAndMins() {
+function CreateHoursAndMins() {
   const start = new Date();
   start.setHours(0, 0, 0, 0);
 
   const end = new Date();
   end.setHours(23, 45, 0, 0);
 
-  const result = eachMinuteOfInterval({ start, end }, { step: 15 });
+  let allHours = [];
+  allHours = eachMinuteOfInterval({ start, end }, { step: 15 });
 
-  console.log(result);
+  return allHours;
 }
 
 export default function Week() {
-  const days = CurrentWeek();
-  const hoursAndMins = createHoursAndMins();
-  const testObjeckt = {
-    days: days,
-    hours: hoursAndMins,
-  };
-
-  console.log(testObjeckt);
+  const fullWeek = CreateWeek();
 
   return (
     <div className="flex gap-10 ">
-      {days.map((day, i) => (
-        <div key={i} className="bg-gray-400">
-          {day.toLocaleDateString('de-DE')}
+      {fullWeek.map((week, index) => (
+        <div key={index}>
+          {week.day.toLocaleDateString('de-DE')}
+          <div>
+            {week.hours.map((hour, index) => (
+              <div key={index}>{hour.toLocaleTimeString('de-DE')}</div>
+            ))}
+          </div>
         </div>
       ))}
     </div>
