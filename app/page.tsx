@@ -1,10 +1,10 @@
-import { Navbar } from './components/Navbar';
 import { Login } from './components/Login';
 
-export default function Home() {
+export default async function Home() {
+
+
   return (
     <div>
-      <Navbar />
       <Login />
     </div>
   );

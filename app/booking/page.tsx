@@ -1,12 +1,10 @@
-import { Navbar } from '../components/Navbar';
-import Week from '../components/Week';
+import WeekAndHours from '../components/WeekAndHours';
 import WeekSelector from '@/app/components/WeekSelector';
 export default function bookingPage() {
   return (
     <div>
-      <Navbar />
       <WeekSelector />
-      <Week />
+      <WeekAndHours />
     </div>
   );
 }

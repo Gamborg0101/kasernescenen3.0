@@ -37,7 +37,7 @@ function CreateHoursAndMins() {
   return allHours;
 }
 
-export default function Week() {
+export default function WeekAndHours() {
   const fullWeek = CreateWeek();
 
   return (
