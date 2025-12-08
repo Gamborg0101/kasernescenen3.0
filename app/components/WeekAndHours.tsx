@@ -19,8 +19,6 @@ function CreateWeek() {
     day,
     hours,
   }));
-
-  console.log(week);
   return week;
 }
 

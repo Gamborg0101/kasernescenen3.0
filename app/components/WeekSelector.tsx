@@ -1,22 +1,25 @@
 'use client';
 
 import { useState } from 'react';
+import { startOfWeek } from 'date-fns';
 
 export default function WeekSelector() {
   const [weekCounter, setWeekCounter] = useState(new Date());
 
   function WeekCounterNext() {
     const newDate = new Date(weekCounter);
-    newDate.setDate(newDate.getDate() + 6);
-    setWeekCounter(newDate);
-    console.log(newDate);
+    newDate.setDate(newDate.getDate() + 7);
+    const firstOfNextWeek = startOfWeek(newDate, { weekStartsOn: 1 });
+    setWeekCounter(firstOfNextWeek);
+    console.log(firstOfNextWeek);
   }
 
   function WeekCounterPrev() {
     const newDate = new Date(weekCounter);
-    newDate.setDate(newDate.getDate() - 6);
-    setWeekCounter(newDate);
-    console.log(newDate);
+    newDate.setDate(newDate.getDate() - 7);
+    const firstOfPrevWeek = startOfWeek(newDate, { weekStartsOn: 1 });
+    setWeekCounter(firstOfPrevWeek);
+    console.log(firstOfPrevWeek);
   }
 
   return (
