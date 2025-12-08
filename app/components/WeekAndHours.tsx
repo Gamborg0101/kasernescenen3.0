@@ -4,7 +4,6 @@ import {
   endOfWeek,
   eachMinuteOfInterval,
 } from 'date-fns';
-import { allowedDisplayValues } from 'next/dist/compiled/@next/font/dist/constants';
 
 function CreateWeek() {
   const currentDate = new Date();
