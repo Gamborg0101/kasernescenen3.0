@@ -12,11 +12,11 @@ model Bruger {
   fornavn        String
   efternavn      String
   studienummerID Int
-
   uddannelsesId Int
-  uddannelse    Uddannelse @relation(fields: [uddannelsesId], references: [id])
-
   rolleId   Int
+
+
+  uddannelse    Uddannelse @relation(fields: [uddannelsesId], references: [id])
   rolle     Rolle     @relation(fields: [rolleId], references: [id])
   bookinger Booking[]
 }
@@ -24,6 +24,7 @@ model Bruger {
 model Uddannelse {
   id        Int      @id @default(autoincrement())
   navn      String
+
   udannelse Bruger[]
 }
 
@@ -31,6 +32,7 @@ model Rolle {
   id        Int      @id @default(autoincrement())
   rolleNavn String
   erAnsat   Boolean
+
   brugere   Bruger[]
 }
 
@@ -39,19 +41,18 @@ model Lokale {
   lokaleNavn  String
   kapacitet   Int
   kanBookesAf Int
+
   bookings    Booking[]
 }
 
 model Booking {
   id       Int @id @default(autoincrement())
   brugerId Int
-
-  bruger Bruger @relation(fields: [brugerId], references: [id])
-
-  lokaleId Int
-  lokale   Lokale @relation(fields: [lokaleId], references: [id])
-
   startTid DateTime
+  lokaleId Int
   slutTid  DateTime
   noter    String
+
+  bruger Bruger @relation(fields: [brugerId], references: [id])
+  lokale   Lokale @relation(fields: [lokaleId], references: [id])
 }
