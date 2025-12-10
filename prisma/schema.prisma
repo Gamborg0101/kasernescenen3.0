@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Bruger {
+  id             Int    @id @default(autoincrement())
+  fornavn        String
+  efternavn      String
+  studienummerID Int
+
+  uddannelsesId Int
+  uddannelse    Uddannelse @relation(fields: [uddannelsesId], references: [id])
+
+  rolleId   Int
+  rolle     Rolle     @relation(fields: [rolleId], references: [id])
+  bookinger Booking[]
+}
+
+model Uddannelse {
+  id        Int      @id @default(autoincrement())
+  navn      String
+  udannelse Bruger[]
+}
+
+model Rolle {
+  id        Int      @id @default(autoincrement())
+  rolleNavn String
+  erAnsat   Boolean
+  brugere   Bruger[]
+}
+
+model Lokale {
+  id          Int       @id @default(autoincrement())
+  lokaleNavn  String
+  kapacitet   Int
+  kanBookesAf Int
+  bookings    Booking[]
+}
+
+model Booking {
+  id       Int @id @default(autoincrement())
+  brugerId Int
+
+  bruger Bruger @relation(fields: [brugerId], references: [id])
+
+  lokaleId Int
+  lokale   Lokale @relation(fields: [lokaleId], references: [id])
+
+  startTid DateTime
+  slutTid  DateTime
+  noter    String
+}
