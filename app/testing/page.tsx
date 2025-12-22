@@ -1,9 +1,7 @@
-import MyTestComp from '@/app/components/testingtools/TESTComp';
+import ThisIsInfo from '../components/testingtools/TESTInfo';
 
 export default function Testing() {
-  return (
-    <div>
-      <MyTestComp />
-    </div>
-  );
+  const information = 'This is the information we need from page';
+
+  return <ThisIsInfo info={information} />;
 }

@@ -1,10 +1,8 @@
-import WeekAndHours from '../components/WeekAndHours';
-import WeekSelector from '@/app/components/WeekSelector';
+import WeekView from '../components/Calendar/WeekView';
 export default function bookingPage() {
   return (
     <div>
-      <WeekSelector />
-      <WeekAndHours />
+      <WeekView />
     </div>
   );
 }

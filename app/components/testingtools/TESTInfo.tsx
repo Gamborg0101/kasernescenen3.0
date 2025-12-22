@@ -1,22 +1,11 @@
-'use client';
-
-import { useState } from 'react';
-
 type Props = {
-  plusWith: number;
+  info: string;
 };
 
-export function ThisIsInfo({ plusWith }: Props) {
-  const [viewInfo, setViewInfo] = useState(2);
-
-  function plusOne() {
-    setViewInfo(viewInfo + plusWith);
-  }
-
+export default function ThisIsInfo({ info }: Props) {
   return (
     <div>
-      <button onClick={plusOne}>Plus one</button>
-      {viewInfo}
+      <p>{info}</p>
     </div>
   );
 }
