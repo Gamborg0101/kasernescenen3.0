@@ -5,8 +5,12 @@ import {
   eachMinuteOfInterval,
 } from 'date-fns';
 
-function CreateWeek() {
-  const currentDate = new Date();
+type Props = {
+  selectedWeek: Date;
+};
+
+function CreateWeek({ selectedWeek }: Props) {
+  const currentDate = selectedWeek;
 
   const start = startOfWeek(currentDate, { weekStartsOn: 1 });
   const end = endOfWeek(currentDate, { weekStartsOn: 1 });
@@ -34,8 +38,8 @@ function CreateHoursAndMins() {
   return allHours;
 }
 
-export default function WeekAndHours() {
-  const fullWeek = CreateWeek();
+export default function WeekAndHours(selectedWeek: Props) {
+  const fullWeek = CreateWeek(selectedWeek);
 
   return (
     <div className="flex gap-10 ">
