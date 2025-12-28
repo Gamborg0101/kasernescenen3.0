@@ -3,6 +3,7 @@ import {
   startOfWeek,
   endOfWeek,
   eachMinuteOfInterval,
+  addDays,
 } from 'date-fns';
 
 type Props = {
@@ -16,26 +17,30 @@ function CreateWeek({ selectedWeek }: Props) {
   const end = endOfWeek(currentDate, { weekStartsOn: 1 });
 
   const days = eachDayOfInterval({ start, end });
-  const hours = CreateHoursAndMins();
-
   const week = days.map((day) => ({
     day,
-    hours,
+    hours: CreateHoursForDay(day),
   }));
   return week;
 }
 
-function CreateHoursAndMins() {
-  const start = new Date();
+function CreateHoursForDay(day: Date) {
+  const start = new Date(day);
   start.setHours(0, 0, 0, 0);
 
-  const end = new Date();
+  const end = new Date(day);
   end.setHours(23, 45, 0, 0);
 
-  let allHours = [];
-  allHours = eachMinuteOfInterval({ start, end }, { step: 15 });
+  return eachMinuteOfInterval({ start, end }, { step: 15 });
+}
 
-  return allHours;
+function createID(currentDate: Date) {
+  const date = currentDate.toLocaleDateString('de-DE');
+  const time = currentDate.toLocaleTimeString('de-DE', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  return `${date}-${time}`;
 }
 
 export default function WeekAndHours(selectedWeek: Props) {
@@ -48,7 +53,9 @@ export default function WeekAndHours(selectedWeek: Props) {
           {week.day.toLocaleDateString('de-DE')}
           <div>
             {week.hours.map((hour, index) => (
-              <div key={index}>{hour.toLocaleTimeString('de-DE')}</div>
+              <div key={index} id={createID(hour)}>
+                {hour.toLocaleTimeString('de-DE')}
+              </div>
             ))}
           </div>
         </div>
