@@ -3,7 +3,6 @@ import {
   startOfWeek,
   endOfWeek,
   eachMinuteOfInterval,
-  addDays,
 } from 'date-fns';
 
 type Props = {

@@ -5,6 +5,7 @@ export function Navbar() {
       <ul className="flex font-semibold gap-8 pr-10">
         <NavItem text="Forside" href="/" />
         <NavItem text="Booking" href={'/booking'} />
+        <NavItem text="Opret" href={'/opret'} />
         <NavItem text="Log ind / ud" href={'#'} />
       </ul>
     </nav>
