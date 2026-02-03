@@ -4,6 +4,7 @@ import {
   endOfWeek,
   eachMinuteOfInterval,
 } from 'date-fns';
+import React, { MouseEventHandler } from 'react';
 
 type Props = {
   selectedWeek: Date;
@@ -45,12 +46,19 @@ function createID(currentDate: Date) {
 export default function WeekAndHours(selectedWeek: Props) {
   const fullWeek = CreateWeek(selectedWeek);
 
+  function printer(event: React.MouseEvent<HTMLElement>): void {
+    const target = event.target as HTMLElement;
+    console.log(target.id);
+  }
+
   return (
     <div className="flex gap-10 ">
       {fullWeek.map((week, index) => (
         <div key={index}>
           {week.day.toLocaleDateString('de-DE')}
-          <div>
+          <div
+            onClick={(event: React.MouseEvent<HTMLElement>) => printer(event)}
+          >
             {week.hours.map((hour, index) => (
               <div key={index} id={createID(hour)}>
                 {hour.toLocaleTimeString('de-DE')}
