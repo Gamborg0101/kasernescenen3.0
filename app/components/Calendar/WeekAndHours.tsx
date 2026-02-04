@@ -4,11 +4,38 @@ import {
   endOfWeek,
   eachMinuteOfInterval,
 } from 'date-fns';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
+import { useState } from 'react';
 
 type Props = {
   selectedWeek: Date;
 };
+
+function ShowModal() {
+  return (
+    <div className="" id="theModal">
+      <h1 className="bg-red-100">
+        <p>HELLO THERE!!!</p>
+      </h1>
+    </div>
+  );
+}
+
+function HideModal() {
+  console.log('Hi there');
+}
+
+function CreateModal() {
+  const [className, setClassName] = React.useState('bg-blue-100');
+
+  return (
+    <div className="">
+      <button className={className} onClick={() => setClassName('bg-red-100')}>
+        Show!
+      </button>
+    </div>
+  );
+}
 
 function CreateWeek({ selectedWeek }: Props) {
   const currentDate = selectedWeek;
@@ -53,6 +80,7 @@ export default function WeekAndHours(selectedWeek: Props) {
 
   return (
     <div className="flex gap-10 ">
+      <div>{CreateModal()}</div>
       {fullWeek.map((week, index) => (
         <div key={index}>
           {week.day.toLocaleDateString('de-DE')}
