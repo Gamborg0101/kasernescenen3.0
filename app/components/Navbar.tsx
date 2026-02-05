@@ -7,6 +7,7 @@ export function Navbar() {
         <NavItem text="Booking" href={'/booking'} />
         <NavItem text="Opret" href={'/opret'} />
         <NavItem text="Log ind / ud" href={'#'} />
+        <NavItem text="Brugere" href={'/brugere'} />
       </ul>
     </nav>
   );
