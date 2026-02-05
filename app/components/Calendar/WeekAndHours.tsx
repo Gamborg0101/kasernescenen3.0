@@ -4,15 +4,14 @@ import {
   endOfWeek,
   eachMinuteOfInterval,
 } from 'date-fns';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Modal from './Modal';
 
-type Props = {
+type WeekProps = {
   selectedWeek: Date;
 };
 
-function CreateWeek({ selectedWeek }: Props) {
+function CreateWeek({ selectedWeek }: WeekProps) {
   const currentDate = selectedWeek;
 
   const start = startOfWeek(currentDate, { weekStartsOn: 1 });
@@ -45,25 +44,36 @@ function createID(currentDate: Date) {
   return `${date}-${time}`;
 }
 
-export default function WeekAndHours(selectedWeek: Props) {
+export default function WeekAndHours(selectedWeek: WeekProps) {
+  const [showModal, setShowModal] = useState(false);
+
   const fullWeek = CreateWeek(selectedWeek);
 
   function printer(event: React.MouseEvent<HTMLElement>): void {
     const target = event.target as HTMLElement;
     console.log(target.id);
   }
+
   return (
     <div>
-      <Modal />
-      <div className="flex gap-10 ">
+      {showModal && <Modal onClose={() => setShowModal(false)} />}
+
+      <div className="flex gap-10">
         {fullWeek.map((week, index) => (
           <div key={index}>
             {week.day.toLocaleDateString('de-DE')}
             <div
               onClick={(event: React.MouseEvent<HTMLElement>) => printer(event)}
             >
+              {}
               {week.hours.map((hour, index) => (
-                <div key={index} id={createID(hour)}>
+                <div
+                  key={index}
+                  id={createID(hour)}
+                  onClick={(event: React.MouseEvent<HTMLElement>) =>
+                    setShowModal(true)
+                  }
+                >
                   {hour.toLocaleTimeString('de-DE')}
                 </div>
               ))}
