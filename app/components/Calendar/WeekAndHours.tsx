@@ -11,11 +11,26 @@ type Props = {
   selectedWeek: Date;
 };
 
-function ShowModal() {
+function SetClassName() {
+  return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
+}
+
+function ShowModal({ onClose }: { onClose: () => void }) {
   return (
-    <div>
-      <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 " onClick={onClose}>
+      <div
+        className="fixed inset-0 bg-opacity-50 flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="bg-white rounded-xl w-80 p-6 relative shadow-lg">
+          <div className="flex flex-row-reverse">
+            <button
+              className="w-6 h-6 bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition flex justify-center items-center"
+              onClick={onClose}
+            >
+              x
+            </button>
+          </div>
           <h2 className="text-2xl font-semibold mb-2 text-center">
             Book et lokale
           </h2>
@@ -24,37 +39,37 @@ function ShowModal() {
             <input
               type="text"
               placeholder="lokale"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={SetClassName()}
             />
             <input
               type="text"
               placeholder="starttid"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={SetClassName()}
             />
             <input
               type="text"
               placeholder="sluttid"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={SetClassName()}
             />
             <input
               type="text"
               placeholder="brugernavn"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={SetClassName()}
             />
             <input
               type="text"
               placeholder="au_mail"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={SetClassName()}
             />
             <input
               type="phone"
               placeholder="telefon"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={SetClassName()}
             />
             <select
               name="afdelinger"
               id="departments"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className={SetClassName()}
             >
               <option value="æk">Æstetik og kultur</option>
               <option value="musikvidenskab">Musikvidenskab</option>
@@ -72,14 +87,6 @@ function ShowModal() {
       </div>
     </div>
   );
-}
-
-function HideModal() {}
-
-function CreateModal() {
-  const [className, setClassName] = React.useState('visible');
-
-  return <div>{ShowModal()}</div>;
 }
 
 function CreateWeek({ selectedWeek }: Props) {
@@ -123,23 +130,32 @@ export default function WeekAndHours(selectedWeek: Props) {
     console.log(target.id);
   }
 
+  const [modal, setModal] = useState(false);
+
   return (
-    <div className="flex gap-10 ">
-      <div>{CreateModal()}</div>
-      {fullWeek.map((week, index) => (
-        <div key={index}>
-          {week.day.toLocaleDateString('de-DE')}
-          <div
-            onClick={(event: React.MouseEvent<HTMLElement>) => printer(event)}
-          >
-            {week.hours.map((hour, index) => (
-              <div key={index} id={createID(hour)}>
-                {hour.toLocaleTimeString('de-DE')}
-              </div>
-            ))}
+    <div>
+      <button className="bg-yellow-100" onClick={() => setModal(true)}>
+        Show modal
+      </button>
+
+      <div className="flex gap-10 ">
+        {modal && <ShowModal onClose={() => setModal(false)} />}
+
+        {fullWeek.map((week, index) => (
+          <div key={index}>
+            {week.day.toLocaleDateString('de-DE')}
+            <div
+              onClick={(event: React.MouseEvent<HTMLElement>) => printer(event)}
+            >
+              {week.hours.map((hour, index) => (
+                <div key={index} id={createID(hour)}>
+                  {hour.toLocaleTimeString('de-DE')}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
