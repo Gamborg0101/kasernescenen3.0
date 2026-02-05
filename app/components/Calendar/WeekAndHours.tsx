@@ -6,6 +6,7 @@ import {
 } from 'date-fns';
 import React, { useState } from 'react';
 import Modal from './Modal';
+import RoomSelector from './RoomSelector';
 
 type WeekProps = {
   selectedWeek: Date;
@@ -56,6 +57,7 @@ export default function WeekAndHours(selectedWeek: WeekProps) {
 
   return (
     <div>
+      <RoomSelector />
       {showModal && <Modal onClose={() => setShowModal(false)} />}
 
       <div className="flex gap-10">
