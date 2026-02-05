@@ -13,28 +13,73 @@ type Props = {
 
 function ShowModal() {
   return (
-    <div className="" id="theModal">
-      <h1 className="bg-red-100">
-        <p>HELLO THERE!!!</p>
-      </h1>
+    <div>
+      <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center">
+        <div className="bg-white rounded-xl w-80 p-6 relative shadow-lg">
+          <h2 className="text-2xl font-semibold mb-2 text-center">
+            Book et lokale
+          </h2>
+
+          <form action="">
+            <input
+              type="text"
+              placeholder="lokale"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              type="text"
+              placeholder="starttid"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              type="text"
+              placeholder="sluttid"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              type="text"
+              placeholder="brugernavn"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              type="text"
+              placeholder="au_mail"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              type="phone"
+              placeholder="telefon"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <select
+              name="afdelinger"
+              id="departments"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="æk">Æstetik og kultur</option>
+              <option value="musikvidenskab">Musikvidenskab</option>
+              <option value="kunsthistorie">kunsthistorie</option>
+            </select>
+            <input type="phone" />
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition"
+            >
+              Book
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
 
-function HideModal() {
-  console.log('Hi there');
-}
+function HideModal() {}
 
 function CreateModal() {
-  const [className, setClassName] = React.useState('bg-blue-100');
+  const [className, setClassName] = React.useState('visible');
 
-  return (
-    <div className="">
-      <button className={className} onClick={() => setClassName('bg-red-100')}>
-        Show!
-      </button>
-    </div>
-  );
+  return <div>{ShowModal()}</div>;
 }
 
 function CreateWeek({ selectedWeek }: Props) {
