@@ -1,4 +1,4 @@
-import WeekView from '../components/Calendar/WeekView';
+import WeekView from '../components/calendar/WeekView';
 export default function bookingPage() {
   return (
     <div>
