@@ -16,7 +16,7 @@ async function main() {
       data: {
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),
-        phone: faker.number.int({ min: 100000000, max: 999999999 }), // 9 cifre
+        phone: faker.number.int({ min: 100000000, max: 999999999 }),
         studentNumber: faker.number.int({ min: 10000000, max: 99999999 }),
         cardNumber: faker.number.int({ min: 10000000, max: 99999999 }),
         email: faker.internet.email(),
