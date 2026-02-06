@@ -1,11 +1,15 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "phone" INTEGER NOT NULL,
     "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+    "studentNumber" INTEGER NOT NULL,
+    "cardNumber" INTEGER NOT NULL,
     "note" TEXT,
     "category" TEXT,
+    "password" TEXT NOT NULL,
     "roomId" INTEGER,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -24,16 +28,32 @@ CREATE TABLE "Room" (
 -- CreateTable
 CREATE TABLE "Booking" (
     "id" SERIAL NOT NULL,
+    "bookingId" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "roomId" INTEGER NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
-    "time" TEXT NOT NULL,
+    "startTime" TIMESTAMP(3) NOT NULL,
+    "endTime" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Booking_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_phone_key" ON "User"("phone");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_studentNumber_key" ON "User"("studentNumber");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_cardNumber_key" ON "User"("cardNumber");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Room_name_key" ON "Room"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Booking_bookingId_key" ON "Booking"("bookingId");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_roomId_fkey" FOREIGN KEY ("roomId") REFERENCES "Room"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -1,4 +1,4 @@
-import { PrismaClient } from '../app/generated/prisma';
+import { PrismaClient } from '../generated/prisma';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { faker } from '@faker-js/faker';
 
@@ -14,7 +14,11 @@ async function main() {
   for (let i = 0; i < 10; i++) {
     const user = await prisma.user.create({
       data: {
-        name: faker.person.fullName(),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        phone: faker.number.int({ min: 100000000, max: 999999999 }), // 9 cifre
+        studentNumber: faker.number.int({ min: 10000000, max: 99999999 }),
+        cardNumber: faker.number.int({ min: 10000000, max: 99999999 }),
         email: faker.internet.email(),
         password: faker.internet.password(),
         note: faker.lorem.sentence(),
@@ -28,20 +32,7 @@ async function main() {
     });
     const room = await prisma.room.create({
       data: {
-        name: faker.helpers.arrayElement([
-          '114',
-          '115',
-          '116',
-          '117',
-          '119',
-          '122',
-          '211',
-          '212',
-          '213',
-          '214',
-          '215',
-          '216',
-        ]),
+        name: faker.airline.recordLocator(),
         capacity: faker.helpers.arrayElement([10, 20, 30, 40, 50]),
         location: faker.helpers.arrayElement([
           '1. Etage',

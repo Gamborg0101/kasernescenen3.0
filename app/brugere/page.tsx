@@ -1,9 +1,9 @@
 import { prisma } from '@/db';
 
 export default async function brugere() {
-  const data = await prisma.user.findMany();
+  const users = await prisma.user.findMany();
 
-  console.log('Data fetched from database:', data);
+  console.log('Data fetched from database:', users);
 
   return (
     <div>
@@ -22,50 +22,38 @@ export default async function brugere() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="border border-gray-300 px-4 py-2">Ole Hansen</td>
-            <td className="border border-gray-300 px-4 py-2">Ole</td>
-            <td className="border border-gray-300 px-4 py-2">21842190 </td>
-            <td className="border border-gray-300 px-4 py-2">
-              ole.hansen@email.com
-            </td>
-            <td className="border border-gray-300 px-4 py-2">20201291</td>
-            <td className="border border-gray-300 px-4 py-2">432817</td>
-            <td className="border border-gray-300 px-4 py-2">Det er Ole</td>
-            <td className="border border-gray-300 px-4 py-2">Admin </td>
-            <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
-                Ændre
-              </button>
-            </td>
-            <td className="border border-gray-300 flex items-center justify-center  px-4 py-2">
-              <button className="flex justify-center items-center bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
-                Slet
-              </button>
-            </td>
-          </tr>
-          <tr className="bg-gray-100">
-            <td className="border border-gray-300 px-4 py-2">Anna Larsen</td>
-            <td className="border border-gray-300 px-4 py-2">Anna</td>
-            <td className="border border-gray-300 px-4 py-2">22883377</td>
-            <td className="border border-gray-300 px-4 py-2">
-              anna.larsen@email.com
-            </td>
-            <td className="border border-gray-300 px-4 py-2">20192812 </td>
-            <td className="border border-gray-300 px-4 py-2">382719 </td>
-            <td className="border border-gray-300 px-4 py-2">Niels er sød </td>
-            <td className="border border-gray-300 px-4 py-2">It Ingeniør</td>
-            <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
-                Ændre
-              </button>
-            </td>
-            <td className="border border-gray-300 flex items-center justify-center  px-4 py-2">
-              <button className="flex justify-center items-center bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
-                Slet
-              </button>
-            </td>
-          </tr>
+          {users.map((user, index) => (
+            <tr key={user.id} className={index % 2 === 0 ? '' : 'bg-gray-100'}>
+              <td className="border border-gray-300 px-4 py-2">
+                {user.firstName}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {user.lastName}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
+              <td className="border border-gray-300 px-4 py-2">{user.email}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                {user.studentNumber}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {user.cardNumber}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">{user.note}</td>
+              <td className="border border-gray-300 px-4 py-2">
+                {user.category}
+              </td>
+              <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                  Ændre
+                </button>
+              </td>
+              <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
+                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                  Slet
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
