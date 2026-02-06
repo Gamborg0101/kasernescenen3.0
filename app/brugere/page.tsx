@@ -1,4 +1,10 @@
-export default function brugere() {
+import { prisma } from '@/db';
+
+export default async function brugere() {
+  const data = await prisma.user.findMany();
+
+  console.log('Data fetched from database:', data);
+
   return (
     <div>
       <table className="w-full border-collapse border border-gray-300">
