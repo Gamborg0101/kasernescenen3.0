@@ -1,4 +1,6 @@
 'use client';
+import { DeleteUser } from './Actions';
+import React from 'react';
 
 type User = {
   id: number;
@@ -13,6 +15,13 @@ type User = {
 };
 
 export default function BrugerTabel({ users }: { users: User[] }) {
+  const [localUsers, setLocalUsers] = React.useState(users);
+
+  const handleDelete = async (userId: number) => {
+    await DeleteUser(userId);
+    setLocalUsers(localUsers.filter((user) => user.id !== userId));
+  };
+
   return (
     <div>
       <table className="w-full border-collapse border border-gray-300">
@@ -30,7 +39,7 @@ export default function BrugerTabel({ users }: { users: User[] }) {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
+          {localUsers.map((user, index) => (
             <tr key={user.id} className={index % 2 === 0 ? '' : 'bg-gray-100'}>
               <td className="border border-gray-300 px-4 py-2">
                 {user.firstName}
@@ -58,9 +67,7 @@ export default function BrugerTabel({ users }: { users: User[] }) {
               <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
                 <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                  onClick={() => {
-                    console.log(user.id);
-                  }}
+                  onClick={() => handleDelete(user.id)}
                 >
                   Slet
                 </button>
