@@ -3,7 +3,7 @@ import { DeleteUser } from './Actions';
 import React from 'react';
 import ChangeUserModal from '../components/modals/ChangeUserModal';
 
-type User = {
+export type User = {
   id: number;
   firstName: string;
   lastName: string;
@@ -18,6 +18,7 @@ type User = {
 export default function BrugerTabel({ users }: { users: User[] }) {
   const [localUsers, setLocalUsers] = React.useState(users);
   const [toggleModal, setToggleModal] = React.useState(false);
+  const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
 
   const handleDelete = async (userId: number) => {
     await DeleteUser(userId);
@@ -64,7 +65,10 @@ export default function BrugerTabel({ users }: { users: User[] }) {
               <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                  onClick={() => setToggleModal(true)}
+                  onClick={() => {
+                    setSelectedUser(user);
+                    setToggleModal(true);
+                  }}
                 >
                   Ændre
                 </button>
@@ -82,7 +86,14 @@ export default function BrugerTabel({ users }: { users: User[] }) {
           ))}
         </tbody>
       </table>
-      {toggleModal && <ChangeUserModal onClose={() => setToggleModal(false)} />}
+      {toggleModal && selectedUser && (
+        <ChangeUserModal
+          onClose={() => setToggleModal(false)}
+          user={selectedUser}
+
+          // Send userinformation til prop, så jeg kan bruge den til at populate modal med data.
+        />
+      )}
     </div>
   );
 }

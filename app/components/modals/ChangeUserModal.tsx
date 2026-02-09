@@ -1,19 +1,25 @@
+import { SUPPORTED_TEST_RUNNERS_LIST } from 'next/dist/cli/next-test';
+import type User from '../brugere/brugertabel';
+
 type Props = {
   onClose: () => void;
 };
 
-export default function ChangeUserModal({ onClose }: Props) {
+export default function ChangeUserModal({
+  onClose,
+  user,
+}: Props & { user: User }) {
   function SetClassName() {
-    return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
+    return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4';
   }
 
   return (
     <div>
       <div
-        className="modal fixed inset-0 bg-black bg-opacity-50 "
+        className="fixed inset-0 bg-opacity-10 flex items-center justify-center  z-50"
         onClick={onClose}
       >
-        <div className="overlay fixed inset-0 bg-opacity-50 flex items-center justify-center">
+        <div className="">
           <div
             className="modal-content"
             onClick={(e) => {
@@ -34,40 +40,54 @@ export default function ChangeUserModal({ onClose }: Props) {
               </h2>
 
               <form action="">
+                <label htmlFor="">Fornavn</label>
                 <input
                   type="text"
+                  className={SetClassName()}
                   placeholder="Fornavn"
-                  className={SetClassName()}
+                  value={user.firstName}
                 />
+                <label htmlFor="">Efternavn</label>
+
                 <input
                   type="text"
-                  placeholder="Efternavn"
                   className={SetClassName()}
+                  value={user.lastName}
                 />
+                <label htmlFor="">Telefon</label>
                 <input
                   type="text"
                   placeholder="Telefon"
                   className={SetClassName()}
+                  value={user.phone}
                 />
+                <label htmlFor="">Email</label>
                 <input
                   type="text"
-                  placeholder="telefon"
+                  placeholder="email"
                   className={SetClassName()}
+                  value={user.email}
                 />
+                <label htmlFor="">Studentnummer</label>
                 <input
                   type="text"
                   placeholder="Studentnummer"
                   className={SetClassName()}
+                  value={user.studentNumber}
                 />
+                <label htmlFor="">Kortnummer</label>
                 <input
                   type="text"
                   placeholder="Kortnummer"
                   className={SetClassName()}
+                  value={user.cardNumber}
                 />
+                <label htmlFor="">Email</label>
                 <input
                   type="text"
                   placeholder="AUmail"
                   className={SetClassName()}
+                  value={user.auMail}
                 />
                 <select
                   name="afdelinger"
@@ -76,7 +96,7 @@ export default function ChangeUserModal({ onClose }: Props) {
                 >
                   <option value="æk">Æstetik og kultur</option>
                   <option value="musikvidenskab">Musikvidenskab</option>
-                  <option value="kunsthistorie">kunsthistorie</option>
+                  <option value="kunsthistorie">Kunsthistorie</option>
                 </select>
                 <input type="phone" />
                 <button
