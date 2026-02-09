@@ -1,6 +1,7 @@
 type Props = {
   onClose: () => void;
 };
+
 export default function ChangeUserModal({ onClose }: Props) {
   function SetClassName() {
     return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
