@@ -1,14 +1,11 @@
-import { SUPPORTED_TEST_RUNNERS_LIST } from 'next/dist/cli/next-test';
 import type User from '../brugere/brugertabel';
 
 type Props = {
   onClose: () => void;
+  user: User;
 };
 
-export default function ChangeUserModal({
-  onClose,
-  user,
-}: Props & { user: User }) {
+export default function ChangeUserModal({ onClose, user }: Props) {
   function SetClassName() {
     return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4';
   }
@@ -40,63 +37,72 @@ export default function ChangeUserModal({
               </h2>
 
               <form action="">
+                <label htmlFor="">Id</label>
+                <input
+                  type="text"
+                  placeholder="Id"
+                  defaultValue={user.id}
+                  className={SetClassName() + ' bg-gray-200 cursor-not-allowed'}
+                  readOnly
+                />
                 <label htmlFor="">Fornavn</label>
                 <input
                   type="text"
                   className={SetClassName()}
                   placeholder="Fornavn"
-                  value={user.firstName}
+                  defaultValue={user.firstName}
                 />
                 <label htmlFor="">Efternavn</label>
 
                 <input
                   type="text"
                   className={SetClassName()}
-                  value={user.lastName}
+                  defaultValue={user.lastName}
                 />
                 <label htmlFor="">Telefon</label>
                 <input
                   type="text"
                   placeholder="Telefon"
                   className={SetClassName()}
-                  value={user.phone}
+                  defaultValue={user.phone}
                 />
                 <label htmlFor="">Email</label>
                 <input
                   type="text"
                   placeholder="email"
                   className={SetClassName()}
-                  value={user.email}
+                  defaultValue={user.email}
                 />
                 <label htmlFor="">Studentnummer</label>
                 <input
                   type="text"
                   placeholder="Studentnummer"
                   className={SetClassName()}
-                  value={user.studentNumber}
+                  defaultValue={user.studentNumber}
                 />
                 <label htmlFor="">Kortnummer</label>
                 <input
                   type="text"
                   placeholder="Kortnummer"
                   className={SetClassName()}
-                  value={user.cardNumber}
+                  defaultValue={user.cardNumber}
                 />
                 <label htmlFor="">Email</label>
                 <input
                   type="text"
                   placeholder="AUmail"
                   className={SetClassName()}
-                  value={user.auMail}
+                  defaultValue={user.email}
                 />
+                <label htmlFor="">Afdeling</label>
                 <select
                   name="afdelinger"
                   id="departments"
                   className={SetClassName()}
                 >
-                  <option value="æk">Æstetik og kultur</option>
-                  <option value="musikvidenskab">Musikvidenskab</option>
-                  <option value="kunsthistorie">Kunsthistorie</option>
+                  <option defaultValue="æk">Æstetik og kultur</option>
+                  <option defaultValue="musikvidenskab">Musikvidenskab</option>
+                  <option defaultValue="kunsthistorie">Kunsthistorie</option>
                 </select>
                 <input type="phone" />
                 <button
