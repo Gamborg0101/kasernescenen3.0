@@ -5,7 +5,7 @@ import {
   eachMinuteOfInterval,
 } from 'date-fns';
 import React, { useState } from 'react';
-import Modal from './Modal';
+import Modal from '../modals/CreateBookingModal';
 import RoomSelector from './RoomSelector';
 
 type WeekProps = {

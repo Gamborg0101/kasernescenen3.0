@@ -1,6 +1,7 @@
 'use client';
 import { DeleteUser } from './Actions';
 import React from 'react';
+import ChangeUserModal from '../components/modals/ChangeUserModal';
 
 type User = {
   id: number;
@@ -16,6 +17,7 @@ type User = {
 
 export default function BrugerTabel({ users }: { users: User[] }) {
   const [localUsers, setLocalUsers] = React.useState(users);
+  const [toggleModal, setToggleModal] = React.useState(false);
 
   const handleDelete = async (userId: number) => {
     await DeleteUser(userId);
@@ -76,6 +78,8 @@ export default function BrugerTabel({ users }: { users: User[] }) {
           ))}
         </tbody>
       </table>
+      <ChangeUserModal />
+      {/* {toggleModal && <ChangeUserModal onClose={() => setToggleModal(false)} />} */}
     </div>
   );
 }
