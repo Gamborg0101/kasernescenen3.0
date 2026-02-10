@@ -1,7 +1,7 @@
-import ThisIsInfo from '../components/testingtools/TESTInfo';
+export default function Function1() {
+   function Function2() {
+    console.log('hi from function 2');
+  }
 
-export default function Testing() {
-  const information = 'This is the information we need from page';
-
-  return <ThisIsInfo info={information} />;
+  console.log('hi from function 1');
 }

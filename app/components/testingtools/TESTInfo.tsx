@@ -1,11 +1,3 @@
-type Props = {
-  info: string;
-};
-
-export default function ThisIsInfo({ info }: Props) {
-  return (
-    <div>
-      <p>{info}</p>
-    </div>
-  );
+export default function ThisIsInfo() {
+  return <div></div>;
 }
