@@ -4,9 +4,11 @@ import WeekAndHours from './WeekAndHours';
 import WeekSelector from './WeekSelector';
 import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
+import RoomSelector from './RoomSelector';
 
 export default function WeekView() {
   const [weekCounter, setWeekCounter] = useState(new Date());
+  const [roomNumber, setRoomNumber] = useState(114);
 
   function WeekCounterNext() {
     const newDate = new Date(weekCounter);
@@ -24,8 +26,9 @@ export default function WeekView() {
 
   return (
     <div>
+      <RoomSelector roomNumber={roomNumber} setRoomNumber={setRoomNumber} />
       <WeekSelector nextWeek={WeekCounterNext} prevWeek={WeekCounterPrev} />
-      <WeekAndHours selectedWeek={weekCounter} />
+      <WeekAndHours selectedWeek={weekCounter} roomNumber={roomNumber} />
     </div>
   );
 }

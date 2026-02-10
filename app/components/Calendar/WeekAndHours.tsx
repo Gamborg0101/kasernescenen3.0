@@ -6,24 +6,21 @@ import {
 } from 'date-fns';
 import React, { useState } from 'react';
 import Modal from '../modals/CreateBookingModal';
-import RoomSelector from './RoomSelector';
 
 type WeekProps = {
   selectedWeek: Date;
+  roomNumber: number;
 };
 
-function CreateWeek({ selectedWeek }: WeekProps) {
-  const currentDate = selectedWeek;
-
-  const start = startOfWeek(currentDate, { weekStartsOn: 1 });
-  const end = endOfWeek(currentDate, { weekStartsOn: 1 });
+function CreateWeek(selectedWeek: Date) {
+  const start = startOfWeek(selectedWeek, { weekStartsOn: 1 });
+  const end = endOfWeek(selectedWeek, { weekStartsOn: 1 });
 
   const days = eachDayOfInterval({ start, end });
-  const week = days.map((day) => ({
+  return days.map((day) => ({
     day,
     hours: CreateHoursForDay(day),
   }));
-  return week;
 }
 
 function CreateHoursForDay(day: Date) {
@@ -45,41 +42,30 @@ function createID(currentDate: Date) {
   return `${date}-${time}`;
 }
 
-export default function WeekAndHours(selectedWeek: WeekProps) {
+export default function WeekAndHours({ selectedWeek, roomNumber }: WeekProps) {
   const [showModal, setShowModal] = useState(false);
+
+  function handleHourClick(event: React.MouseEvent<HTMLElement>, hour: Date) {
+    event.stopPropagation();
+    console.log('Rum:', roomNumber, 'Tid:', createID(hour));
+    setShowModal(true);
+  }
 
   const fullWeek = CreateWeek(selectedWeek);
 
-  function printer(event: React.MouseEvent<HTMLElement>): void {
-    const target = event.target as HTMLElement;
-    console.log(target.id);
-  }
-
   return (
     <div>
-      <RoomSelector />
       {showModal && <Modal onClose={() => setShowModal(false)} />}
 
       <div className="flex gap-10">
         {fullWeek.map((week, index) => (
           <div key={index}>
             {week.day.toLocaleDateString('de-DE')}
-            <div
-              onClick={(event: React.MouseEvent<HTMLElement>) => printer(event)}
-            >
-              {}
-              {week.hours.map((hour, index) => (
-                <div
-                  key={index}
-                  id={createID(hour)}
-                  onClick={(event: React.MouseEvent<HTMLElement>) =>
-                    setShowModal(true)
-                  }
-                >
-                  {hour.toLocaleTimeString('de-DE')}
-                </div>
-              ))}
-            </div>
+            {week.hours.map((hour, index) => (
+              <div key={index} onClick={(e) => handleHourClick(e, hour)}>
+                {hour.toLocaleTimeString('de-DE')}
+              </div>
+            ))}
           </div>
         ))}
       </div>
