@@ -16,3 +16,23 @@ export async function DeleteUser(userId: number) {
     },
   });
 }
+
+export async function UpdateUser(
+  userId: number,
+  data: {
+    firstName?: string;
+    lastName?: string;
+    phone?: number;
+    email?: string;
+    studentNumber?: number;
+    cardNumber?: number;
+    category?: string;
+  },
+) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data,
+  });
+}

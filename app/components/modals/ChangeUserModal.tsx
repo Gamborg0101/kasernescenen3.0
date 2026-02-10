@@ -1,4 +1,6 @@
-import type User from '../brugere/brugertabel';
+import { User } from '../../brugere/BrugerTabel';
+import { UpdateUser } from '../../brugere/Actions';
+import { useState } from 'react';
 
 type Props = {
   onClose: () => void;
@@ -6,8 +8,31 @@ type Props = {
 };
 
 export default function ChangeUserModal({ onClose, user }: Props) {
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setlastName] = useState(user.lastName);
+  const [phone, setPhone] = useState(user.phone);
+  const [email, setEmail] = useState(user.email);
+  const [studentNumber, setStudentNumber] = useState(user.studentNumber);
+  const [cardNumber, setCardNumber] = useState(user.cardNumber);
+  const [category, setCategory] = useState(user.category);
+
   function SetClassName() {
     return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4';
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    //Grunden til undefined er, at prisma forventer undefined, men ts returner null.
+    await UpdateUser(user.id, {
+      firstName: firstName ?? undefined,
+      lastName: lastName ?? undefined,
+      phone: phone ?? undefined,
+      email: email ?? undefined,
+      studentNumber: studentNumber ?? undefined,
+      cardNumber: cardNumber ?? undefined,
+      category: category ?? undefined,
+    });
+    onClose();
   }
 
   return (
@@ -36,7 +61,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                 Ændre bruger
               </h2>
 
-              <form action="">
+              <form onSubmit={handleSubmit}>
                 <label htmlFor="">Id</label>
                 <input
                   type="text"
@@ -51,6 +76,9 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   className={SetClassName()}
                   placeholder="Fornavn"
                   defaultValue={user.firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
                 />
                 <label htmlFor="">Efternavn</label>
 
@@ -58,6 +86,9 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   type="text"
                   className={SetClassName()}
                   defaultValue={user.lastName}
+                  onChange={(e) => {
+                    setlastName(e.target.value);
+                  }}
                 />
                 <label htmlFor="">Telefon</label>
                 <input
@@ -65,6 +96,9 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   placeholder="Telefon"
                   className={SetClassName()}
                   defaultValue={user.phone}
+                  onChange={(e) => {
+                    setPhone(Number(e.target.value));
+                  }}
                 />
                 <label htmlFor="">Email</label>
                 <input
@@ -72,6 +106,9 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   placeholder="email"
                   className={SetClassName()}
                   defaultValue={user.email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
                 <label htmlFor="">Studentnummer</label>
                 <input
@@ -79,6 +116,9 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   placeholder="Studentnummer"
                   className={SetClassName()}
                   defaultValue={user.studentNumber}
+                  onChange={(e) => {
+                    setStudentNumber(Number(e.target.value));
+                  }}
                 />
                 <label htmlFor="">Kortnummer</label>
                 <input
@@ -86,19 +126,18 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   placeholder="Kortnummer"
                   className={SetClassName()}
                   defaultValue={user.cardNumber}
-                />
-                <label htmlFor="">Email</label>
-                <input
-                  type="text"
-                  placeholder="AUmail"
-                  className={SetClassName()}
-                  defaultValue={user.email}
+                  onChange={(e) => {
+                    setCardNumber(Number(e.target.value));
+                  }}
                 />
                 <label htmlFor="">Afdeling</label>
                 <select
                   name="afdelinger"
                   id="departments"
                   className={SetClassName()}
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                  }}
                 >
                   <option defaultValue="æk">Æstetik og kultur</option>
                   <option defaultValue="musikvidenskab">Musikvidenskab</option>
