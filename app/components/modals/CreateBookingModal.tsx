@@ -9,10 +9,10 @@ export default function Modal({ onClose }: Props) {
   return (
     <div>
       <div
-        className="modal fixed inset-0 bg-black bg-opacity-50 "
+        className="fixed inset-0 bg-black/60 flex items-center justify-center"
         onClick={onClose}
       >
-        <div className="overlay fixed inset-0 bg-opacity-50 flex items-center justify-center">
+        <div className=" ">
           <div
             className="modal-content"
             onClick={(e) => {
@@ -22,7 +22,7 @@ export default function Modal({ onClose }: Props) {
             <div className="bg-white rounded-xl w-80 p-6 relative shadow-lg">
               <div className="flex flex-row-reverse">
                 <button
-                  className=" w-6 h-6 bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition flex justify-center items-center"
+                  className="w-6 h-6 bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition flex justify-center items-center"
                   onClick={onClose}
                 >
                   x
