@@ -142,9 +142,10 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                     setCategory(e.target.value);
                   }}
                 >
-                  <option defaultValue="æk">Æstetik og kultur</option>
-                  <option defaultValue="musikvidenskab">Musikvidenskab</option>
-                  <option defaultValue="kunsthistorie">Kunsthistorie</option>
+                  <option value="">Vælg en afdeling</option>
+                  <option value="æk">Æstetik og kultur</option>
+                  <option value="musikvidenskab">Musikvidenskab</option>
+                  <option value="kunsthistorie">Kunsthistorie</option>
                 </select>
                 <input type="phone" />
                 <button
