@@ -90,8 +90,6 @@ export default function BrugerTabel({ users }: { users: User[] }) {
         <ChangeUserModal
           onClose={() => setToggleModal(false)}
           user={selectedUser}
-
-          // Send userinformation til prop, så jeg kan bruge den til at populate modal med data.
         />
       )}
     </div>

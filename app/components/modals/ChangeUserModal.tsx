@@ -1,6 +1,7 @@
 import { User } from '../../brugere/BrugerTabel';
 import { UpdateUser } from '../../brugere/Actions';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   onClose: () => void;
@@ -15,6 +16,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
   const [studentNumber, setStudentNumber] = useState(user.studentNumber);
   const [cardNumber, setCardNumber] = useState(user.cardNumber);
   const [category, setCategory] = useState(user.category);
+  const router = useRouter();
 
   function SetClassName() {
     return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4';
@@ -22,7 +24,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    //Grunden til undefined er, at prisma forventer undefined, men ts returner null.
+    //undefined da prisma forventer undefined, men ts returner null.
     await UpdateUser(user.id, {
       firstName: firstName ?? undefined,
       lastName: lastName ?? undefined,
@@ -32,6 +34,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
       cardNumber: cardNumber ?? undefined,
       category: category ?? undefined,
     });
+    router.refresh();
     onClose();
   }
 
