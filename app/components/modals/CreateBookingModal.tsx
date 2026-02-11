@@ -1,10 +1,13 @@
+import { useState } from 'react';
 type Props = {
   onClose: () => void;
 };
-export default function Modal({ onClose }: Props) {
+export default function CreateBookingModal({ onClose }: Props) {
   function SetClassName() {
     return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
   }
+
+  const [roomNumber, setRoomNumber] = useState('114');
 
   return (
     <div>
@@ -12,7 +15,7 @@ export default function Modal({ onClose }: Props) {
         className="fixed inset-0 bg-black/60 flex items-center justify-center"
         onClick={onClose}
       >
-        <div className=" ">
+        <div>
           <div
             className="modal-content"
             onClick={(e) => {
@@ -37,6 +40,10 @@ export default function Modal({ onClose }: Props) {
                   type="text"
                   placeholder="lokale"
                   className={SetClassName()}
+                  onChange={(e) => {
+                    setRoomNumber(e.target.value);
+                  }}
+                  value={roomNumber}
                 />
                 <input
                   type="text"
