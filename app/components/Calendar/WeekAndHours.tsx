@@ -30,7 +30,7 @@ function CreateHoursForDay(day: Date) {
   const end = new Date(day);
   end.setHours(23, 45, 0, 0);
 
-  return eachMinuteOfInterval({ start, end }, { step: 15 });
+  return eachMinuteOfInterval({ start, end }, { step: 60 });
 }
 
 function createID(currentDate: Date) {
@@ -51,13 +51,28 @@ export default function WeekAndHours({ selectedWeek, roomNumber }: WeekProps) {
     setShowModal(true);
   }
 
+  function hoursInDay() {
+    const hours = [];
+    for (let i = 0; i < 24; i++) {
+      hours[i] = i;
+    }
+    return (
+      <div>
+        <div>&nbsp;</div> {/* tom header for alignment */}
+        {hours.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
+      </div>
+    );
+  }
+
   const fullWeek = CreateWeek(selectedWeek);
 
   return (
     <div>
       {showModal && <Modal onClose={() => setShowModal(false)} />}
-
       <div className="flex gap-10">
+        <div>{hoursInDay()}</div>
         {fullWeek.map((week, index) => (
           <div key={index}>
             {week.day.toLocaleDateString('de-DE')}
