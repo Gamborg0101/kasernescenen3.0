@@ -12,3 +12,7 @@ Stack:
 - Tailwind CSS
 - Postgresql
 - Prisma
+
+Authentication:
+
+- Auth.js

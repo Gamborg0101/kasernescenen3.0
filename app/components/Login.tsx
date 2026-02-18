@@ -1,3 +1,5 @@
+import { signIn } from '@/auth/authSetup';
+
 export function Login() {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -65,6 +67,16 @@ export function Login() {
               Sign in
             </button>
           </div>
+        </form>
+      </div>
+      <div>
+        <form
+          action={async () => {
+            'use server';
+            await signIn('google');
+          }}
+        >
+          <button type="submit">Signin with Google</button>
         </form>
       </div>
     </div>

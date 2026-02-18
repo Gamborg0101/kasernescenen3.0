@@ -1,4 +1,7 @@
-export function Navbar() {
+import { auth, signOut } from '@/auth/authSetup';
+
+export async function Navbar() {
+  const session = await auth();
   return (
     <nav className="flex justify-between h-16 bg-amber-200 items-center">
       <Logo />
@@ -6,7 +9,20 @@ export function Navbar() {
         <NavItem text="Forside" href="/" />
         <NavItem text="Booking" href={'/booking'} />
         <NavItem text="Opret" href={'/opret'} />
-        <NavItem text="Log ind / ud" href={'#'} />
+
+        {session?.user ? (
+          <form
+            action={async () => {
+              'use server';
+              await signOut();
+            }}
+          >
+            <button type="submit">Log ud</button>
+          </form>
+        ) : (
+          <NavItem text="Log ind" href="/login" />
+        )}
+
         <NavItem text="Brugere" href={'/brugere'} />
       </ul>
     </nav>
