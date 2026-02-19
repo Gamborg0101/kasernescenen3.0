@@ -7,8 +7,8 @@ export async function Navbar() {
       <Logo />
       <ul className="flex font-semibold gap-8 pr-10">
         <NavItem text="Forside" href="/" />
-        <NavItem text="Booking" href={'/booking'} />
-        <NavItem text="Opret" href={'/opret'} />
+        <NavItem text="Booking" href="/booking" />
+        <NavItem text="Opret" href="/opret" />
 
         {session?.user ? (
           <form
@@ -17,7 +17,7 @@ export async function Navbar() {
               await signOut();
             }}
           >
-            <button type="submit">Log ud</button>
+            <NavItem text="Log ud" href="/login" type="submit" />
           </form>
         ) : (
           <NavItem text="Log ind" href="/login" />
@@ -38,12 +38,22 @@ function Logo() {
   );
 }
 
-function NavItem({ text, href }: { text: string; href?: string }) {
+function NavItem({
+  text,
+  href,
+  type,
+}: {
+  text: string;
+  href?: string;
+  type?: 'button' | 'submit';
+}) {
   return (
-    <a href={href}>
-      <div className="flex justify-center items-center hover:bg-amber-700 h-16 p-5">
-        {text}
-      </div>
-    </a>
+    <button type={type}>
+      <a href={href}>
+        <div className="flex justify-center items-center hover:bg-amber-700 h-16 p-5">
+          {text}
+        </div>
+      </a>
+    </button>
   );
 }
