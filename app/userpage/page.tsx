@@ -23,6 +23,7 @@ export default async function UserPage() {
         <br />
         {userInfo.email}
       </p>
+      
     </div>
   );
 }

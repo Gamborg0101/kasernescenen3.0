@@ -10,6 +10,7 @@ export default function WeekView() {
   const [weekCounter, setWeekCounter] = useState(new Date());
   const [roomNumber, setRoomNumber] = useState(114);
 
+
   function WeekCounterNext() {
     const newDate = new Date(weekCounter);
     newDate.setDate(newDate.getDate() + 7);

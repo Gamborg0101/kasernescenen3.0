@@ -4,7 +4,7 @@ import {
   endOfWeek,
   eachMinuteOfInterval,
 } from 'date-fns';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreateBookingModal from '../modals/CreateBookingModal';
 
 type WeekProps = {
@@ -14,12 +14,12 @@ type WeekProps = {
 
 export default function WeekAndHours({ selectedWeek, roomNumber }: WeekProps) {
   const [showModal, setShowModal] = useState(false);
-
-  console.log(roomNumber);
+  const [startHour, setStartHour] = useState('null');
 
   function handleHourClick(event: React.MouseEvent<HTMLElement>, hour: Date) {
     event.stopPropagation();
     console.log('Rum:', roomNumber, 'Tid:', createID(hour));
+    setStartHour(createID(hour));
     setShowModal(true);
   }
 
@@ -80,6 +80,7 @@ export default function WeekAndHours({ selectedWeek, roomNumber }: WeekProps) {
         <CreateBookingModal
           onClose={() => setShowModal(false)}
           roomNumber={roomNumber}
+          startHour={startHour}
         />
       )}
       <div className="flex gap-10">

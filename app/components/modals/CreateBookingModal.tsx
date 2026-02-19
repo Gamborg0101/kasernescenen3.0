@@ -1,8 +1,16 @@
+import { start } from 'node:repl';
+
 type Props = {
   onClose: () => void;
   roomNumber: number;
+  startHour: string;
 };
-export default function CreateBookingModal({ onClose, roomNumber }: Props) {
+
+export default function CreateBookingModal({
+  onClose,
+  roomNumber,
+  startHour,
+}: Props) {
   function SetClassName() {
     return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
   }
@@ -37,16 +45,21 @@ export default function CreateBookingModal({ onClose, roomNumber }: Props) {
                 <input
                   type="text"
                   placeholder="lokale"
-                  className={SetClassName()}
-                  onChange={(e) => {
-                    setRoomNumber(e.target.value);
-                  }}
+                  className={SetClassName() + ' ' + 'bg-gray-300'}
                   value={roomNumber}
+                  readOnly
+                />
+                <input
+                  type="text"
+                  placeholder="dato"
+                  className={SetClassName()}
                 />
                 <input
                   type="text"
                   placeholder="starttid"
                   className={SetClassName()}
+                  value={startHour.split('-')[1]}
+                  readOnly
                 />
                 <input
                   type="text"
