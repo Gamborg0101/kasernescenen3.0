@@ -1,13 +1,11 @@
-import { useState } from 'react';
 type Props = {
   onClose: () => void;
+  roomNumber: number;
 };
-export default function CreateBookingModal({ onClose }: Props) {
+export default function CreateBookingModal({ onClose, roomNumber }: Props) {
   function SetClassName() {
     return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
   }
-
-  const [roomNumber, setRoomNumber] = useState('114');
 
   return (
     <div>
