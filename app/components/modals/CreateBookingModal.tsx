@@ -53,12 +53,13 @@ export default function CreateBookingModal({
                   type="text"
                   placeholder="dato"
                   className={SetClassName()}
+                  value={startHour ? startHour.split('-')[0] : ''}
                 />
                 <input
                   type="text"
                   placeholder="starttid"
                   className={SetClassName()}
-                  value={startHour.split('-')[1]}
+                  value={startHour ? startHour.split('-')[1] : ''}
                   readOnly
                 />
                 <input
