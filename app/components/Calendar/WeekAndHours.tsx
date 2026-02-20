@@ -6,17 +6,7 @@ import {
 } from 'date-fns';
 import React, { useState } from 'react';
 import CreateBookingModal from '../modals/CreateBookingModal';
-
-type UserInfo = {
-  name: string;
-  email: string;
-};
-
-type WeekProps = {
-  selectedWeek: Date;
-  roomNumber: number;
-  userInfo: UserInfo;
-};
+import { WeekProps } from '@/app/types/types';
 
 export default function WeekAndHours({
   selectedWeek,
@@ -33,18 +23,18 @@ export default function WeekAndHours({
     setShowModal(true);
   }
 
-  function CreateWeek(selectedWeek: Date) {
+  function createWeek(selectedWeek: Date) {
     const start = startOfWeek(selectedWeek, { weekStartsOn: 1 });
     const end = endOfWeek(selectedWeek, { weekStartsOn: 1 });
 
     const days = eachDayOfInterval({ start, end });
     return days.map((day) => ({
       day,
-      hours: CreateHoursForDay(day),
+      hours: createHoursForDay(day),
     }));
   }
 
-  function CreateHoursForDay(day: Date) {
+  function createHoursForDay(day: Date) {
     const start = new Date(day);
     start.setHours(0, 0, 0, 0);
 
@@ -82,7 +72,7 @@ export default function WeekAndHours({
       </div>
     );
   }
-  const fullWeek = CreateWeek(selectedWeek);
+  const fullWeek = createWeek(selectedWeek);
 
   return (
     <div>

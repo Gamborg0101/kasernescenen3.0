@@ -1,20 +1,11 @@
 'use client';
 
 import WeekAndHours from './WeekAndHours';
-
 import WeekSelector from './WeekSelector';
 import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
-
-type UserInfo = {
-  name: string;
-  email: string;
-};
-
-export type WeekViewProps = {
-  userInfo: UserInfo;
-};
+import { WeekViewProps } from '@/app/types/types';
 
 export default function WeekView({ userInfo }: WeekViewProps) {
   const [weekCounter, setWeekCounter] = useState(new Date());
