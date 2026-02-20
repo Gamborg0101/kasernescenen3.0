@@ -1,15 +1,19 @@
-import { start } from 'node:repl';
-
+type UserInfo = {
+  name: string;
+  email: string;
+};
 type Props = {
   onClose: () => void;
   roomNumber: number;
   startHour: string;
+  userInfo: UserInfo;
 };
 
 export default function CreateBookingModal({
   onClose,
   roomNumber,
   startHour,
+  userInfo,
 }: Props) {
   function SetClassName() {
     return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
@@ -71,11 +75,15 @@ export default function CreateBookingModal({
                   type="text"
                   placeholder="brugernavn"
                   className={SetClassName()}
+                  value={userInfo.name}
+                  readOnly
                 />
                 <input
                   type="text"
                   placeholder="au_mail"
                   className={SetClassName()}
+                  value={userInfo.email}
+                  readOnly
                 />
                 <input
                   type="phone"

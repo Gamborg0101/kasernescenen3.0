@@ -1,12 +1,9 @@
+// app/booking/page.tsx
 import WeekView from '../components/calendar/WeekView';
-import { getBookings } from './BookingActions';
 
-export default async function bookingPage() {
-  const booking = await getBookings();
-  console.log(booking);
-  return (
-    <div>
-      <WeekView />
-    </div>
-  );
+import { getUserInfo } from './BookingActions';
+
+export default async function BookingPage() {
+  const userInfo = await getUserInfo(); // Kører på server
+  return <WeekView userInfo={userInfo} />; // sender videre til client
 }

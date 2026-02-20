@@ -4,15 +4,25 @@ import {
   endOfWeek,
   eachMinuteOfInterval,
 } from 'date-fns';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CreateBookingModal from '../modals/CreateBookingModal';
+
+type UserInfo = {
+  name: string;
+  email: string;
+};
 
 type WeekProps = {
   selectedWeek: Date;
   roomNumber: number;
+  userInfo: UserInfo;
 };
 
-export default function WeekAndHours({ selectedWeek, roomNumber }: WeekProps) {
+export default function WeekAndHours({
+  selectedWeek,
+  roomNumber,
+  userInfo,
+}: WeekProps) {
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState('null');
 
@@ -81,6 +91,7 @@ export default function WeekAndHours({ selectedWeek, roomNumber }: WeekProps) {
           onClose={() => setShowModal(false)}
           roomNumber={roomNumber}
           startHour={startHour}
+          userInfo={userInfo}
         />
       )}
       <div className="flex gap-10">
