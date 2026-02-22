@@ -33,7 +33,7 @@ async function main() {
     const room = await prisma.room.create({
       data: {
         name: faker.airline.recordLocator(),
-        capacity: faker.helpers.arrayElement([10, 20, 30, 40, 50]),
+        capacity: faker.helpers.arrayElement([114, 116, 118, 120]),
         location: faker.helpers.arrayElement([
           '1. Etage',
           '2. Etage',
@@ -41,13 +41,17 @@ async function main() {
         ]),
       },
     });
+
     await prisma.booking.create({
       data: {
         bookingId: faker.string.uuid(),
         userId: faker.helpers.arrayElement([user.id]),
         roomId: faker.helpers.arrayElement([room.id]),
-        startTime: faker.date.soon(),
-        endTime: faker.date.soon({ days: 1 }),
+        startTime: faker.date.between({
+          from: new Date(),
+          to: faker.date.soon({ days: 1 }),
+        }),
+        endTime: faker.date.soon({ days: 10, refDate: new Date() }),
       },
     });
   }
