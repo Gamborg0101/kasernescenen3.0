@@ -11,7 +11,7 @@ Stack:
 - React
 - Tailwind CSS
 - Postgresql
-- Prisma
+- Prisma - online DB - login
 
 Authentication:
 

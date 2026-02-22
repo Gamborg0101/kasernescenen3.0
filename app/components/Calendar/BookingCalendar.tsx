@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
-import { FormatDateOptions } from 'date-fns';
 
 type Props = {
   userInfo: { name: string; email: string };
