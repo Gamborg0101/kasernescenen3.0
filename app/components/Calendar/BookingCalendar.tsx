@@ -1,52 +1,50 @@
 'use client';
 
+import WeekAndHours from './WeekAndHours';
+import WeekSelector from './WeekSelector';
 import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
-import WeekSelector from './WeekSelector';
 import RoomSelector from './RoomSelector';
-import WeekAndHours from './WeekAndHours';
 import CreateBookingModal from '../modals/CreateBookingModal';
 
-type UserInfo = {
-  name: string;
-  email: string;
-  id?: string;
-};
-
 type Props = {
-  userInfo: UserInfo;
+  userInfo: { name: string; email: string };
+  allBookings: {
+    endTime: Date;
+    roomId: number;
+    startTime: Date;
+  }[];
 };
 
-export default function BookingCalendar({ userInfo }: Props) {
+export default function BookingCalendar({ userInfo, allBookings }: Props) {
   const [weekCounter, setWeekCounter] = useState(new Date());
-  const [roomNumber, setRoomNumber] = useState(114);
+  const [roomNumber, setRoomNumber] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [startHour, setStartHour] = useState('');
+  const [startHour, setStartHour] = useState({ date: '', hour: '' });
 
-  function nextWeek() {
+  function WeekCounterNext() {
     const newDate = new Date(weekCounter);
     newDate.setDate(newDate.getDate() + 7);
-    setWeekCounter(startOfWeek(newDate, { weekStartsOn: 1 }));
+    const firstOfNextWeek = startOfWeek(newDate, { weekStartsOn: 1 });
+    setWeekCounter(firstOfNextWeek);
   }
 
-  function prevWeek() {
+  function WeekCounterPrev() {
     const newDate = new Date(weekCounter);
     newDate.setDate(newDate.getDate() - 7);
-    setWeekCounter(startOfWeek(newDate, { weekStartsOn: 1 }));
+    const firstOfPrevWeek = startOfWeek(newDate, { weekStartsOn: 1 });
+    setWeekCounter(firstOfPrevWeek);
   }
 
   function handleHourClick(hour: Date) {
-    setStartHour(createID(hour));
-    setShowModal(true);
-  }
-
-  function createID(currentDate: Date) {
-    const date = currentDate.toLocaleDateString('de-DE');
-    const time = currentDate.toLocaleTimeString('de-DE', {
-      hour: '2-digit',
-      minute: '2-digit',
+    setStartHour({
+      date: hour.toLocaleDateString('de-DE'),
+      hour: hour.toLocaleTimeString('de-DE', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
     });
-    return `${date}-${time}`;
+    setShowModal(true);
   }
 
   return (
@@ -60,11 +58,12 @@ export default function BookingCalendar({ userInfo }: Props) {
         />
       )}
       <RoomSelector roomNumber={roomNumber} setRoomNumber={setRoomNumber} />
-      <WeekSelector nextWeek={nextWeek} prevWeek={prevWeek} />
+      <WeekSelector nextWeek={WeekCounterNext} prevWeek={WeekCounterPrev} />
       <WeekAndHours
         selectedWeek={weekCounter}
         roomNumber={roomNumber}
-        onHourClick={handleHourClick}
+        allBookings={allBookings}
+        handleHourClick={handleHourClick}
       />
     </div>
   );

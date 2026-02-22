@@ -2,11 +2,7 @@
 
 import { prisma } from '@/db';
 import { auth } from '@/auth/authSetup';
-
-export async function getBookings() {
-  const bookings = await prisma.booking.findMany();
-  return bookings;
-}
+import { isSameDay, isWithinInterval } from 'date-fns';
 
 export async function getUserInfo() {
   const session = await auth();
@@ -35,5 +31,33 @@ export async function createBooking(formData: FormData) {
       endTime: new Date(formData.get('endHour') as string),
       userId: Number(session.user?.id || 0),
     },
+  });
+}
+
+export async function getBookings() {
+  return await prisma.booking.findMany({
+    select: {
+      roomId: true,
+      startTime: true,
+      endTime: true,
+    },
+  });
+}
+
+export async function checkBookingForOverlap(
+  roomNumber: number,
+  hour: Date,
+): Promise<boolean> {
+  const allBookings = await prisma.booking.findMany();
+
+  return allBookings.some((booking) => {
+    const start = new Date(booking.startTime);
+    const end = new Date(booking.endTime);
+
+    return (
+      booking.roomId === roomNumber &&
+      isSameDay(start, hour) &&
+      isWithinInterval(hour, { start, end })
+    );
   });
 }

@@ -11,7 +11,7 @@ type UserInfo = {
 type Props = {
   onClose: () => void;
   roomNumber: number;
-  startHour: string;
+  startHour: { date: string; hour: string };
   userInfo: UserInfo;
 };
 
@@ -47,7 +47,7 @@ export default function CreateBookingModal({
 
         <form action={createBooking}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
-          <input type="hidden" name="startHour" value={startHour} />
+          <input type="hidden" name="startHour" value={startHour.hour} />
 
           <input
             type="text"
@@ -58,13 +58,13 @@ export default function CreateBookingModal({
           <input
             type="text"
             className={inputClass}
-            value={startHour ? startHour.split('-')[0] : ''}
+            value={startHour.date}
             readOnly
           />
           <input
             type="text"
             className={inputClass}
-            value={startHour ? startHour.split('-')[1] : ''}
+            value={startHour.hour}
             readOnly
           />
           <input
