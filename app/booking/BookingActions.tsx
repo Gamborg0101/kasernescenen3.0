@@ -20,15 +20,29 @@ export async function getUserInfo() {
 export async function createBooking(formData: FormData) {
   const session = await auth();
 
+  const roomNumber = Number(formData.get('roomNumber'));
+  console.log('This is it ' + roomNumber);
+
+  const date = formData.get('date');
+  const startHour = formData.get('startHour');
+  const endHour = formData.get('endHour');
+
+  const startFormatted = `${date}T${startHour}`;
+  const endFormatted = `${date}T${endHour}`;
+
+  const startTime = new Date(startFormatted);
+  const endTime = new Date(endFormatted);
+  console.log('Her er mit id: ' + session?.user?.id);
+
   if (!session) throw new Error('Ikke logget ind');
 
   await prisma.booking.create({
     data: {
       bookingId: crypto.randomUUID(),
-      roomId: Number(formData.get('roomNumber')),
-      startTime: new Date(formData.get('startHour') as string),
-      endTime: new Date(formData.get('endHour') as string),
-      userId: Number(session.user?.id || 0),
+      roomId: roomNumber,
+      startTime: startTime,
+      endTime: endTime,
+      userId: Number(session.user?.id),
     },
   });
 }

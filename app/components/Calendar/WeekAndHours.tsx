@@ -41,7 +41,6 @@ export default function WeekAndHours({
     });
   }
 
-  console.log(allBookings);
   function createWeek(selectedWeek: Date) {
     const start = startOfWeek(selectedWeek, { weekStartsOn: 1 });
     const end = endOfWeek(selectedWeek, { weekStartsOn: 1 });

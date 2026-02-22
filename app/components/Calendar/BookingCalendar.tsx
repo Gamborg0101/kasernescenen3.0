@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
+import { FormatDateOptions } from 'date-fns';
 
 type Props = {
   userInfo: { name: string; email: string };
@@ -38,11 +39,8 @@ export default function BookingCalendar({ userInfo, allBookings }: Props) {
 
   function handleHourClick(hour: Date) {
     setStartHour({
-      date: hour.toLocaleDateString('de-DE'),
-      hour: hour.toLocaleTimeString('de-DE', {
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
+      date: hour.toISOString().split('T')[0],
+      hour: hour.toISOString().split('T')[1],
     });
     setShowModal(true);
   }

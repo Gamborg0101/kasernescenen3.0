@@ -24,6 +24,9 @@ export default function CreateBookingModal({
   const inputClass =
     'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
 
+  console.log('starhour: ' + startHour.date);
+  console.log('starhour: ' + startHour.hour);
+
   return (
     <div
       className="fixed inset-0 bg-black/60 flex items-center justify-center"
@@ -45,7 +48,10 @@ export default function CreateBookingModal({
           Book et lokale
         </h2>
 
-        <form action={createBooking}>
+        <form
+          action={createBooking}
+          onSubmit={() => console.log('Form submitted!')}
+        >
           <input type="hidden" name="roomNumber" value={roomNumber} />
           <input type="hidden" name="startHour" value={startHour.hour} />
 
@@ -58,6 +64,7 @@ export default function CreateBookingModal({
           <input
             type="text"
             className={inputClass}
+            name="date"
             value={startHour.date}
             readOnly
           />
