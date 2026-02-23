@@ -2,6 +2,7 @@
 
 import { prisma } from '@/db';
 import { auth } from '@/auth/authSetup';
+import { revalidatePath } from 'next/cache';
 
 export async function getUserInfo() {
   const session = await auth();
@@ -45,9 +46,10 @@ export async function createBooking(formData: FormData) {
       roomId: roomNumber,
       startTime: startTime,
       endTime: endTime,
-      userId: 1,
+      userId: Number(session.user.id),
     },
   });
+  revalidatePath('/booking');
 }
 
 export async function getBookings() {

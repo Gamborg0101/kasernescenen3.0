@@ -48,10 +48,7 @@ export default function CreateBookingModal({
           Book et lokale
         </h2>
 
-        <form
-          action={createBooking}
-          onSubmit={() => console.log('Form submitted!')}
-        >
+        <form action={createBooking} onSubmit={() => onClose()}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
           <input type="hidden" name="startHour" value={startHour.hour} />
 
@@ -71,7 +68,9 @@ export default function CreateBookingModal({
           <input
             type="text"
             className={inputClass}
-            value={startHour.hour}
+            value={
+              startHour.hour.split(':')[0] + ':' + startHour.hour.split(':')[1]
+            }
             readOnly
           />
           <input
