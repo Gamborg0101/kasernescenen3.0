@@ -137,7 +137,7 @@ export default function Opret() {
                 </div>
 
                 <button
-                  type="submit" //Mangler funktion
+                  type="submit"
                   className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2"
                 >
                   Opret bruger
