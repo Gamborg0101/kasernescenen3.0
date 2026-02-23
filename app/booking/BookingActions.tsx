@@ -42,7 +42,7 @@ export async function createBooking(formData: FormData) {
       roomId: roomNumber,
       startTime: startTime,
       endTime: endTime,
-      userId: Number(session.user?.id),
+      userId: 1,
     },
   });
 }
