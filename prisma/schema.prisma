@@ -9,6 +9,7 @@ datasource db {
 
 model User {
   id            Int       @id @default(autoincrement())
+  googleId      String    @unique
   firstName     String
   lastName      String
   phone         Int       @unique

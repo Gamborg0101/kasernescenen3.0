@@ -1,3 +1,16 @@
+import { DefaultSession } from 'next-auth';
+//https://authjs.dev/getting-started/typescript
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string;
+      isRegistered: boolean;
+      googleId: string;
+    } & DefaultSession['user'];
+  }
+}
+
 export type UserInfo = {
   name: string;
   email: string;

@@ -8,6 +8,9 @@ export async function getUserInfo() {
 
   if (!session) return { name: '', email: '' };
 
+  console.log(session.user?.name);
+  console.log(session.user?.id);
+
   const user = session.user;
 
   return {

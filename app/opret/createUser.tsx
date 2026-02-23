@@ -2,6 +2,8 @@ import { prisma } from '@/db';
 import { redirect } from 'next/navigation';
 
 export async function createUser(data: {
+  googleId: string;
+
   firstName: string;
   lastName: string;
   phone: number;
@@ -13,5 +15,4 @@ export async function createUser(data: {
   await prisma.user.create({
     data,
   });
-  redirect('/booking');
 }
