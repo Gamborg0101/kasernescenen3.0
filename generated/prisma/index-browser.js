@@ -130,7 +130,6 @@ exports.Prisma.UserScalarFieldEnum = {
   cardNumber: 'cardNumber',
   note: 'note',
   category: 'category',
-  password: 'password',
   roomId: 'roomId'
 };
 

@@ -99,14 +99,21 @@ export default function Opret() {
                     >
                       Studie
                     </label>
-                    <input
-                      type="text"
-                      name="study"
-                      id="study"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Vælg xxx"
-                      required
-                    />
+                    <select
+                      name="studie"
+                      id=""
+                      className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="">Vælg et studie</option>
+                      <option value="musikvidenskab">Musikvidenskab</option>
+                      <option value="dramaturgi">Dramaturgi</option>
+                      <option value="æstetik_og_kultur">
+                        Æstetik og Kultur
+                      </option>
+                      <option value="litteraturhistorie">
+                        Litteraturhistorie
+                      </option>
+                    </select>
                   </div>
 
                   <div className="mt-4">
@@ -121,7 +128,7 @@ export default function Opret() {
                       name="cardNumber"
                       id="cardNumber"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Jensen"
+                      placeholder="123456"
                       required
                     />
                   </div>
@@ -129,7 +136,7 @@ export default function Opret() {
 
                 <button
                   type="submit" //Mangler funktion
-                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2"
                 >
                   Opret bruger
                 </button>

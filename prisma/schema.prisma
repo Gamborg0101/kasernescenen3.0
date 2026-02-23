@@ -17,8 +17,7 @@ model User {
   cardNumber    Int       @unique
   note          String?
   category      String?
-  password      String
-  roomId        Int?  
+  roomId        Int?
   bookings      Booking[]
   room          Room?     @relation(fields: [roomId], references: [id])
 }

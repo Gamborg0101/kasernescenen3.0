@@ -1152,7 +1152,6 @@ export namespace Prisma {
     cardNumber: number | null
     note: string | null
     category: string | null
-    password: string | null
     roomId: number | null
   }
 
@@ -1166,7 +1165,6 @@ export namespace Prisma {
     cardNumber: number | null
     note: string | null
     category: string | null
-    password: string | null
     roomId: number | null
   }
 
@@ -1180,7 +1178,6 @@ export namespace Prisma {
     cardNumber: number
     note: number
     category: number
-    password: number
     roomId: number
     _all: number
   }
@@ -1212,7 +1209,6 @@ export namespace Prisma {
     cardNumber?: true
     note?: true
     category?: true
-    password?: true
     roomId?: true
   }
 
@@ -1226,7 +1222,6 @@ export namespace Prisma {
     cardNumber?: true
     note?: true
     category?: true
-    password?: true
     roomId?: true
   }
 
@@ -1240,7 +1235,6 @@ export namespace Prisma {
     cardNumber?: true
     note?: true
     category?: true
-    password?: true
     roomId?: true
     _all?: true
   }
@@ -1341,7 +1335,6 @@ export namespace Prisma {
     cardNumber: number
     note: string | null
     category: string | null
-    password: string
     roomId: number | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -1374,7 +1367,6 @@ export namespace Prisma {
     cardNumber?: boolean
     note?: boolean
     category?: boolean
-    password?: boolean
     roomId?: boolean
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     room?: boolean | User$roomArgs<ExtArgs>
@@ -1391,7 +1383,6 @@ export namespace Prisma {
     cardNumber?: boolean
     note?: boolean
     category?: boolean
-    password?: boolean
     roomId?: boolean
     room?: boolean | User$roomArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1406,7 +1397,6 @@ export namespace Prisma {
     cardNumber?: boolean
     note?: boolean
     category?: boolean
-    password?: boolean
     roomId?: boolean
     room?: boolean | User$roomArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1421,11 +1411,10 @@ export namespace Prisma {
     cardNumber?: boolean
     note?: boolean
     category?: boolean
-    password?: boolean
     roomId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "phone" | "email" | "studentNumber" | "cardNumber" | "note" | "category" | "password" | "roomId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "phone" | "email" | "studentNumber" | "cardNumber" | "note" | "category" | "roomId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     room?: boolean | User$roomArgs<ExtArgs>
@@ -1454,7 +1443,6 @@ export namespace Prisma {
       cardNumber: number
       note: string | null
       category: string | null
-      password: string
       roomId: number | null
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1890,7 +1878,6 @@ export namespace Prisma {
     readonly cardNumber: FieldRef<"User", 'Int'>
     readonly note: FieldRef<"User", 'String'>
     readonly category: FieldRef<"User", 'String'>
-    readonly password: FieldRef<"User", 'String'>
     readonly roomId: FieldRef<"User", 'Int'>
   }
     
@@ -4617,7 +4604,6 @@ export namespace Prisma {
     cardNumber: 'cardNumber',
     note: 'note',
     category: 'category',
-    password: 'password',
     roomId: 'roomId'
   };
 
@@ -4747,7 +4733,6 @@ export namespace Prisma {
     cardNumber?: IntFilter<"User"> | number
     note?: StringNullableFilter<"User"> | string | null
     category?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
     roomId?: IntNullableFilter<"User"> | number | null
     bookings?: BookingListRelationFilter
     room?: XOR<RoomNullableScalarRelationFilter, RoomWhereInput> | null
@@ -4763,7 +4748,6 @@ export namespace Prisma {
     cardNumber?: SortOrder
     note?: SortOrderInput | SortOrder
     category?: SortOrderInput | SortOrder
-    password?: SortOrder
     roomId?: SortOrderInput | SortOrder
     bookings?: BookingOrderByRelationAggregateInput
     room?: RoomOrderByWithRelationInput
@@ -4782,7 +4766,6 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     note?: StringNullableFilter<"User"> | string | null
     category?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
     roomId?: IntNullableFilter<"User"> | number | null
     bookings?: BookingListRelationFilter
     room?: XOR<RoomNullableScalarRelationFilter, RoomWhereInput> | null
@@ -4798,7 +4781,6 @@ export namespace Prisma {
     cardNumber?: SortOrder
     note?: SortOrderInput | SortOrder
     category?: SortOrderInput | SortOrder
-    password?: SortOrder
     roomId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -4820,7 +4802,6 @@ export namespace Prisma {
     cardNumber?: IntWithAggregatesFilter<"User"> | number
     note?: StringNullableWithAggregatesFilter<"User"> | string | null
     category?: StringNullableWithAggregatesFilter<"User"> | string | null
-    password?: StringWithAggregatesFilter<"User"> | string
     roomId?: IntNullableWithAggregatesFilter<"User"> | number | null
   }
 
@@ -4953,7 +4934,6 @@ export namespace Prisma {
     cardNumber: number
     note?: string | null
     category?: string | null
-    password: string
     bookings?: BookingCreateNestedManyWithoutUserInput
     room?: RoomCreateNestedOneWithoutUsersInput
   }
@@ -4968,7 +4948,6 @@ export namespace Prisma {
     cardNumber: number
     note?: string | null
     category?: string | null
-    password: string
     roomId?: number | null
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
   }
@@ -4982,7 +4961,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
     room?: RoomUpdateOneWithoutUsersNestedInput
   }
@@ -4997,7 +4975,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
     roomId?: NullableIntFieldUpdateOperationsInput | number | null
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -5012,7 +4989,6 @@ export namespace Prisma {
     cardNumber: number
     note?: string | null
     category?: string | null
-    password: string
     roomId?: number | null
   }
 
@@ -5025,7 +5001,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -5038,7 +5013,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
     roomId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -5236,7 +5210,6 @@ export namespace Prisma {
     cardNumber?: SortOrder
     note?: SortOrder
     category?: SortOrder
-    password?: SortOrder
     roomId?: SortOrder
   }
 
@@ -5258,7 +5231,6 @@ export namespace Prisma {
     cardNumber?: SortOrder
     note?: SortOrder
     category?: SortOrder
-    password?: SortOrder
     roomId?: SortOrder
   }
 
@@ -5272,7 +5244,6 @@ export namespace Prisma {
     cardNumber?: SortOrder
     note?: SortOrder
     category?: SortOrder
-    password?: SortOrder
     roomId?: SortOrder
   }
 
@@ -5961,7 +5932,6 @@ export namespace Prisma {
     cardNumber: number
     note?: string | null
     category?: string | null
-    password: string
     bookings?: BookingCreateNestedManyWithoutUserInput
   }
 
@@ -5975,7 +5945,6 @@ export namespace Prisma {
     cardNumber: number
     note?: string | null
     category?: string | null
-    password: string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -6034,7 +6003,6 @@ export namespace Prisma {
     cardNumber?: IntFilter<"User"> | number
     note?: StringNullableFilter<"User"> | string | null
     category?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
     roomId?: IntNullableFilter<"User"> | number | null
   }
 
@@ -6067,7 +6035,6 @@ export namespace Prisma {
     cardNumber: number
     note?: string | null
     category?: string | null
-    password: string
     room?: RoomCreateNestedOneWithoutUsersInput
   }
 
@@ -6081,7 +6048,6 @@ export namespace Prisma {
     cardNumber: number
     note?: string | null
     category?: string | null
-    password: string
     roomId?: number | null
   }
 
@@ -6136,7 +6102,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
     room?: RoomUpdateOneWithoutUsersNestedInput
   }
 
@@ -6150,7 +6115,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
     roomId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -6203,7 +6167,6 @@ export namespace Prisma {
     cardNumber: number
     note?: string | null
     category?: string | null
-    password: string
   }
 
   export type BookingUpdateWithoutRoomInput = {
@@ -6238,7 +6201,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
   }
 
@@ -6252,7 +6214,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -6266,7 +6227,6 @@ export namespace Prisma {
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
     category?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: StringFieldUpdateOperationsInput | string
   }
 
 
