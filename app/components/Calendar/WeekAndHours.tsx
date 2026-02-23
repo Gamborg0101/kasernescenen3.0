@@ -53,20 +53,25 @@ export default function WeekAndHours({
 
   function createHoursForDay(day: Date) {
     const start = new Date(day);
-    start.setHours(0, 0, 0, 0);
+    start.setHours(6, 0, 0, 0);
     const end = new Date(day);
-    end.setHours(23, 45, 0, 0);
+    end.setHours(23, 0, 0, 0);
     return eachMinuteOfInterval({ start, end }, { step: 60 });
   }
 
   function hoursInDay() {
-    const hours = Array.from({ length: 24 }, (_, i) => i);
+    const day = new Date();
+    const hours = createHoursForDay(day);
+
     return (
       <div>
-        <div>&nbsp;</div>
-        {hours.map((item, index) => (
-          <div key={index} className="my-3 px-10 flex justify-center">
-            {item}
+        <div className="h-10">&nbsp;</div>
+        {hours.map((hour) => (
+          <div
+            key={hour.toISOString()}
+            className="h-10 px-4 flex justify-center"
+          >
+            {hour.getHours()}
           </div>
         ))}
       </div>
@@ -85,10 +90,8 @@ export default function WeekAndHours({
             <div
               key={index}
               onClick={() => handleHourClick(hour)}
-              className={`my-3 ${isBooked(hour) ? 'text-red-500 cursor-not-allowed' : 'cursor-pointer'}`}
-            >
-              {hour.toLocaleTimeString('de-DE')}
-            </div>
+              className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${isBooked(hour) ? 'bg-red-500 cursor-not-allowed  hover:bg-red-400' : 'cursor-pointer hover:bg-black'}`}
+            ></div>
           ))}
         </div>
       ))}
