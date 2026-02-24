@@ -9,14 +9,16 @@ export async function getUserInfo() {
 
   if (!session) return { name: '', email: '' };
 
-  console.log(session.user?.name);
-  console.log(session.user?.id);
-
+  // console.log(session.user?.name);
+  // console.log(session.user?.id);
+  // console.log(session);
+  // console.log(session.user.isRegistered);
   const user = session.user;
 
   return {
     name: user?.name || '',
     email: user?.email || '',
+    image: user?.image || '',
     id: user?.id,
   };
 }
@@ -25,7 +27,6 @@ export async function createBooking(formData: FormData) {
   const session = await auth();
 
   const roomNumber = Number(formData.get('roomNumber'));
-  console.log('This is it ' + roomNumber);
 
   const date = formData.get('date');
   const startHour = formData.get('startHour');
@@ -36,7 +37,6 @@ export async function createBooking(formData: FormData) {
 
   const startTime = new Date(startFormatted);
   const endTime = new Date(endFormatted);
-  console.log('Her er mit id: ' + session?.user?.id);
 
   if (!session) throw new Error('Ikke logget ind');
 

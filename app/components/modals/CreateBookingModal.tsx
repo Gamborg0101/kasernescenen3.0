@@ -6,6 +6,7 @@ type UserInfo = {
   name: string;
   email: string;
   id?: string;
+  phone: number;
 };
 
 type Props = {
@@ -23,9 +24,6 @@ export default function CreateBookingModal({
 }: Props) {
   const inputClass =
     'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
-
-  console.log('starhour: ' + startHour.date);
-  console.log('starhour: ' + startHour.hour);
 
   return (
     <div
@@ -60,14 +58,14 @@ export default function CreateBookingModal({
           />
           <input
             type="text"
-            className={inputClass}
+            className={inputClass + ' bg-gray-300'}
             name="date"
             value={startHour.date}
             readOnly
           />
           <input
             type="text"
-            className={inputClass}
+            className={inputClass + ' bg-gray-300'}
             value={
               startHour.hour.split(':')[0] + ':' + startHour.hour.split(':')[1]
             }
@@ -81,22 +79,17 @@ export default function CreateBookingModal({
           />
           <input
             type="text"
-            className={inputClass}
+            className={inputClass + ' bg-gray-300'}
             value={userInfo.name}
             readOnly
           />
           <input
             type="text"
-            className={inputClass}
+            className={inputClass + ' bg-gray-300'}
             value={userInfo.email}
             readOnly
           />
-          <input type="phone" placeholder="telefon" className={inputClass} />
-          <select name="afdelinger" className={inputClass}>
-            <option value="æk">Æstetik og kultur</option>
-            <option value="musikvidenskab">Musikvidenskab</option>
-            <option value="kunsthistorie">Kunsthistorie</option>
-          </select>
+
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2"
