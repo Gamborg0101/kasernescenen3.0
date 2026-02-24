@@ -1147,6 +1147,7 @@ export namespace Prisma {
     googleId: string | null
     firstName: string | null
     lastName: string | null
+    role: string | null
     phone: number | null
     email: string | null
     studentNumber: number | null
@@ -1161,6 +1162,7 @@ export namespace Prisma {
     googleId: string | null
     firstName: string | null
     lastName: string | null
+    role: string | null
     phone: number | null
     email: string | null
     studentNumber: number | null
@@ -1175,6 +1177,7 @@ export namespace Prisma {
     googleId: number
     firstName: number
     lastName: number
+    role: number
     phone: number
     email: number
     studentNumber: number
@@ -1207,6 +1210,7 @@ export namespace Prisma {
     googleId?: true
     firstName?: true
     lastName?: true
+    role?: true
     phone?: true
     email?: true
     studentNumber?: true
@@ -1221,6 +1225,7 @@ export namespace Prisma {
     googleId?: true
     firstName?: true
     lastName?: true
+    role?: true
     phone?: true
     email?: true
     studentNumber?: true
@@ -1235,6 +1240,7 @@ export namespace Prisma {
     googleId?: true
     firstName?: true
     lastName?: true
+    role?: true
     phone?: true
     email?: true
     studentNumber?: true
@@ -1336,6 +1342,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role: string
     phone: number
     email: string
     studentNumber: number
@@ -1369,6 +1376,7 @@ export namespace Prisma {
     googleId?: boolean
     firstName?: boolean
     lastName?: boolean
+    role?: boolean
     phone?: boolean
     email?: boolean
     studentNumber?: boolean
@@ -1386,6 +1394,7 @@ export namespace Prisma {
     googleId?: boolean
     firstName?: boolean
     lastName?: boolean
+    role?: boolean
     phone?: boolean
     email?: boolean
     studentNumber?: boolean
@@ -1401,6 +1410,7 @@ export namespace Prisma {
     googleId?: boolean
     firstName?: boolean
     lastName?: boolean
+    role?: boolean
     phone?: boolean
     email?: boolean
     studentNumber?: boolean
@@ -1416,6 +1426,7 @@ export namespace Prisma {
     googleId?: boolean
     firstName?: boolean
     lastName?: boolean
+    role?: boolean
     phone?: boolean
     email?: boolean
     studentNumber?: boolean
@@ -1425,7 +1436,7 @@ export namespace Prisma {
     roomId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "googleId" | "firstName" | "lastName" | "phone" | "email" | "studentNumber" | "cardNumber" | "note" | "category" | "roomId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "googleId" | "firstName" | "lastName" | "role" | "phone" | "email" | "studentNumber" | "cardNumber" | "note" | "category" | "roomId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     room?: boolean | User$roomArgs<ExtArgs>
@@ -1449,6 +1460,7 @@ export namespace Prisma {
       googleId: string
       firstName: string
       lastName: string
+      role: string
       phone: number
       email: string
       studentNumber: number
@@ -1885,6 +1897,7 @@ export namespace Prisma {
     readonly googleId: FieldRef<"User", 'String'>
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'Int'>
     readonly email: FieldRef<"User", 'String'>
     readonly studentNumber: FieldRef<"User", 'Int'>
@@ -4612,6 +4625,7 @@ export namespace Prisma {
     googleId: 'googleId',
     firstName: 'firstName',
     lastName: 'lastName',
+    role: 'role',
     phone: 'phone',
     email: 'email',
     studentNumber: 'studentNumber',
@@ -4742,6 +4756,7 @@ export namespace Prisma {
     googleId?: StringFilter<"User"> | string
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     phone?: IntFilter<"User"> | number
     email?: StringFilter<"User"> | string
     studentNumber?: IntFilter<"User"> | number
@@ -4758,6 +4773,7 @@ export namespace Prisma {
     googleId?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
+    role?: SortOrder
     phone?: SortOrder
     email?: SortOrder
     studentNumber?: SortOrder
@@ -4781,6 +4797,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     note?: StringNullableFilter<"User"> | string | null
     category?: StringNullableFilter<"User"> | string | null
     roomId?: IntNullableFilter<"User"> | number | null
@@ -4793,6 +4810,7 @@ export namespace Prisma {
     googleId?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
+    role?: SortOrder
     phone?: SortOrder
     email?: SortOrder
     studentNumber?: SortOrder
@@ -4815,6 +4833,7 @@ export namespace Prisma {
     googleId?: StringWithAggregatesFilter<"User"> | string
     firstName?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
+    role?: StringWithAggregatesFilter<"User"> | string
     phone?: IntWithAggregatesFilter<"User"> | number
     email?: StringWithAggregatesFilter<"User"> | string
     studentNumber?: IntWithAggregatesFilter<"User"> | number
@@ -4948,6 +4967,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role?: string
     phone: number
     email: string
     studentNumber: number
@@ -4963,6 +4983,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role?: string
     phone: number
     email: string
     studentNumber: number
@@ -4977,6 +4998,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -4992,6 +5014,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -5007,6 +5030,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role?: string
     phone: number
     email: string
     studentNumber: number
@@ -5020,6 +5044,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -5033,6 +5058,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -5231,6 +5257,7 @@ export namespace Prisma {
     googleId?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
+    role?: SortOrder
     phone?: SortOrder
     email?: SortOrder
     studentNumber?: SortOrder
@@ -5253,6 +5280,7 @@ export namespace Prisma {
     googleId?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
+    role?: SortOrder
     phone?: SortOrder
     email?: SortOrder
     studentNumber?: SortOrder
@@ -5267,6 +5295,7 @@ export namespace Prisma {
     googleId?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
+    role?: SortOrder
     phone?: SortOrder
     email?: SortOrder
     studentNumber?: SortOrder
@@ -5956,6 +5985,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role?: string
     phone: number
     email: string
     studentNumber: number
@@ -5970,6 +6000,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role?: string
     phone: number
     email: string
     studentNumber: number
@@ -6029,6 +6060,7 @@ export namespace Prisma {
     googleId?: StringFilter<"User"> | string
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     phone?: IntFilter<"User"> | number
     email?: StringFilter<"User"> | string
     studentNumber?: IntFilter<"User"> | number
@@ -6062,6 +6094,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role?: string
     phone: number
     email: string
     studentNumber: number
@@ -6076,6 +6109,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role?: string
     phone: number
     email: string
     studentNumber: number
@@ -6131,6 +6165,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -6145,6 +6180,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -6198,6 +6234,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
+    role?: string
     phone: number
     email: string
     studentNumber: number
@@ -6233,6 +6270,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -6247,6 +6285,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -6261,6 +6300,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number

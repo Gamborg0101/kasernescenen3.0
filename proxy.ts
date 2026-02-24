@@ -1,20 +1,20 @@
 import { auth } from '@/auth/authSetup';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
+import { redirect } from 'next/navigation';
+import { NodeNextResponse } from 'next/dist/server/base-http/node';
 
-export default auth((req) => {
-  const session = req.auth;
-  const isLoggedIn = !!session;
-  const isRegistered = session?.user?.isRegistered;
-  const path = req.nextUrl.pathname;
+export default auth((request) => {
+  const session = request.auth;
+  const pathname = request.nextUrl.pathname;
 
   // Ikke logget ind → send til login
-  if (!isLoggedIn) {
-    return NextResponse.redirect(new URL('/login', req.url));
+  if (!session) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   // Logget ind men ikke registreret → send til registrering
-  if (!isRegistered && path !== '/register') {
-    return NextResponse.redirect(new URL('/register', req.url));
+  if (!session.user.isRegistered && pathname !== '/register') {
+    return NextResponse.redirect(new URL('register', request.url));
   }
 
   return NextResponse.next();

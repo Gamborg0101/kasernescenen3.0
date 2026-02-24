@@ -12,6 +12,7 @@ model User {
   googleId      String    @unique
   firstName     String
   lastName      String
+  role          String    @default("student")
   phone         Int       @unique
   email         String    @unique
   studentNumber Int       @unique

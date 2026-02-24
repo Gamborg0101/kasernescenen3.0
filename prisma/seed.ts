@@ -11,11 +11,26 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
+  await prisma.user.create({
+    data: {
+      firstName: 'Casper',
+      lastName: 'G',
+      googleId: faker.string.uuid(),
+      phone: 12345678,
+      role: 'admin',
+      studentNumber: 20160012,
+      cardNumber: 123456,
+      email: 'casperGamborg@hotmail.com',
+      note: faker.lorem.sentence(),
+      category: 'musikvidenskab',
+    },
+  });
   for (let i = 0; i < 10; i++) {
     const user = await prisma.user.create({
       data: {
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),
+        role: 'student',
         googleId: faker.string.uuid(),
         phone: faker.number.int({ min: 100000000, max: 999999999 }),
         studentNumber: faker.number.int({ min: 10000000, max: 99999999 }),

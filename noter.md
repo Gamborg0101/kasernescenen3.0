@@ -16,3 +16,4 @@ Stack:
 Authentication:
 
 - Auth.js
+  user, moderator and admin

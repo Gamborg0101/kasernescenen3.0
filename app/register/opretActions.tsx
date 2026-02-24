@@ -11,6 +11,7 @@ export async function OpretActions(formData: FormData) {
     googleId: googleId,
     firstName: formData.get('firstName') as string,
     lastName: formData.get('lastName') as string,
+    role: 'student',
     phone: Number(formData.get('phone')),
     email: formData.get('email') as string,
     studentNumber: Number(formData.get('studentNumber')),

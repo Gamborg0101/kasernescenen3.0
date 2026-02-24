@@ -1,11 +1,11 @@
 import { prisma } from '@/db';
-import { redirect } from 'next/navigation';
 
 export async function createUser(data: {
   googleId: string;
 
   firstName: string;
   lastName: string;
+  role: string;
   phone: number;
   email: string;
   studentNumber: number;
