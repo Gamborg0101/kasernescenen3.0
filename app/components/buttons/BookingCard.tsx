@@ -5,6 +5,17 @@ import { deleteBooking } from '@/app/booking/BookingActions';
 
 export default function BookingCard({ item }: { item: BookingCardProps }) {
   return (
+    //Fornavn
+    //Mail
+    //Studie
+    //Studienummer
+    //Rolle
+    //3 næste bookinger
+    //.  Start
+    //.  Slut
+    //.  Lokale
+    //.  <btn> Slet booking </btn>
+
     <div className="flex flex-col h-full p-4 bg-amber-500  text-sm">
       <div className="h-full">
         {`Tidspunkt: ${item.startTime.toLocaleTimeString('da-DK', {

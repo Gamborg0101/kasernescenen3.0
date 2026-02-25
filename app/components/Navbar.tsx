@@ -20,7 +20,6 @@ export async function Navbar() {
       <ul className="flex font-semibold gap-8 pr-10">
         {session ? (
           <>
-            <NavItem text="Forside" href="/" />
             <NavItem text="Booking" href="/booking" />
             <NavItem text="Min side" href="/userpage" />
 
