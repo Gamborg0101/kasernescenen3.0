@@ -1,5 +1,4 @@
 import { signIn } from '@/auth/authSetup';
-import { SUPPORTED_TEST_RUNNERS_LIST } from 'next/dist/cli/next-test';
 import Image from 'next/image';
 
 export function Login() {
@@ -57,7 +56,7 @@ export function Login() {
                     key={who}
                     className="flex gap-4 items-start py-3 border-b border-stone-100"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-stone-400 mt-2 shrink-0"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-stone-400 mt-2 shrink-0" />
                     <div>
                       <p className="text-stone-800 font-medium text-sm">
                         {who}

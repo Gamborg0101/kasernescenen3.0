@@ -33,3 +33,12 @@ export type WeekProps = {
   allBookings: allBookings;
   handleHourClick: (hour: Date) => void;
 };
+
+export type BookingCardProps = {
+  id: number;
+  roomId: number;
+  bookingId: string;
+  userId: number;
+  startTime: Date;
+  endTime: Date;
+};

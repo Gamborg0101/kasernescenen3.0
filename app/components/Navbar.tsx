@@ -4,6 +4,7 @@ import { prisma } from '@/db';
 export async function Navbar() {
   const session = await auth();
 
+  //Skal bruges til at lave role check
   const userRole = session
     ? await prisma.user.findFirst({
         where: {
@@ -21,26 +22,25 @@ export async function Navbar() {
           <>
             <NavItem text="Forside" href="/" />
             <NavItem text="Booking" href="/booking" />
+            <NavItem text="Min side" href="/userpage" />
+
+            <form
+              action={async () => {
+                'use server';
+                await signOut();
+              }}
+            >
+              <NavItem text="Log ud" href="/login" type="submit" />
+            </form>
           </>
         ) : (
-          session && <NavItem text="Opret" href="/opret" /> &&
-          userRole?.role === 'admin' && (
+          !session && (
             <>
-              <NavItem text="Brugere" href={'/brugere'} />
+              <NavItem text="Opret" href="/opret" />
+              <NavItem text="Brugere" href="/brugere" />
+              <NavItem text="Log ind" href="/login" />
             </>
           )
-        )}
-        {session?.user ? (
-          <form
-            action={async () => {
-              'use server';
-              await signOut();
-            }}
-          >
-            <NavItem text="Log ud" href="/login" type="submit" />
-          </form>
-        ) : (
-          <NavItem text="Log ind" href="/login" />
         )}
       </ul>
     </nav>

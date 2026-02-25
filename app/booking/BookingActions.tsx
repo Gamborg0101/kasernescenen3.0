@@ -9,10 +9,6 @@ export async function getUserInfo() {
 
   if (!session) return { name: '', email: '' };
 
-  // console.log(session.user?.name);
-  // console.log(session.user?.id);
-  // console.log(session);
-  // console.log(session.user.isRegistered);
   const user = session.user;
 
   return {
@@ -60,4 +56,14 @@ export async function getBookings() {
       endTime: true,
     },
   });
+}
+
+export async function deleteBooking(roomIdArg: number, bookingIdArg: number) {
+  await prisma.booking.delete({
+    where: {
+      roomId: roomIdArg,
+      id: bookingIdArg,
+    },
+  });
+  revalidatePath('/userpage');
 }
