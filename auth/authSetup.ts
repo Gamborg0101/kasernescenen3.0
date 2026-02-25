@@ -16,7 +16,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const dbUser = await prisma.user.findUnique({
         where: { googleId: token.googleId as string },
       });
-
       session.user.id = dbUser?.id.toString() ?? '';
       session.user.isRegistered = !!dbUser;
       session.user.googleId = token.googleId as string;
