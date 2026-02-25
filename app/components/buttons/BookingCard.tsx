@@ -5,15 +5,15 @@ import { deleteBooking } from '@/app/booking/BookingActions';
 
 export default function BookingCard({ item }: { item: BookingCardProps }) {
   return (
-    <div className="bg-amber-500 p-1 w-30 text-sm">
-      <div>
+    <div className="flex flex-col h-full p-4 bg-amber-500  text-sm">
+      <div className="h-full">
         {`Tidspunkt: ${item.startTime.toLocaleTimeString('da-DK', {
           hour: '2-digit',
           minute: '2-digit',
         })} - ${item.endTime.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })} - ${item.startTime.toLocaleDateString('da-DK', { day: '2-digit', month: '2-digit' })}`}
 
         <button
-          className="bg-red-400 hover:bg-red-300 w-full h-full"
+          className="bg-red-400 hover:bg-red-300 w-full"
           onClick={() => deleteBooking(item.roomId, item.id)}
         >
           Slet booking

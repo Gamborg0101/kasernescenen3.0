@@ -3,7 +3,6 @@ import { prisma } from '@/db';
 import Image from 'next/image';
 import BookingCard from '../components/buttons/BookingCard';
 
-
 export default async function UserPage() {
   const session = await auth();
 
@@ -27,34 +26,38 @@ export default async function UserPage() {
   console.log(nextBooking);
 
   return (
-    <div className=" flex justify-center center-items bg-stone-50 font-serif py-52">
-      <div className="w-106 h-106 sticky top-8 bg-white border border-stone-200 rounded-sm p-8 shadow-sm ">
-        <h3 className="font-serif text-2xl ">Brugerinformation</h3>
-        <Image
-          src={session.user?.image || ''}
-          alt={`${user.name}`}
-          width={96}
-          height={96}
-          className="rounded-full my-5"
-        />
-        <p>{`${userFromDb?.firstName} ${userFromDb?.lastName}`}</p>
-        <p>{userFromDb?.email}</p>
-        <p>{userFromDb?.category}</p>
-        <p>{userFromDb?.studentNumber}</p>
-
-        {/* Following bookings */}
-        <div>
+    <div className="flex justify-center center-items bg-stone-50 font-serif py-52">
+      <div className="grid grid-2-rows w-106 h-116 sticky top-8 bg-white border border-stone-200 rounded-sm shadow-sm ">
+        <div className="m-4">
+          <h3 className="font-serif text-2xl ">Brugerinformation</h3>
+          <Image
+            src={session.user?.image || ''}
+            alt={`${user.name}`}
+            width={96}
+            height={96}
+            className="rounded-full my-5"
+          />
+          <p>{`${userFromDb?.firstName} ${userFromDb?.lastName}`}</p>
+          <p>{userFromDb?.email}</p>
+          <p>{userFromDb?.category}</p>
+          <p>{userFromDb?.studentNumber}</p>
+          <p>{userFromDb?.role}</p>
           <h3>3 næste bookinger:</h3>
-          <div className="grid grid-cols-3 gap-4 ">
-            {nextBooking.map((item, index) =>
-              index < 3 ? (
-                <div key={index}>
-                  <BookingCard item={item} />
-                </div>
-              ) : (
-                ''
-              ),
-            )}
+        </div>
+        {/* Following bookings */}
+        <div className="flex flex-col-reverse  ">
+          <div className="">
+            <div className="grid grid-cols-3  ">
+              {nextBooking.map((item, index) =>
+                index < 3 ? (
+                  <div key={index} className="border">
+                    <BookingCard item={item} />
+                  </div>
+                ) : (
+                  ''
+                ),
+              )}
+            </div>
           </div>
         </div>
       </div>
