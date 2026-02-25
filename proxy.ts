@@ -1,5 +1,5 @@
 import { auth } from '@/auth/authSetup';
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export default auth((request) => {
   const session = request.auth;
