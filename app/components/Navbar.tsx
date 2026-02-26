@@ -1,5 +1,6 @@
 import { auth, signOut } from '@/auth/authSetup';
 import { prisma } from '@/db';
+import LogoutBtn from './buttons/LogoutBtn';
 
 export async function Navbar() {
   const session = await auth();
@@ -20,24 +21,18 @@ export async function Navbar() {
       <ul className="flex font-semibold gap-8 pr-10">
         {session ? (
           <>
-            <NavItem text="Booking" href="/booking" />
             <NavItem text="Min side" href="/userpage" />
-
-            <form
-              action={async () => {
-                'use server';
-                await signOut();
-              }}
-            >
-              <NavItem text="Log ud" href="/login" type="submit" />
-            </form>
+            <NavItem text="Booking" href="/booking" />
+            <LogoutBtn />
+            {userRole?.role === 'admin' && (
+              <NavItem text="Brugere" href="/brugere" />
+            )}
           </>
         ) : (
           !session && (
             <>
               <NavItem text="Opret" href="/opret" />
-              <NavItem text="Brugere" href="/brugere" />
-              <NavItem text="Log ind" href="/login" />
+              <NavItem text="Log ind" href="/" />
             </>
           )
         )}
@@ -55,7 +50,7 @@ function Logo() {
   );
 }
 
-function NavItem({
+export function NavItem({
   text,
   href,
   type,
