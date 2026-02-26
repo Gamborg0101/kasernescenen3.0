@@ -49,6 +49,7 @@ export async function createBooking(prevState: unknown, formData: FormData) {
     },
   });
   revalidatePath('/booking');
+  return { success: true, error: null };
 }
 
 export async function getBookings() {
