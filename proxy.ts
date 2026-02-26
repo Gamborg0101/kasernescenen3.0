@@ -1,5 +1,6 @@
 import { auth } from '@/auth/authSetup';
 import { NextResponse } from 'next/server';
+import { prisma } from '@/db';
 
 export default auth((request) => {
   const session = request.auth;

@@ -39,6 +39,7 @@ export default function BrugerTabel({ users }: { users: User[] }) {
             <th className="border border-gray-300 px-4 py-2">Kortnummer</th>
             <th className="border border-gray-300 px-4 py-2">Note</th>
             <th className="border border-gray-300 px-4 py-2">Kategori</th>
+            <th className="border border-gray-300 px-4 py-2">Rolle</th>
             <th className="border border-gray-300 px-4 py-2">Knap 1</th>
           </tr>
         </thead>
