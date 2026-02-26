@@ -25,6 +25,7 @@ export async function UpdateUser(
     studentNumber?: number;
     cardNumber?: number;
     category?: string;
+    role: string;
   },
 ) {
   await prisma.user.update({

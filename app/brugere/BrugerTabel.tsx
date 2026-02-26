@@ -13,6 +13,7 @@ export type User = {
   cardNumber: number;
   note: string | null;
   category: string | null;
+  role: string;
 };
 
 export default function BrugerTabel({ users }: { users: User[] }) {
@@ -62,6 +63,7 @@ export default function BrugerTabel({ users }: { users: User[] }) {
               <td className="border border-gray-300 px-4 py-2">
                 {user.category}
               </td>
+              <td className="border border-gray-300 px-4 py-2">{user.role}</td>
               <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"

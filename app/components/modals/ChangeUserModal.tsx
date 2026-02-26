@@ -16,6 +16,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
   const [studentNumber, setStudentNumber] = useState(user.studentNumber);
   const [cardNumber, setCardNumber] = useState(user.cardNumber);
   const [category, setCategory] = useState(user.category);
+  const [role, setRole] = useState(user.role);
   const router = useRouter();
 
   function SetClassName() {
@@ -33,6 +34,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
       studentNumber: studentNumber ?? undefined,
       cardNumber: cardNumber ?? undefined,
       category: category ?? undefined,
+      role: role ?? undefined,
     });
     router.refresh();
     onClose();
@@ -147,6 +149,22 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   <option value="musikvidenskab">Musikvidenskab</option>
                   <option value="kunsthistorie">Kunsthistorie</option>
                 </select>
+
+                <label htmlFor="">Rolle</label>
+                <select
+                  name="role"
+                  id="role"
+                  className={SetClassName()}
+                  onChange={(e) => {
+                    setRole(e.target.value);
+                  }}
+                >
+                  <option value="">Vælg en rolle</option>
+                  <option value="studerende">Studerende</option>
+                  <option value="superbruger">Superbruger</option>
+                  <option value="admin">Admin</option>
+                </select>
+
                 <input type="phone" />
                 <button
                   type="submit"
