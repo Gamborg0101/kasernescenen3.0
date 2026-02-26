@@ -19,8 +19,9 @@ export async function getUserInfo() {
   };
 }
 
-export async function createBooking(formData: FormData) {
+export async function createBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
+  if (!session) throw new Error('Ikke logget ind');
 
   const roomNumber = Number(formData.get('roomNumber'));
 
@@ -34,7 +35,9 @@ export async function createBooking(formData: FormData) {
   const startTime = new Date(startFormatted);
   const endTime = new Date(endFormatted);
 
-  if (!session) throw new Error('Ikke logget ind');
+  if (startTime > endTime) {
+    return { success: false, error: 'Starttiden må ikke være efter sluttid' };
+  }
 
   await prisma.booking.create({
     data: {
