@@ -35,8 +35,38 @@ export async function createBooking(prevState: unknown, formData: FormData) {
   const startTime = new Date(startFormatted);
   const endTime = new Date(endFormatted);
 
+  if (!endHour) {
+    return { success: false, error: 'Sluttid er påkrævet' };
+  }
+
   if (startTime > endTime) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
+  }
+
+  if (startTime < new Date()) {
+    return { success: false, error: 'Du kan ikke booke i fortiden' };
+  }
+
+  const conflictBooking = await prisma.booking.findFirst({
+    where: {
+      roomId: roomNumber,
+      OR: [
+        {
+          startTime: { lte: startTime },
+          endTime: { gte: startTime },
+        },
+        {
+          startTime: { lte: endTime },
+          endTime: { gte: endTime },
+        },
+      ],
+    },
+  });
+  if (conflictBooking) {
+    return {
+      success: false,
+      error: 'Lokalet er allerede booket i det valgte tidsrum.',
+    };
   }
 
   await prisma.booking.create({
