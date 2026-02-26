@@ -8,7 +8,7 @@ import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
 
 type Props = {
-  userInfo: { name: string; email: string };
+  userInfo: { name: string; email: string; phone: number };
   allBookings: {
     endTime: Date;
     roomId: number;
