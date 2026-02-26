@@ -7,13 +7,13 @@ import { redirect } from 'next/navigation';
 
 // Denne funktion henter alle brugere fra databasen.
 export default async function Page(): Promise<JSX.Element> {
-  const users = await prisma.user.findMany();
-
   const session = await auth();
 
   if (session?.user.role !== 'admin') {
     redirect('/booking');
   }
+
+  const users = await prisma.user.findMany();
 
   return <BrugerTabel users={users} />;
 }
