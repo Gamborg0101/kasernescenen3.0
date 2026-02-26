@@ -1,18 +1,10 @@
-import { auth, signOut } from '@/auth/authSetup';
-import { prisma } from '@/db';
+import { auth } from '@/auth/authSetup';
 import LogoutBtn from './buttons/LogoutBtn';
 
 export async function Navbar() {
   const session = await auth();
 
   //Skal bruges til at lave role check
-  const userRole = session
-    ? await prisma.user.findFirst({
-        where: {
-          id: Number(session?.user.id),
-        },
-      })
-    : null;
 
   return (
     <nav className="flex justify-between h-16 bg-amber-200 items-center">
@@ -24,7 +16,7 @@ export async function Navbar() {
             <NavItem text="Min side" href="/userpage" />
             <NavItem text="Booking" href="/booking" />
             <LogoutBtn />
-            {userRole?.role === 'admin' && (
+            {session?.user?.role === 'admin' && (
               <NavItem text="Brugere" href="/brugere" />
             )}
           </>

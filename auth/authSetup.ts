@@ -3,6 +3,9 @@ import Google from 'next-auth/providers/google';
 import { prisma } from '@/db';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
     Google({
       profile(profile) {
@@ -11,15 +14,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session, user }) {
+    async jwt({ token, profile }) {
+      if (profile) {
+        token.googleId = profile.sub;
+      }
+      return token;
+    },
+    async session({ session, token }) {
       const dbUser = await prisma.user.findUnique({
-        where: { googleId: user.id },
+        where: { googleId: token.googleId as string },
       });
 
       session.user.id = dbUser?.id.toString() ?? '';
       session.user.role = dbUser?.role ?? 'student';
       session.user.isRegistered = !!dbUser;
-      session.user.googleId = user.id;
+      session.user.googleId = token.googleId as string;
       return session;
     },
   },
