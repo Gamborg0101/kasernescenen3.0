@@ -47,7 +47,6 @@ export default async function UserPage() {
           <p>{userFromDb?.category}</p>
           <p>{userFromDb?.studentNumber}</p>
           <p>{userFromDb?.role}</p>
-          <h3>3 næste bookinger:</h3>
         </div>
         {/* Following bookings */}
         <div className="flex flex-col-reverse  ">

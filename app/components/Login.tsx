@@ -1,7 +1,10 @@
 import { signIn } from '@/auth/authSetup';
 import Image from 'next/image';
+import { auth } from '@/auth/authSetup';
 
-export function Login() {
+export async function Login() {
+  const session = await auth();
+
   const studensAndRooms = [
     {
       who: 'Musikvidenskabsstuderende',
@@ -135,44 +138,46 @@ export function Login() {
           </div>
 
           {/* Right: login card */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-8 bg-white border border-stone-200 rounded-sm p-8 shadow-sm">
-              <h2 className="text-xs tracking-widest uppercase text-stone-400 mb-6 pb-2 border-b border-stone-100">
-                Log ind
-              </h2>
-              <p className="text-sm text-stone-500 mb-8 leading-relaxed">
-                Brug din AU-Google-konto for at få adgang til
-                reservationssystemet.
-              </p>
+          {!session && (
+            <div className="lg:col-span-1">
+              <div className="sticky top-8 bg-white border border-stone-200 rounded-sm p-8 shadow-sm">
+                <h2 className="text-xs tracking-widest uppercase text-stone-400 mb-6 pb-2 border-b border-stone-100">
+                  Log ind
+                </h2>
+                <p className="text-sm text-stone-500 mb-8 leading-relaxed">
+                  Brug din AU-Google-konto for at få adgang til
+                  reservationssystemet.
+                </p>
 
-              <form
-                action={async () => {
-                  'use server';
-                  await signIn('google');
-                }}
-              >
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-stone-200 bg-white hover:bg-stone-50 hover:border-stone-300 transition-colors duration-150 text-sm text-stone-700 rounded-sm"
+                <form
+                  action={async () => {
+                    'use server';
+                    await signIn('google');
+                  }}
                 >
-                  <Image
-                    src="https://www.svgrepo.com/show/475656/google-color.svg"
-                    loading="lazy"
-                    alt="Google logo"
-                    width={18}
-                    height={18}
-                  />
-                  <span>Fortsæt med Google</span>
-                </button>
-              </form>
+                  <button
+                    type="submit"
+                    className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-stone-200 bg-white hover:bg-stone-50 hover:border-stone-300 transition-colors duration-150 text-sm text-stone-700 rounded-sm"
+                  >
+                    <Image
+                      src="https://www.svgrepo.com/show/475656/google-color.svg"
+                      loading="lazy"
+                      alt="Google logo"
+                      width={18}
+                      height={18}
+                    />
+                    <span>Fortsæt med Google</span>
+                  </button>
+                </form>
 
-              <p className="text-xs text-stone-400 mt-6 leading-relaxed">
-                Kun studerende og ansatte med en{' '}
-                <span className="text-stone-500">@au.dk</span>-konto kan logge
-                ind.
-              </p>
+                <p className="text-xs text-stone-400 mt-6 leading-relaxed">
+                  Kun studerende og ansatte med en{' '}
+                  <span className="text-stone-500">@au.dk</span>-konto kan logge
+                  ind.
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
