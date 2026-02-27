@@ -5,25 +5,14 @@ import { deleteBooking } from '@/app/booking/BookingActions';
 
 export default function BookingCard({ item }: { item: BookingCardProps }) {
   return (
-    //Fornavn
-    //Mail
-    //Studie
-    //Studienummer
-    //Rolle
-    //3 næste bookinger
-    //.  Start
-    //.  Slut
-    //.  Lokale
-    //.  <btn> Slet booking </btn>
-
-    <div className="flex flex-col h-full p-4 bg-amber-500  text-xs">
-      <div className="h-full">
-        <p>Booking: </p>
-
+    <div className="h-full bg-stone-200 text-sm flex flex-col place-content-between ">
+      <div className="p-1 text-gray-500">
         {item.startTime.toLocaleDateString('da-DK', {
           day: '2-digit',
-          month: '2-digit',
+          month: 'short',
         })}
+      </div>
+      <div className="font-bold p-1">
         {` ${item.startTime.toLocaleTimeString('da-DK', {
           hour: '2-digit',
           minute: '2-digit',
@@ -31,14 +20,13 @@ export default function BookingCard({ item }: { item: BookingCardProps }) {
           hour: '2-digit',
           minute: '2-digit',
         })}`}
-        <br />
-        <button
-          className="bg-red-400 hover:bg-red-300 w-full"
-          onClick={() => deleteBooking(item.roomId, item.id)}
-        >
-          Slet booking
-        </button>
       </div>
+      <button
+        className="bg-red-200 hover:bg-red-100"
+        onClick={() => deleteBooking(item.roomId, item.id)}
+      >
+        Slet booking
+      </button>
     </div>
   );
 }

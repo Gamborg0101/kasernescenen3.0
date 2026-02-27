@@ -15,6 +15,7 @@ export async function Navbar() {
           <>
             <NavItem text="Min side" href="/userpage" />
             <NavItem text="Booking" href="/booking" />
+            <NavItem text="Info" href="/" />
             <LogoutBtn />
             {session?.user?.role === 'admin' && (
               <NavItem text="Brugere" href="/brugere" />
