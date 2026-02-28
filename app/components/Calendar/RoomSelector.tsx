@@ -5,7 +5,7 @@ type Props = {
 
 export default function RoomSelector({ roomNumber, setRoomNumber }: Props) {
   return (
-    <div className="w-64">
+    <div className="w-64 flex justify-center items-center">
       <select
         id="room"
         name="room"

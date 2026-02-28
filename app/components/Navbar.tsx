@@ -7,7 +7,7 @@ export async function Navbar() {
   //Skal bruges til at lave role check
 
   return (
-    <nav className="flex justify-between h-16 bg-amber-200 items-center">
+    <nav className="flex justify-between h-16 bg-[rgb(55,160,203)]  items-center">
       <Logo />
 
       <ul className="flex font-semibold gap-8 pr-10">

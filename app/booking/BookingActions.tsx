@@ -39,7 +39,7 @@ export async function createBooking(prevState: unknown, formData: FormData) {
     return { success: false, error: 'Sluttid er påkrævet' };
   }
 
-  if (startTime > endTime) {
+  if (startTime >= endTime) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
   }
 
@@ -50,16 +50,8 @@ export async function createBooking(prevState: unknown, formData: FormData) {
   const conflictBooking = await prisma.booking.findFirst({
     where: {
       roomId: roomNumber,
-      OR: [
-        {
-          startTime: { lte: startTime },
-          endTime: { gte: startTime },
-        },
-        {
-          startTime: { lte: endTime },
-          endTime: { gte: endTime },
-        },
-      ],
+      startTime: { lt: endTime },
+      endTime: { gt: startTime },
     },
   });
   if (conflictBooking) {
@@ -93,11 +85,20 @@ export async function getBookings() {
 }
 
 export async function deleteBooking(roomIdArg: number, bookingIdArg: number) {
-  await prisma.booking.delete({
-    where: {
-      roomId: roomIdArg,
-      id: bookingIdArg,
-    },
-  });
-  revalidatePath('/userpage');
+  const session = await auth();
+
+  if (!session) {
+    return 'Du er ikke logget ind';
+  }
+
+  if (session) {
+    await prisma.booking.delete({
+      where: {
+        userId: Number(session.user.id),
+        roomId: roomIdArg,
+        id: bookingIdArg,
+      },
+    });
+    revalidatePath('/userpage');
+  }
 }
