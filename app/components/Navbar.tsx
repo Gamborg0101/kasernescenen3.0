@@ -3,7 +3,6 @@ import LogoutBtn from './buttons/LogoutBtn';
 
 export async function Navbar() {
   const session = await auth();
-
   //Skal bruges til at lave role check
 
   return (

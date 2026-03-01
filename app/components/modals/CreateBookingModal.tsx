@@ -57,7 +57,6 @@ export default function CreateBookingModal({
 
         <form action={action}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
-          <input type="hidden" name="startHour" value={startHour.hour} />
 
           <input
             type="text"
@@ -74,6 +73,7 @@ export default function CreateBookingModal({
           />
           <input
             type="text"
+            name="startHour"
             className={inputClass + ' bg-gray-300'}
             value={
               startHour.hour.split(':')[0] + ':' + startHour.hour.split(':')[1]
@@ -81,10 +81,11 @@ export default function CreateBookingModal({
             readOnly
           />
           <input
-            type="text"
+            type="time"
             name="endHour"
             placeholder="sluttid"
             className={inputClass}
+            required
           />
           <input
             type="text"

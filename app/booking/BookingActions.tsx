@@ -26,20 +26,21 @@ export async function createBooking(prevState: unknown, formData: FormData) {
   const roomNumber = Number(formData.get('roomNumber'));
 
   const date = formData.get('date');
-  const startHour = formData.get('startHour');
-  const endHour = formData.get('endHour');
+  const getStartHour = formData.get('startHour');
+  const getEndHour = formData.get('endHour');
 
-  const startFormatted = `${date}T${startHour}`;
-  const endFormatted = `${date}T${endHour}`;
+  if (!date || !getStartHour || !getEndHour) {
+    return { success: false, error: 'Alle felter er påkrævet' };
+  }
 
-  const startTime = new Date(startFormatted);
-  const endTime = new Date(endFormatted);
+  const startTime = new Date(`${date}T${getStartHour}`);
+  const endTime = new Date(`${date}T${getEndHour}`);
 
-  if (!endHour) {
+  if (!getEndHour) {
     return { success: false, error: 'Sluttid er påkrævet' };
   }
 
-  if (startTime >= endTime) {
+  if (startTime > endTime) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
   }
 
@@ -86,10 +87,6 @@ export async function getBookings() {
 
 export async function deleteBooking(roomIdArg: number, bookingIdArg: number) {
   const session = await auth();
-
-  if (!session) {
-    return 'Du er ikke logget ind';
-  }
 
   if (session) {
     await prisma.booking.delete({
