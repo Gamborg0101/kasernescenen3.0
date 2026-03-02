@@ -26,7 +26,8 @@ model User {
 
 model Room {
   id       Int       @id @default(autoincrement())
-  name     String    @unique
+  name     String
+  roomNum  Int       @unique
   capacity Int
   location String
   bookings Booking[]

@@ -85,14 +85,15 @@ export async function getBookings() {
   });
 }
 
-export async function deleteBooking(roomIdArg: number, bookingIdArg: number) {
+export async function deleteBooking(roomIdArg: string, bookingIdArg: number) {
   const session = await auth();
+  console.log(roomIdArg);
 
   if (session) {
     await prisma.booking.delete({
       where: {
         userId: Number(session.user.id),
-        roomId: roomIdArg,
+        roomId: Number(roomIdArg),
         id: bookingIdArg,
       },
     });
