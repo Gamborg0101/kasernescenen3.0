@@ -25,6 +25,8 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
   const roomNumber = Number(formData.get('roomNumber'));
 
+  console.log('Room Number herer: ', roomNumber);
+
   const date = formData.get('date');
   const getStartHour = formData.get('startHour');
   const getEndHour = formData.get('endHour');
@@ -33,12 +35,16 @@ export async function createBooking(prevState: unknown, formData: FormData) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
 
+  const room = await prisma.room.findUnique({
+    where: { roomNum: roomNumber },
+  });
+
+  if (!room) {
+    return { success: false, error: 'Lokalet findes ikke' };
+  }
+
   const startTime = new Date(`${date}T${getStartHour}`);
   const endTime = new Date(`${date}T${getEndHour}`);
-
-  if (!getEndHour) {
-    return { success: false, error: 'Sluttid er påkrævet' };
-  }
 
   if (startTime > endTime) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
@@ -50,11 +56,12 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
   const conflictBooking = await prisma.booking.findFirst({
     where: {
-      roomId: roomNumber,
+      roomId: room.id,
       startTime: { lt: endTime },
       endTime: { gt: startTime },
     },
   });
+
   if (conflictBooking) {
     return {
       success: false,
@@ -64,8 +71,7 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
   await prisma.booking.create({
     data: {
-      bookingId: crypto.randomUUID(),
-      roomId: roomNumber,
+      roomId: room.id,
       startTime: startTime,
       endTime: endTime,
       userId: Number(session.user.id),
@@ -98,7 +104,7 @@ export async function getRooms() {
 
 export async function deleteBooking(roomIdArg: string, bookingIdArg: number) {
   const session = await auth();
-  console.log(roomIdArg);
+  if (!session) throw new Error('Ikke logget ind');
 
   if (session) {
     await prisma.booking.delete({

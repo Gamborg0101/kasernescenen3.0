@@ -19,9 +19,7 @@ model User {
   cardNumber    Int       @unique
   note          String?
   category      String?
-  roomId        Int?
   bookings      Booking[]
-  room          Room?     @relation(fields: [roomId], references: [id])
 }
 
 model Room {
@@ -31,12 +29,10 @@ model Room {
   capacity Int
   location String
   bookings Booking[]
-  users    User[]
 }
 
 model Booking {
   id        Int      @id @default(autoincrement())
-  bookingId String   @unique
   userId    Int
   roomId    Int
   startTime DateTime

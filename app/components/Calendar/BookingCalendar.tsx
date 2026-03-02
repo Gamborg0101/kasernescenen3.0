@@ -25,7 +25,7 @@ export default function BookingCalendar({
   allRooms,
 }: Props) {
   const [weekCounter, setWeekCounter] = useState(new Date());
-  const [roomNumber, setRoomNumber] = useState(1);
+  const [roomNumber, setRoomNumber] = useState(126);
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState({ date: '', hour: '' });
 
