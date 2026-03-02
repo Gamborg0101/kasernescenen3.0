@@ -3,7 +3,6 @@
 import { prisma } from '@/db';
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
-import { RoomType } from '../types/types';
 
 export async function getUserInfo() {
   const session = await auth();
@@ -87,7 +86,14 @@ export async function getBookings() {
 }
 
 export async function getRooms() {
-  return await prisma.room.findMany();
+  return await prisma.room.findMany({
+    select: {
+      name: true,
+      roomNum: true,
+      capacity: true,
+      location: true,
+    },
+  });
 }
 
 export async function deleteBooking(roomIdArg: string, bookingIdArg: number) {

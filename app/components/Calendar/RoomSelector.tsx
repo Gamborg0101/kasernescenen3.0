@@ -6,7 +6,7 @@ type Props = {
   allRooms: RoomType;
 };
 
-export default async function RoomSelector({
+export default function RoomSelector({
   roomNumber,
   setRoomNumber,
   allRooms,
@@ -20,10 +20,11 @@ export default async function RoomSelector({
         value={roomNumber}
         onChange={(e) => setRoomNumber(Number(e.target.value))}
       >
-        <option value="114">Rum 114</option>
-        <option value="116">Rum 116</option>
-        <option value="118">Rum 118</option>
-        <option value="120">Rum 120</option>
+        {allRooms.map((room, index) => (
+          <option key={index} value={room.roomNum}>
+            {`${room.roomNum} - ${room.name}`}
+          </option>
+        ))}
       </select>
     </div>
   );

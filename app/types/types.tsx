@@ -50,4 +50,4 @@ export type RoomType = {
   roomNum: number;
   capacity: number;
   location: string;
-};
+}[];

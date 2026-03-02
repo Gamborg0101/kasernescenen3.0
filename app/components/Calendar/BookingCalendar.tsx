@@ -11,7 +11,7 @@ import { RoomType } from '@/app/types/types';
 
 type Props = {
   userInfo: { name: string; email: string };
-  allRooms: RoomType[];
+  allRooms: RoomType;
   allBookings: {
     endTime: Date;
     roomId: number;
