@@ -12,6 +12,8 @@ export default function BookingCard({ item }: { item: BookingCardProps }) {
           month: 'short',
         })}
       </div>
+
+      <p className="p-1">{`${item.room.roomNum} - ${item.room.name}`}</p>
       <div className="font-bold p-1">
         {` ${item.startTime.toLocaleTimeString('da-DK', {
           hour: '2-digit',

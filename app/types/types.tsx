@@ -39,10 +39,13 @@ export type WeekProps = {
 export type BookingCardProps = {
   id: number;
   roomId: number;
-  bookingId: string;
   userId: number;
   startTime: Date;
   endTime: Date;
+  room: {
+    roomNum: number;
+    name: string;
+  };
 };
 
 export type RoomType = {

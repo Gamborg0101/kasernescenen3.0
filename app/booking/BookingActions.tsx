@@ -102,7 +102,7 @@ export async function getRooms() {
   });
 }
 
-export async function deleteBooking(roomIdArg: string, bookingIdArg: number) {
+export async function deleteBooking(roomIdArg: number, bookingIdArg: number) {
   const session = await auth();
   if (!session) throw new Error('Ikke logget ind');
 
@@ -110,7 +110,7 @@ export async function deleteBooking(roomIdArg: string, bookingIdArg: number) {
     await prisma.booking.delete({
       where: {
         userId: Number(session.user.id),
-        roomId: Number(roomIdArg),
+        roomId: roomIdArg,
         id: bookingIdArg,
       },
     });

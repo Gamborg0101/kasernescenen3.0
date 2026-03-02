@@ -1,5 +1,7 @@
 'use client';
 
+import { RoomType } from '@/app/types/types';
+
 import {
   eachDayOfInterval,
   startOfWeek,
@@ -20,10 +22,12 @@ type Props = {
   roomNumber: number;
   allBookings: Booking[];
   handleHourClick: (hour: Date) => void;
+  allRooms: RoomType;
 };
 
 export default function WeekAndHours({
   selectedWeek,
+  allRooms,
   roomNumber,
   allBookings,
   handleHourClick,
@@ -32,6 +36,8 @@ export default function WeekAndHours({
     return allBookings.some((booking) => {
       const start = new Date(booking.startTime);
       const end = new Date(booking.endTime);
+      console.log('id: ', booking.roomId);
+      console.log('Number: ', roomNumber);
 
       return (
         booking.roomId === roomNumber &&
@@ -91,7 +97,9 @@ export default function WeekAndHours({
               key={index}
               onClick={() => handleHourClick(hour)}
               className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${isBooked(hour) ? 'bg-red-500 cursor-not-allowed  hover:bg-red-400' : 'cursor-pointer hover:bg-black'}`}
-            ></div>
+            >
+              Hi there
+            </div>
           ))}
         </div>
       ))}

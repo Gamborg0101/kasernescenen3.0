@@ -25,10 +25,8 @@ export default async function UserPage() {
     orderBy: {
       startTime: 'asc',
     },
+    include: { room: true },
   });
-
-  console.log('Right here: ', session.user.image);
-  console.log('image:', JSON.stringify(session.user.image));
 
   return (
     <div className="flex justify-center center-items bg-stone-50 font-serif py-52 ">
@@ -56,7 +54,7 @@ export default async function UserPage() {
               <div
                 key={item.id}
                 className="flex flex-col border 
-
+              
 "
               >
                 <BookingCard item={item} />

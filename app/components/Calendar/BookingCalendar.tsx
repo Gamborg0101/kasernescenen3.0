@@ -70,9 +70,10 @@ export default function BookingCalendar({
       <WeekSelector nextWeek={WeekCounterNext} prevWeek={WeekCounterPrev} />
       <WeekAndHours
         selectedWeek={weekCounter}
-        roomNumber={roomNumber}
+        allRooms={allRooms}
         allBookings={allBookings}
         handleHourClick={handleHourClick}
+        roomNumber={roomNumber}
       />
     </div>
   );
