@@ -15,6 +15,7 @@ declare module 'next-auth' {
 export type UserInfo = {
   name: string;
   email: string;
+  phone: number;
 };
 
 export type WeekViewProps = {
@@ -42,4 +43,11 @@ export type BookingCardProps = {
   userId: number;
   startTime: Date;
   endTime: Date;
+};
+
+export type RoomType = {
+  name: string;
+  roomNum: number;
+  capacity: number;
+  location: string;
 };

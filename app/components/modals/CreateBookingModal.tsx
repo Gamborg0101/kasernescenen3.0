@@ -7,7 +7,6 @@ type UserInfo = {
   name: string;
   email: string;
   id?: string;
-  phone: number;
 };
 
 type Props = {

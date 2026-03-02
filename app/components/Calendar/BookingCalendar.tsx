@@ -6,9 +6,12 @@ import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
+import ShowBookingInfoModal from '../modals/ShowBookingInfoModal';
+import { RoomType } from '@/app/types/types';
 
 type Props = {
-  userInfo: { name: string; email: string; phone: number };
+  userInfo: { name: string; email: string };
+  allRooms: RoomType[];
   allBookings: {
     endTime: Date;
     roomId: number;
@@ -16,7 +19,11 @@ type Props = {
   }[];
 };
 
-export default function BookingCalendar({ userInfo, allBookings }: Props) {
+export default function BookingCalendar({
+  userInfo,
+  allBookings,
+  allRooms,
+}: Props) {
   const [weekCounter, setWeekCounter] = useState(new Date());
   const [roomNumber, setRoomNumber] = useState(1);
   const [showModal, setShowModal] = useState(false);
@@ -46,6 +53,7 @@ export default function BookingCalendar({ userInfo, allBookings }: Props) {
 
   return (
     <div>
+      {ShowBookingInfoModal()}
       {showModal && (
         <CreateBookingModal
           onClose={() => setShowModal(false)}
@@ -54,7 +62,11 @@ export default function BookingCalendar({ userInfo, allBookings }: Props) {
           userInfo={userInfo}
         />
       )}
-      <RoomSelector roomNumber={roomNumber} setRoomNumber={setRoomNumber} />
+      <RoomSelector
+        roomNumber={roomNumber}
+        setRoomNumber={setRoomNumber}
+        allRooms={allRooms}
+      />
       <WeekSelector nextWeek={WeekCounterNext} prevWeek={WeekCounterPrev} />
       <WeekAndHours
         selectedWeek={weekCounter}

@@ -6,11 +6,11 @@ type WeekProps = {
 export default function WeekSelector({ nextWeek, prevWeek }: WeekProps) {
   return (
     <div className=" gap-10 bg">
-      <button className="bg-gray-400" onClick={nextWeek}>
-        +1 week
-      </button>
       <button className="bg-gray-400" onClick={prevWeek}>
         -1 week
+      </button>
+      <button className="bg-gray-400" onClick={nextWeek}>
+        +1 week
       </button>
     </div>
   );

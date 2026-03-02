@@ -1,9 +1,16 @@
+import { RoomType } from '@/app/types/types';
+
 type Props = {
   roomNumber: number;
   setRoomNumber: (room: number) => void;
+  allRooms: RoomType;
 };
 
-export default function RoomSelector({ roomNumber, setRoomNumber }: Props) {
+export default async function RoomSelector({
+  roomNumber,
+  setRoomNumber,
+  allRooms,
+}: Props) {
   return (
     <div className="w-64 flex justify-center items-center">
       <select

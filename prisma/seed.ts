@@ -170,7 +170,7 @@ async function main() {
           from: new Date(),
           to: faker.date.soon({ days: 1 }),
         }),
-        endTime: faker.date.soon({ days: 10 }),
+        endTime: faker.date.soon({ days: 2 }),
       },
     });
   }
