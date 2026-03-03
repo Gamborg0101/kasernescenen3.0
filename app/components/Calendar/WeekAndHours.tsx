@@ -96,8 +96,8 @@ export default function WeekAndHours({
           {week.day.toLocaleDateString('de-DE')}
           {week.hours.map((hour, index) => (
             <div
-              onMouseEnter={() => handleHover(true)}
-              onMouseLeave={() => handleHover(false)}
+              onMouseEnter={() => (isBooked(hour) ? handleHover(true) : false)}
+              onMouseLeave={() => (isBooked(hour) ? handleHover(false) : false)}
               key={index}
               onClick={() => handleHourClick(hour, !isBooked(hour))}
               className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${isBooked(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}

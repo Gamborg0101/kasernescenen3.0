@@ -46,6 +46,7 @@ export default function BookingCalendar({
   }
 
   function handleHover(disable: boolean) {
+    console.log(disable);
     return setBookingInfoOpen(disable);
   }
 
