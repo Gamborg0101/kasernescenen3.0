@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
-
 import { RoomType } from '@/app/types/types';
 import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
 
@@ -14,9 +13,10 @@ type Props = {
   userInfo: { name: string; email: string };
   allRooms: RoomType;
   allBookings: {
+    id: number;
+    startTime: Date;
     endTime: Date;
     roomId: number;
-    startTime: Date;
   }[];
 };
 
@@ -46,7 +46,6 @@ export default function BookingCalendar({
   }
 
   function handleHover(disable: boolean) {
-    console.log(disable);
     return setBookingInfoOpen(disable);
   }
 

@@ -12,6 +12,7 @@ import {
 } from 'date-fns';
 
 type Booking = {
+  id: number;
   roomId: number;
   startTime: Date;
   endTime: Date;
@@ -41,6 +42,7 @@ export default function WeekAndHours({
       const start = new Date(booking.startTime);
       const end = new Date(booking.endTime);
 
+      console.log('test', booking.id);
       return (
         booking.roomId === currentRoom?.id &&
         isSameDay(start, hour) &&
@@ -99,7 +101,9 @@ export default function WeekAndHours({
               onMouseEnter={() => (isBooked(hour) ? handleHover(true) : false)}
               onMouseLeave={() => (isBooked(hour) ? handleHover(false) : false)}
               key={index}
-              onClick={() => handleHourClick(hour, !isBooked(hour))}
+              onClick={() => {
+                handleHourClick(hour, !isBooked(hour));
+              }}
               className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${isBooked(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}
             ></div>
           ))}

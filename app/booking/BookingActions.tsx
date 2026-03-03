@@ -83,10 +83,8 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
 export async function getBookings() {
   return await prisma.booking.findMany({
-    select: {
-      roomId: true,
-      startTime: true,
-      endTime: true,
+    include: {
+      room: true,
     },
   });
 }

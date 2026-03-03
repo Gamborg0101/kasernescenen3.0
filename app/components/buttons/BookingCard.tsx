@@ -1,9 +1,9 @@
 'use client';
 
-import { BookingCardProps } from '@/app/types/types';
+import { BookingInfoProps } from '@/app/types/types';
 import { deleteBooking } from '@/app/booking/BookingActions';
 
-export default function BookingCard({ item }: { item: BookingCardProps }) {
+export default function BookingCard({ item }: { item: BookingInfoProps }) {
   return (
     <div className="h-full bg-stone-200 text-sm flex flex-col place-content-between ">
       <div className="p-1 text-gray-500">

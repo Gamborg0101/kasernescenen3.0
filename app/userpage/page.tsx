@@ -51,12 +51,7 @@ export default async function UserPage() {
         <div className="flex flex-cols ">
           <div className="grid grid-cols-3 grow">
             {nextBooking.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col border 
-              
-"
-              >
+              <div key={item.id} className="flex flex-col border">
                 <BookingCard item={item} />
               </div>
             ))}
