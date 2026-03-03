@@ -6,8 +6,9 @@ import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
-import ShowBookingInfoModal from '../modals/ShowBookingInfoModal';
+import ShowBookingInfoModal from '../modals/CreateBookingInfoModal';
 import { RoomType } from '@/app/types/types';
+import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
 
 type Props = {
   userInfo: { name: string; email: string };
@@ -28,6 +29,7 @@ export default function BookingCalendar({
   const [roomNumber, setRoomNumber] = useState(126);
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState({ date: '', hour: '' });
+  const [open, setOpen] = useState(false);
 
   function WeekCounterNext() {
     const newDate = new Date(weekCounter);
@@ -43,6 +45,13 @@ export default function BookingCalendar({
     setWeekCounter(firstOfPrevWeek);
   }
 
+  function handleHover(disable: boolean) {
+    setOpen(disable);
+    //disable ? setOpen('true') : setOpen('false');
+    console.log(disable);
+    return;
+  }
+
   function handleHourClick(hour: Date, disable: boolean) {
     if (disable === true) {
       setStartHour({
@@ -50,8 +59,7 @@ export default function BookingCalendar({
         hour: hour.toISOString().split('T')[1],
       });
       setShowModal(true);
-    }
-    if (disable === false) {
+    } else if (disable === false) {
       setShowModal(false);
     }
   }
@@ -67,6 +75,7 @@ export default function BookingCalendar({
           userInfo={userInfo}
         />
       )}
+      {open && <CreateBookingInfoModal />}
       <RoomSelector
         roomNumber={roomNumber}
         setRoomNumber={setRoomNumber}
@@ -78,6 +87,7 @@ export default function BookingCalendar({
         allRooms={allRooms}
         allBookings={allBookings}
         handleHourClick={handleHourClick}
+        handleHover={handleHover}
         roomNumber={roomNumber}
       />
     </div>
