@@ -32,15 +32,15 @@ export default function WeekAndHours({
   allBookings,
   handleHourClick,
 }: Props) {
+  const currentRoom = allRooms.find((room) => room.roomNum === roomNumber);
+
   function isBooked(hour: Date): boolean {
     return allBookings.some((booking) => {
       const start = new Date(booking.startTime);
       const end = new Date(booking.endTime);
-      console.log('id: ', booking.roomId);
-      console.log('Number: ', roomNumber);
 
       return (
-        booking.roomId === roomNumber &&
+        booking.roomId === currentRoom?.id &&
         isSameDay(start, hour) &&
         isWithinInterval(hour, { start, end })
       );

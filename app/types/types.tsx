@@ -49,6 +49,7 @@ export type BookingCardProps = {
 };
 
 export type RoomType = {
+  id: number;
   name: string;
   roomNum: number;
   capacity: number;

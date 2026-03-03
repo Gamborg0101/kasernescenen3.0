@@ -94,6 +94,7 @@ export async function getBookings() {
 export async function getRooms() {
   return await prisma.room.findMany({
     select: {
+      id: true,
       name: true,
       roomNum: true,
       capacity: true,
