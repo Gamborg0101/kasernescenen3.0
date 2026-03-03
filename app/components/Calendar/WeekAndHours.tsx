@@ -21,7 +21,7 @@ type Props = {
   selectedWeek: Date;
   roomNumber: number;
   allBookings: Booking[];
-  handleHourClick: (hour: Date) => void;
+  handleHourClick: (hour: Date, disable: boolean) => void;
   allRooms: RoomType;
 };
 
@@ -95,11 +95,9 @@ export default function WeekAndHours({
           {week.hours.map((hour, index) => (
             <div
               key={index}
-              onClick={() => handleHourClick(hour)}
-              className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${isBooked(hour) ? 'bg-red-500 cursor-not-allowed  hover:bg-red-400' : 'cursor-pointer hover:bg-black'}`}
-            >
-              Hi there
-            </div>
+              onClick={() => handleHourClick(hour, !isBooked(hour))}
+              className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${isBooked(hour) ? `bg-red-500 cursor-not-allowed hover:bg-red-400` : 'cursor-pointer hover:bg-black'}`}
+            ></div>
           ))}
         </div>
       ))}

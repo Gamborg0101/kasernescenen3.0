@@ -43,17 +43,22 @@ export default function BookingCalendar({
     setWeekCounter(firstOfPrevWeek);
   }
 
-  function handleHourClick(hour: Date) {
-    setStartHour({
-      date: hour.toISOString().split('T')[0],
-      hour: hour.toISOString().split('T')[1],
-    });
-    setShowModal(true);
+  function handleHourClick(hour: Date, disable: boolean) {
+    if (disable === true) {
+      setStartHour({
+        date: hour.toISOString().split('T')[0],
+        hour: hour.toISOString().split('T')[1],
+      });
+      setShowModal(true);
+    }
+    if (disable === false) {
+      setShowModal(false);
+    }
   }
 
   return (
     <div>
-      {ShowBookingInfoModal()}
+      <ShowBookingInfoModal />
       {showModal && (
         <CreateBookingModal
           onClose={() => setShowModal(false)}

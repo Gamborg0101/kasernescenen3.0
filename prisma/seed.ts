@@ -148,7 +148,7 @@ async function main() {
     const createdRooms = [];
     for (const room of rooms) {
       const createdRoom = await prisma.room.upsert({
-        where: { roomNum: room.roomNum }, // brug roomNum som unikt felt
+        where: { roomNum: room.roomNum },
         update: {},
         create: {
           roomNum: room.roomNum,
@@ -163,7 +163,6 @@ async function main() {
     const roomForBooking = faker.helpers.arrayElement(createdRooms);
     await prisma.booking.create({
       data: {
-        bookingId: faker.string.uuid(),
         userId: user.id,
         roomId: roomForBooking.id,
         startTime: faker.date.between({
