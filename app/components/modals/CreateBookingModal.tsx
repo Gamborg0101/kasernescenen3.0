@@ -3,11 +3,12 @@
 import { createBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
 import { UserInfoSession } from '@/app/types/types';
+import { start } from 'node:repl';
 
 type Props = {
   onClose: () => void;
   roomNumber: number;
-  startHour: { date: string; hour: string };
+  startHour: Date;
   userInfoSession: UserInfoSession;
 };
 
@@ -62,16 +63,14 @@ export default function CreateBookingModal({
             type="text"
             className={inputClass + ' bg-gray-300'}
             name="date"
-            value={startHour.date}
+            value={startHour.toLocaleDateString()}
             readOnly
           />
           <input
             type="text"
             name="startHour"
             className={inputClass + ' bg-gray-300'}
-            value={
-              startHour.hour.split(':')[0] + ':' + startHour.hour.split(':')[1]
-            }
+            value={startHour.getHours()}
             readOnly
           />
           <input

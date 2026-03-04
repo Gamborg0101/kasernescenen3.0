@@ -32,7 +32,7 @@ export default function BookingCalendar({
   const [weekCounter, setWeekCounter] = useState(new Date());
   const [roomNumber, setRoomNumber] = useState(126);
   const [showModal, setShowModal] = useState(false);
-  const [startHour, setStartHour] = useState({ date: '', hour: '' });
+  const [startHour, setStartHour] = useState(new Date());
   const [bookingInfoOpen, setBookingInfoOpen] = useState(false);
   const [hoveredBooking, setHoveredBooking] = useState<{
     id: number;
@@ -41,7 +41,6 @@ export default function BookingCalendar({
     roomId: number;
   } | null>(null);
 
-  console.log(userInfoDb);
   function WeekCounterNext() {
     const newDate = new Date(weekCounter);
     newDate.setDate(newDate.getDate() + 7);
@@ -65,13 +64,10 @@ export default function BookingCalendar({
   }
 
   function handleHourClick(hour: Date, disable: boolean) {
-    if (disable === true) {
-      setStartHour({
-        date: hour.toISOString().split('T')[0],
-        hour: hour.toISOString().split('T')[1],
-      });
+    if (disable) {
+      setStartHour(hour);
       setShowModal(true);
-    } else if (disable === false) {
+    } else {
       setShowModal(false);
     }
   }

@@ -10,7 +10,6 @@ export async function getUserInfoFromSession() {
   if (!session) return { name: '', email: '' };
 
   const user = session.user;
-  console.log(session?.user.id);
 
   return {
     name: user?.name || '',
