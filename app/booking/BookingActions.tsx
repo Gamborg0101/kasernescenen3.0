@@ -10,6 +10,7 @@ export async function getUserInfoFromSession() {
   if (!session) return { name: '', email: '' };
 
   const user = session.user;
+  console.log(session?.user.id);
 
   return {
     name: user?.name || '',
@@ -17,6 +18,17 @@ export async function getUserInfoFromSession() {
     image: user?.image || '',
     id: user.id,
   };
+}
+
+export async function getUserFromDb() {
+  const session = await auth();
+  if (!session) throw new Error('Brugeren er ikke fundet');
+
+  return prisma.user.findUnique({
+    where: {
+      id: Number(session?.user.id),
+    },
+  });
 }
 
 export async function createBooking(prevState: unknown, formData: FormData) {

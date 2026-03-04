@@ -9,6 +9,7 @@ import CreateBookingModal from '../modals/CreateBookingModal';
 import { RoomType } from '@/app/types/types';
 import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
 import { UserInfoSession } from '@/app/types/types';
+import { UserInfoDb } from '@/app/types/types';
 
 type Props = {
   userInfoSession: UserInfoSession;
@@ -19,12 +20,14 @@ type Props = {
     endTime: Date;
     roomId: number;
   }[];
+  userInfoDb: UserInfoDb | null;
 };
 
 export default function BookingCalendar({
   userInfoSession,
   allBookings,
   allRooms,
+  userInfoDb,
 }: Props) {
   const [weekCounter, setWeekCounter] = useState(new Date());
   const [roomNumber, setRoomNumber] = useState(126);
@@ -38,6 +41,7 @@ export default function BookingCalendar({
     roomId: number;
   } | null>(null);
 
+  console.log(userInfoDb);
   function WeekCounterNext() {
     const newDate = new Date(weekCounter);
     newDate.setDate(newDate.getDate() + 7);
@@ -85,7 +89,7 @@ export default function BookingCalendar({
       {bookingInfoOpen && hoveredBooking && (
         <CreateBookingInfoModal
           booking={hoveredBooking}
-          userInfoSession={userInfoSession}
+          userInfoDb={userInfoDb}
         />
       )}
       <RoomSelector

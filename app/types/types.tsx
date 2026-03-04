@@ -13,11 +13,15 @@ declare module 'next-auth' {
 
 export type UserInfoDb = {
   id: number;
+  googleId: string;
   firstName: string;
   lastName: string;
+  role: string;
+  studentNumber: number;
+  category: string | null;
   phone: number;
   email: string;
-  studentNumber: number;
+  note: string | null;
   cardNumber: number;
 };
 
