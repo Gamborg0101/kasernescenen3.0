@@ -29,12 +29,11 @@ export default function CreateBookingInfoModal({ booking, userInfoDb }: Props) {
       style={{ top: pos.y, left: pos.x }}
     >
       <div className="p-2">
-        <ul>
-          <li>Booking {booking.id}</li>
-          <li>{userInfoDb?.firstName}</li>
-          <li>{userInfoDb?.email}</li>
-          <li>
-            {`
+        <p>Booking {booking.id}</p>
+        <p>{userInfoDb?.firstName}</p>
+        <p>{userInfoDb?.email}</p>
+        <p>
+          {`
           ${new Date(booking.startTime).toLocaleTimeString('da-DK', {
             hour: '2-digit',
             minute: '2-digit',
@@ -44,9 +43,8 @@ export default function CreateBookingInfoModal({ booking, userInfoDb }: Props) {
             hour: '2-digit',
             minute: '2-digit',
           })}`}
-          </li>
-          <li>{booking.startTime.toLocaleDateString()}</li>
-        </ul>
+        </p>
+        <p>{booking.startTime.toLocaleDateString()}</p>
       </div>
     </div>
   );

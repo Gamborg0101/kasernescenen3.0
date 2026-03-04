@@ -1,7 +1,5 @@
 'use client';
-
 import { RoomType } from '@/app/types/types';
-import { useState } from 'react';
 
 import {
   eachDayOfInterval,
@@ -41,8 +39,6 @@ export default function WeekAndHours({
   handleHover,
 }: Props) {
   const currentRoom = allRooms.find((room) => room.roomNum === roomNumber);
-
-  
 
   function getBookingForHour(hour: Date): Booking | undefined {
     return allBookings.find((booking) => {
