@@ -30,6 +30,12 @@ export default function BookingCalendar({
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState({ date: '', hour: '' });
   const [bookingInfoOpen, setBookingInfoOpen] = useState(false);
+  const [hoveredBooking, setHoveredBooking] = useState<{
+    id: number;
+    startTime: Date;
+    endTime: Date;
+    roomId: number;
+  } | null>(null);
 
   function WeekCounterNext() {
     const newDate = new Date(weekCounter);
@@ -45,8 +51,12 @@ export default function BookingCalendar({
     setWeekCounter(firstOfPrevWeek);
   }
 
-  function handleHover(disable: boolean) {
-    return setBookingInfoOpen(disable);
+  function handleHover(
+    disable: boolean,
+    booking?: { id: number; startTime: Date; endTime: Date; roomId: number },
+  ) {
+    setBookingInfoOpen(disable);
+    setHoveredBooking(booking || null);
   }
 
   function handleHourClick(hour: Date, disable: boolean) {
@@ -71,7 +81,9 @@ export default function BookingCalendar({
           userInfo={userInfo}
         />
       )}
-      {bookingInfoOpen && <CreateBookingInfoModal />}
+      {bookingInfoOpen && hoveredBooking && (
+        <CreateBookingInfoModal booking={hoveredBooking} />
+      )}
       <RoomSelector
         roomNumber={roomNumber}
         setRoomNumber={setRoomNumber}

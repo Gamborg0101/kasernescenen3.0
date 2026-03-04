@@ -25,7 +25,7 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
   const roomNumber = Number(formData.get('roomNumber'));
 
-  console.log('Room Number herer: ', roomNumber);
+  
 
   const date = formData.get('date');
   const getStartHour = formData.get('startHour');

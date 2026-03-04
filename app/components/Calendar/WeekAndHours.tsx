@@ -23,7 +23,11 @@ type Props = {
   roomNumber: number;
   allBookings: Booking[];
   handleHourClick: (hour: Date, disable: boolean) => void;
-  handleHover: (disable: boolean) => void;
+  handleHover: (
+    disable: boolean,
+    booking?: { id: number; startTime: Date; endTime: Date; roomId: number },
+  ) => void;
+
   allRooms: RoomType;
 };
 
@@ -36,13 +40,13 @@ export default function WeekAndHours({
   handleHover,
 }: Props) {
   const currentRoom = allRooms.find((room) => room.roomNum === roomNumber);
+  console.log(allBookings);
 
-  function isBooked(hour: Date): boolean {
-    return allBookings.some((booking) => {
+  function getBookingForHour(hour: Date): Booking | undefined {
+    return allBookings.find((booking) => {
       const start = new Date(booking.startTime);
       const end = new Date(booking.endTime);
 
-      console.log('test', booking.id);
       return (
         booking.roomId === currentRoom?.id &&
         isSameDay(start, hour) &&
@@ -98,13 +102,16 @@ export default function WeekAndHours({
           {week.day.toLocaleDateString('de-DE')}
           {week.hours.map((hour, index) => (
             <div
-              onMouseEnter={() => (isBooked(hour) ? handleHover(true) : false)}
-              onMouseLeave={() => (isBooked(hour) ? handleHover(false) : false)}
+              onMouseEnter={() => {
+                const booking = getBookingForHour(hour);
+                if (booking) handleHover(true, booking);
+              }}
+              onMouseLeave={() => handleHover(false)}
               key={index}
               onClick={() => {
-                handleHourClick(hour, !isBooked(hour));
+                handleHourClick(hour, !getBookingForHour(hour));
               }}
-              className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${isBooked(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}
+              className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${getBookingForHour(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}
             ></div>
           ))}
         </div>
