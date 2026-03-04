@@ -8,9 +8,10 @@ import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
 import { RoomType } from '@/app/types/types';
 import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
+import { UserInfoSession } from '@/app/types/types';
 
 type Props = {
-  userInfo: { name: string; email: string };
+  userInfoSession: UserInfoSession;
   allRooms: RoomType;
   allBookings: {
     id: number;
@@ -21,7 +22,7 @@ type Props = {
 };
 
 export default function BookingCalendar({
-  userInfo,
+  userInfoSession,
   allBookings,
   allRooms,
 }: Props) {
@@ -52,10 +53,10 @@ export default function BookingCalendar({
   }
 
   function handleHover(
-    disable: boolean,
+    isOpen: boolean,
     booking?: { id: number; startTime: Date; endTime: Date; roomId: number },
   ) {
-    setBookingInfoOpen(disable);
+    setBookingInfoOpen(isOpen);
     setHoveredBooking(booking || null);
   }
 
@@ -78,11 +79,14 @@ export default function BookingCalendar({
           onClose={() => setShowModal(false)}
           roomNumber={roomNumber}
           startHour={startHour}
-          userInfo={userInfo}
+          userInfoSession={userInfoSession}
         />
       )}
       {bookingInfoOpen && hoveredBooking && (
-        <CreateBookingInfoModal booking={hoveredBooking} />
+        <CreateBookingInfoModal
+          booking={hoveredBooking}
+          userInfoSession={userInfoSession}
+        />
       )}
       <RoomSelector
         roomNumber={roomNumber}

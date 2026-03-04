@@ -40,7 +40,6 @@ export default function WeekAndHours({
   handleHover,
 }: Props) {
   const currentRoom = allRooms.find((room) => room.roomNum === roomNumber);
-  console.log(allBookings);
 
   function getBookingForHour(hour: Date): Booking | undefined {
     return allBookings.find((booking) => {

@@ -4,7 +4,7 @@ import { prisma } from '@/db';
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
 
-export async function getUserInfo() {
+export async function getUserInfoFromSession() {
   const session = await auth();
 
   if (!session) return { name: '', email: '' };
@@ -15,7 +15,7 @@ export async function getUserInfo() {
     name: user?.name || '',
     email: user?.email || '',
     image: user?.image || '',
-    id: user?.id,
+    id: user.id,
   };
 }
 
@@ -24,8 +24,6 @@ export async function createBooking(prevState: unknown, formData: FormData) {
   if (!session) throw new Error('Ikke logget ind');
 
   const roomNumber = Number(formData.get('roomNumber'));
-
-  
 
   const date = formData.get('date');
   const getStartHour = formData.get('startHour');

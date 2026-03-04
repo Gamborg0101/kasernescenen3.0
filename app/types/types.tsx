@@ -1,10 +1,9 @@
 import { DefaultSession } from 'next-auth';
-//https://authjs.dev/getting-started/typescript
 
 declare module 'next-auth' {
   interface Session {
     user: {
-      id: string;
+      id: number;
       role: string;
       isRegistered: boolean;
       googleId: string;
@@ -12,14 +11,25 @@ declare module 'next-auth' {
   }
 }
 
-export type UserInfo = {
+export type UserInfoDb = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  phone: number;
+  email: string;
+  studentNumber: number;
+  cardNumber: number;
+};
+
+export type UserInfoSession = {
   name: string;
   email: string;
-  phone: number;
+  image?: string;
+  id?: number;
 };
 
 export type WeekViewProps = {
-  userInfo: UserInfo;
+  userInfo: UserInfoSession;
 };
 
 type allBookings = {
@@ -31,7 +41,7 @@ type allBookings = {
 export type WeekProps = {
   selectedWeek: Date;
   roomNumber: number;
-  userInfo: UserInfo;
+  userInfo: UserInfoSession;
   allBookings: allBookings;
   handleHourClick: (hour: Date) => void;
 };

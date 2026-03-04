@@ -2,25 +2,20 @@
 
 import { createBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
-
-type UserInfo = {
-  name: string;
-  email: string;
-  id?: string;
-};
+import { UserInfoSession } from '@/app/types/types';
 
 type Props = {
   onClose: () => void;
   roomNumber: number;
   startHour: { date: string; hour: string };
-  userInfo: UserInfo;
+  userInfoSession: UserInfoSession;
 };
 
 export default function CreateBookingModal({
   onClose,
   roomNumber,
   startHour,
-  userInfo,
+  userInfoSession,
 }: Props) {
   const [data, action] = useActionState(createBooking, null);
 
@@ -89,13 +84,13 @@ export default function CreateBookingModal({
           <input
             type="text"
             className={inputClass + ' bg-gray-300'}
-            value={userInfo.name}
+            value={userInfoSession.name}
             readOnly
           />
           <input
             type="text"
             className={inputClass + ' bg-gray-300'}
-            value={userInfo.email}
+            value={userInfoSession.email}
             readOnly
           />
           {data?.error && (
