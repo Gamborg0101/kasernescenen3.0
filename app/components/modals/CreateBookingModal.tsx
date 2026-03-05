@@ -52,40 +52,73 @@ export default function CreateBookingModal({
         <form action={action}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
 
+          <label
+            htmlFor="roomNumber"
+            className="text-xs font-bold text-gray-500"
+          >
+            Rum:
+          </label>
           <input
+            id="roomNumber"
             type="text"
             className={inputClass + ' bg-gray-300'}
             value={roomNumber}
             readOnly
           />
+          <label htmlFor="date" className="text-xs font-bold text-gray-500">
+            Dato:
+          </label>
           <input
+            id="date"
             type="text"
             className={inputClass + ' bg-gray-300'}
             name="date"
             value={startHour.toLocaleDateString()}
             readOnly
           />
+          <label
+            htmlFor="startHour"
+            className="text-xs font-bold text-gray-500"
+          >
+            Start:
+          </label>
           <input
+            id="startHour"
             type="text"
             name="startHour"
             className={inputClass + ' bg-gray-300'}
-            value={startHour.getHours()}
+            value={startHour.toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
             readOnly
           />
+          <label htmlFor="endHour" className="text-xs font-bold text-gray-500">
+            Slut:
+          </label>
           <input
+            id="endHour"
             type="time"
             name="endHour"
             placeholder="sluttid"
             className={inputClass}
             required
           />
+          <label htmlFor="name" className="text-xs font-bold text-gray-500">
+            Navn:
+          </label>
           <input
+            id="name"
             type="text"
             className={inputClass + ' bg-gray-300'}
             value={userInfoSession.name}
             readOnly
           />
+          <label htmlFor="email" className="text-xs font-bold text-gray-500">
+            Email:
+          </label>
           <input
+            id="email"
             type="text"
             className={inputClass + ' bg-gray-300'}
             value={userInfoSession.email}
