@@ -11,14 +11,20 @@ type Booking = {
 type Props = {
   booking: Booking;
   userInfoDb: UserInfoDb | null;
+  initialPos: { x: number; y: number };
 };
 
-export default function CreateBookingInfoModal({ booking, userInfoDb }: Props) {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+export default function CreateBookingInfoModal({
+  booking,
+  userInfoDb,
+  initialPos,
+}: Props) {
+  const [pos, setPos] = useState(initialPos);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) =>
       setPos({ x: e.clientX + 12, y: e.clientY + 12 });
+
     window.addEventListener('mousemove', onMove);
     return () => window.removeEventListener('mousemove', onMove);
   }, []);

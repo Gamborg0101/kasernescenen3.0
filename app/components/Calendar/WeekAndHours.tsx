@@ -25,6 +25,7 @@ type Props = {
   handleHover: (
     disable: boolean,
     booking?: { id: number; startTime: Date; endTime: Date; roomId: number },
+    pos?: { x: number; y: number },
   ) => void;
 
   allRooms: RoomType;
@@ -100,9 +101,13 @@ export default function WeekAndHours({
           {week.day.toLocaleDateString('de-DE')}
           {week.hours.map((hour, index) => (
             <div
-              onMouseEnter={() => {
+              onMouseEnter={(e) => {
                 const booking = getBookingForHour(hour);
-                if (booking) handleHover(true, booking);
+                if (booking)
+                  handleHover(true, booking, {
+                    x: e.clientX + 12,
+                    y: e.clientY + 12,
+                  });
               }}
               onMouseLeave={() => handleHover(false)}
               key={index}

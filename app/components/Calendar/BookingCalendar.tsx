@@ -40,6 +40,7 @@ export default function BookingCalendar({
     endTime: Date;
     roomId: number;
   } | null>(null);
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
   function WeekCounterNext() {
     const newDate = new Date(weekCounter);
@@ -58,9 +59,11 @@ export default function BookingCalendar({
   function handleHover(
     isOpen: boolean,
     booking?: { id: number; startTime: Date; endTime: Date; roomId: number },
+    pos?: { x: number; y: number },
   ) {
     setBookingInfoOpen(isOpen);
     setHoveredBooking(booking || null);
+    if (pos) setTooltipPos(pos);
   }
 
   function handleHourClick(hour: Date, disable: boolean) {
@@ -86,6 +89,7 @@ export default function BookingCalendar({
         <CreateBookingInfoModal
           booking={hoveredBooking}
           userInfoDb={userInfoDb}
+          initialPos={tooltipPos}
         />
       )}
       <RoomSelector
