@@ -40,6 +40,8 @@ export async function createBooking(prevState: unknown, formData: FormData) {
   const getStartHour = formData.get('startHour');
   const getEndHour = formData.get('endHour');
 
+  console.log(getStartHour);
+
   if (!date || !getStartHour || !getEndHour) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
@@ -52,8 +54,8 @@ export async function createBooking(prevState: unknown, formData: FormData) {
     return { success: false, error: 'Lokalet findes ikke' };
   }
 
-  const startTime = new Date(`${date}T${getStartHour}`);
-  const endTime = new Date(`${date}T${getEndHour}`);
+  const startTime = new Date(`${date} ${getStartHour}`);
+  const endTime = new Date(`${date} ${getEndHour}`);
 
   if (startTime > endTime) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };

@@ -3,6 +3,7 @@
 import { createBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
 import { UserInfoSession } from '@/app/types/types';
+import { startOfDay } from 'date-fns';
 
 type Props = {
   onClose: () => void;
@@ -51,6 +52,21 @@ export default function CreateBookingModal({
 
         <form action={action}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
+          <input
+            type="hidden"
+            name="startHour"
+            id="startHour"
+            value={startHour.toLocaleTimeString('de', {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          />
+          <input
+            type="hidden"
+            name="date"
+            id="date"
+            value={startHour.toDateString()}
+          />
 
           <label
             htmlFor="roomNumber"
@@ -69,10 +85,9 @@ export default function CreateBookingModal({
             Dato:
           </label>
           <input
-            id="date"
+            id="dateShow"
             type="text"
             className={inputClass + ' bg-gray-300'}
-            name="date"
             value={startHour.toLocaleDateString()}
             readOnly
           />
@@ -83,9 +98,8 @@ export default function CreateBookingModal({
             Start:
           </label>
           <input
-            id="startHour"
+            id="startHourShow"
             type="text"
-            name="startHour"
             className={inputClass + ' bg-gray-300'}
             value={startHour.toLocaleTimeString([], {
               hour: '2-digit',
