@@ -147,7 +147,8 @@ exports.Prisma.BookingScalarFieldEnum = {
   userId: 'userId',
   roomId: 'roomId',
   startTime: 'startTime',
-  endTime: 'endTime'
+  endTime: 'endTime',
+  reason: 'reason'
 };
 
 exports.Prisma.SortOrder = {

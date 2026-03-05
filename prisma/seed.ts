@@ -170,6 +170,7 @@ async function main() {
           to: faker.date.soon({ days: 1 }),
         }),
         endTime: faker.date.soon({ days: 2 }),
+        reason: faker.lorem.lines(2),
       },
     });
   }

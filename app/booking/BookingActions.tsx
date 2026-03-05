@@ -39,10 +39,13 @@ export async function createBooking(prevState: unknown, formData: FormData) {
   const date = formData.get('date');
   const getStartHour = formData.get('startHour');
   const getEndHour = formData.get('endHour');
+  const getInfo = String(formData.get('reason') || '');
+
+  console.log(getInfo);
 
   console.log(getStartHour);
 
-  if (!date || !getStartHour || !getEndHour) {
+  if (!date || !getStartHour || !getEndHour || !getInfo) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
 
@@ -86,6 +89,7 @@ export async function createBooking(prevState: unknown, formData: FormData) {
       startTime: startTime,
       endTime: endTime,
       userId: Number(session.user.id),
+      reason: getInfo,
     },
   });
   revalidatePath('/booking');

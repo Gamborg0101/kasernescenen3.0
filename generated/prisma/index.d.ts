@@ -3441,6 +3441,7 @@ export namespace Prisma {
     roomId: number | null
     startTime: Date | null
     endTime: Date | null
+    reason: string | null
   }
 
   export type BookingMaxAggregateOutputType = {
@@ -3449,6 +3450,7 @@ export namespace Prisma {
     roomId: number | null
     startTime: Date | null
     endTime: Date | null
+    reason: string | null
   }
 
   export type BookingCountAggregateOutputType = {
@@ -3457,6 +3459,7 @@ export namespace Prisma {
     roomId: number
     startTime: number
     endTime: number
+    reason: number
     _all: number
   }
 
@@ -3479,6 +3482,7 @@ export namespace Prisma {
     roomId?: true
     startTime?: true
     endTime?: true
+    reason?: true
   }
 
   export type BookingMaxAggregateInputType = {
@@ -3487,6 +3491,7 @@ export namespace Prisma {
     roomId?: true
     startTime?: true
     endTime?: true
+    reason?: true
   }
 
   export type BookingCountAggregateInputType = {
@@ -3495,6 +3500,7 @@ export namespace Prisma {
     roomId?: true
     startTime?: true
     endTime?: true
+    reason?: true
     _all?: true
   }
 
@@ -3590,6 +3596,7 @@ export namespace Prisma {
     roomId: number
     startTime: Date
     endTime: Date
+    reason: string
     _count: BookingCountAggregateOutputType | null
     _avg: BookingAvgAggregateOutputType | null
     _sum: BookingSumAggregateOutputType | null
@@ -3617,6 +3624,7 @@ export namespace Prisma {
     roomId?: boolean
     startTime?: boolean
     endTime?: boolean
+    reason?: boolean
     room?: boolean | RoomDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
@@ -3627,6 +3635,7 @@ export namespace Prisma {
     roomId?: boolean
     startTime?: boolean
     endTime?: boolean
+    reason?: boolean
     room?: boolean | RoomDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
@@ -3637,6 +3646,7 @@ export namespace Prisma {
     roomId?: boolean
     startTime?: boolean
     endTime?: boolean
+    reason?: boolean
     room?: boolean | RoomDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
@@ -3647,9 +3657,10 @@ export namespace Prisma {
     roomId?: boolean
     startTime?: boolean
     endTime?: boolean
+    reason?: boolean
   }
 
-  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "roomId" | "startTime" | "endTime", ExtArgs["result"]["booking"]>
+  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "roomId" | "startTime" | "endTime" | "reason", ExtArgs["result"]["booking"]>
   export type BookingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     room?: boolean | RoomDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -3675,6 +3686,7 @@ export namespace Prisma {
       roomId: number
       startTime: Date
       endTime: Date
+      reason: string
     }, ExtArgs["result"]["booking"]>
     composites: {}
   }
@@ -4105,6 +4117,7 @@ export namespace Prisma {
     readonly roomId: FieldRef<"Booking", 'Int'>
     readonly startTime: FieldRef<"Booking", 'DateTime'>
     readonly endTime: FieldRef<"Booking", 'DateTime'>
+    readonly reason: FieldRef<"Booking", 'String'>
   }
     
 
@@ -4566,7 +4579,8 @@ export namespace Prisma {
     userId: 'userId',
     roomId: 'roomId',
     startTime: 'startTime',
-    endTime: 'endTime'
+    endTime: 'endTime',
+    reason: 'reason'
   };
 
   export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
@@ -4813,6 +4827,7 @@ export namespace Prisma {
     roomId?: IntFilter<"Booking"> | number
     startTime?: DateTimeFilter<"Booking"> | Date | string
     endTime?: DateTimeFilter<"Booking"> | Date | string
+    reason?: StringFilter<"Booking"> | string
     room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -4823,6 +4838,7 @@ export namespace Prisma {
     roomId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    reason?: SortOrder
     room?: RoomOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
   }
@@ -4836,6 +4852,7 @@ export namespace Prisma {
     roomId?: IntFilter<"Booking"> | number
     startTime?: DateTimeFilter<"Booking"> | Date | string
     endTime?: DateTimeFilter<"Booking"> | Date | string
+    reason?: StringFilter<"Booking"> | string
     room?: XOR<RoomScalarRelationFilter, RoomWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -4846,6 +4863,7 @@ export namespace Prisma {
     roomId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    reason?: SortOrder
     _count?: BookingCountOrderByAggregateInput
     _avg?: BookingAvgOrderByAggregateInput
     _max?: BookingMaxOrderByAggregateInput
@@ -4862,6 +4880,7 @@ export namespace Prisma {
     roomId?: IntWithAggregatesFilter<"Booking"> | number
     startTime?: DateTimeWithAggregatesFilter<"Booking"> | Date | string
     endTime?: DateTimeWithAggregatesFilter<"Booking"> | Date | string
+    reason?: StringWithAggregatesFilter<"Booking"> | string
   }
 
   export type UserCreateInput = {
@@ -5023,6 +5042,7 @@ export namespace Prisma {
   export type BookingCreateInput = {
     startTime: Date | string
     endTime: Date | string
+    reason: string
     room: RoomCreateNestedOneWithoutBookingsInput
     user: UserCreateNestedOneWithoutBookingsInput
   }
@@ -5033,11 +5053,13 @@ export namespace Prisma {
     roomId: number
     startTime: Date | string
     endTime: Date | string
+    reason: string
   }
 
   export type BookingUpdateInput = {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
     room?: RoomUpdateOneRequiredWithoutBookingsNestedInput
     user?: UserUpdateOneRequiredWithoutBookingsNestedInput
   }
@@ -5048,6 +5070,7 @@ export namespace Prisma {
     roomId?: IntFieldUpdateOperationsInput | number
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
   }
 
   export type BookingCreateManyInput = {
@@ -5056,11 +5079,13 @@ export namespace Prisma {
     roomId: number
     startTime: Date | string
     endTime: Date | string
+    reason: string
   }
 
   export type BookingUpdateManyMutationInput = {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
   }
 
   export type BookingUncheckedUpdateManyInput = {
@@ -5069,6 +5094,7 @@ export namespace Prisma {
     roomId?: IntFieldUpdateOperationsInput | number
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5298,6 +5324,7 @@ export namespace Prisma {
     roomId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    reason?: SortOrder
   }
 
   export type BookingAvgOrderByAggregateInput = {
@@ -5312,6 +5339,7 @@ export namespace Prisma {
     roomId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    reason?: SortOrder
   }
 
   export type BookingMinOrderByAggregateInput = {
@@ -5320,6 +5348,7 @@ export namespace Prisma {
     roomId?: SortOrder
     startTime?: SortOrder
     endTime?: SortOrder
+    reason?: SortOrder
   }
 
   export type BookingSumOrderByAggregateInput = {
@@ -5613,6 +5642,7 @@ export namespace Prisma {
   export type BookingCreateWithoutUserInput = {
     startTime: Date | string
     endTime: Date | string
+    reason: string
     room: RoomCreateNestedOneWithoutBookingsInput
   }
 
@@ -5621,6 +5651,7 @@ export namespace Prisma {
     roomId: number
     startTime: Date | string
     endTime: Date | string
+    reason: string
   }
 
   export type BookingCreateOrConnectWithoutUserInput = {
@@ -5658,11 +5689,13 @@ export namespace Prisma {
     roomId?: IntFilter<"Booking"> | number
     startTime?: DateTimeFilter<"Booking"> | Date | string
     endTime?: DateTimeFilter<"Booking"> | Date | string
+    reason?: StringFilter<"Booking"> | string
   }
 
   export type BookingCreateWithoutRoomInput = {
     startTime: Date | string
     endTime: Date | string
+    reason: string
     user: UserCreateNestedOneWithoutBookingsInput
   }
 
@@ -5671,6 +5704,7 @@ export namespace Prisma {
     userId: number
     startTime: Date | string
     endTime: Date | string
+    reason: string
   }
 
   export type BookingCreateOrConnectWithoutRoomInput = {
@@ -5820,11 +5854,13 @@ export namespace Prisma {
     roomId: number
     startTime: Date | string
     endTime: Date | string
+    reason: string
   }
 
   export type BookingUpdateWithoutUserInput = {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
     room?: RoomUpdateOneRequiredWithoutBookingsNestedInput
   }
 
@@ -5833,6 +5869,7 @@ export namespace Prisma {
     roomId?: IntFieldUpdateOperationsInput | number
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
   }
 
   export type BookingUncheckedUpdateManyWithoutUserInput = {
@@ -5840,6 +5877,7 @@ export namespace Prisma {
     roomId?: IntFieldUpdateOperationsInput | number
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
   }
 
   export type BookingCreateManyRoomInput = {
@@ -5847,11 +5885,13 @@ export namespace Prisma {
     userId: number
     startTime: Date | string
     endTime: Date | string
+    reason: string
   }
 
   export type BookingUpdateWithoutRoomInput = {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutBookingsNestedInput
   }
 
@@ -5860,6 +5900,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
   }
 
   export type BookingUncheckedUpdateManyWithoutRoomInput = {
@@ -5867,6 +5908,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
   }
 
 

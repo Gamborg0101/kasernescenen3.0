@@ -138,6 +138,16 @@ export default function CreateBookingModal({
             value={userInfoSession.email}
             readOnly
           />
+          <label htmlFor="reason" className="text-xs font-bold text-gray-500">
+            Aktivitet:
+          </label>
+          <input
+            type="text"
+            name="reason"
+            id="reason"
+            className={inputClass + 'bg-gray'}
+          />
+
           {data?.error && (
             <p className="text-red-500 text-sm mt-1">{data.error}</p>
           )}
