@@ -76,7 +76,7 @@ export default function WeekAndHours({
     start.setHours(6, 0, 0, 0);
     const end = new Date(day);
     end.setHours(23, 0, 0, 0);
-    return eachMinuteOfInterval({ start, end }, { step: 60 });
+    return eachMinuteOfInterval({ start, end }, { step: 15 });
   }
 
   function hoursInDay() {
@@ -85,13 +85,20 @@ export default function WeekAndHours({
 
     return (
       <div>
-        <div className="h-10">&nbsp;</div>
-        {hours.map((hour) => (
+        <div className="">&nbsp;</div>
+        {hours.map((hour, index) => (
           <div
-            key={hour.toISOString()}
-            className="h-10 px-4 flex justify-center"
+            key={index}
+            className={`h-5 px-4 flex justify-center border border-gray-200 font-semibold ${index % 4 == 0 ? 'bg-amber-50' : 'bg-white'}`}
           >
-            {hour.getHours()}
+            {' '}
+            {index % 4 == 0
+              ? hour.toLocaleTimeString('da-DK', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })
+              : ''}
+            {}
           </div>
         ))}
       </div>
@@ -107,22 +114,23 @@ export default function WeekAndHours({
         <div key={index}>
           {week.day.toLocaleDateString('de-DE')}
           {week.hours.map((hour, index) => (
-            <div
-              onMouseEnter={(e) => {
-                const booking = getBookingForHour(hour);
-                if (booking)
-                  handleHover(true, booking, {
-                    x: e.clientX + 12,
-                    y: e.clientY + 12,
-                  });
-              }}
-              onMouseLeave={() => handleHover(false)}
-              key={index}
-              onClick={() => {
-                handleHourClick(hour, !getBookingForHour(hour));
-              }}
-              className={`h-10 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${getBookingForHour(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}
-            ></div>
+            <div key={index}>
+              <div
+                onMouseEnter={(e) => {
+                  const booking = getBookingForHour(hour);
+                  if (booking)
+                    handleHover(true, booking, {
+                      x: e.clientX + 12,
+                      y: e.clientY + 12,
+                    });
+                }}
+                onMouseLeave={() => handleHover(false)}
+                onClick={() => {
+                  handleHourClick(hour, !getBookingForHour(hour));
+                }}
+                className={`h-4 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${getBookingForHour(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}
+              ></div>
+            </div>
           ))}
         </div>
       ))}
