@@ -1,16 +1,26 @@
 type WeekProps = {
   nextWeek: () => void;
   prevWeek: () => void;
+  currentWeek: () => void;
 };
 
-export default function WeekSelector({ nextWeek, prevWeek }: WeekProps) {
+const btnStyle = 'bg-gray-400 h-10 w-50 hover:bg-gray-400/90 shadow-md';
+
+export default function WeekSelector({
+  nextWeek,
+  prevWeek,
+  currentWeek,
+}: WeekProps) {
   return (
-    <div className=" gap-10 bg">
-      <button className="bg-gray-400" onClick={prevWeek}>
-        -1 week
+    <div className="gap-10 bg flex justify-center items-center p-6">
+      <button className={btnStyle} onClick={prevWeek}>
+        <p>{'<<'}</p>
       </button>
-      <button className="bg-gray-400" onClick={nextWeek}>
-        +1 week
+      <button className={btnStyle} onClick={currentWeek}>
+        <p>Denne uge</p>
+      </button>
+      <button className={btnStyle} onClick={nextWeek}>
+        <p>{'>>'}</p>
       </button>
     </div>
   );

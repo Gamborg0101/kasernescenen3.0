@@ -6,6 +6,7 @@ type Booking = {
   roomId: number;
   startTime: Date;
   endTime: Date;
+  reason: string;
 };
 
 type Props = {
@@ -31,11 +32,10 @@ export default function CreateBookingInfoModal({
 
   return (
     <div
-      className="bg-amber-200 w-40 h-50 rounded-2xl fixed top-100"
+      className="bg-amber-200 min-h-20 rounded-2xl fixed break-word shadow-lg p-2 z-50"
       style={{ top: pos.y, left: pos.x }}
     >
       <div className="p-2">
-        <p>Booking {booking.id}</p>
         <p>{userInfoDb?.firstName}</p>
         <p>{userInfoDb?.email}</p>
         <p>
@@ -50,7 +50,9 @@ export default function CreateBookingInfoModal({
             minute: '2-digit',
           })}`}
         </p>
+
         <p>{booking.startTime.toLocaleDateString()}</p>
+        <p>{booking.reason}</p>
       </div>
     </div>
   );

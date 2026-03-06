@@ -3,7 +3,6 @@
 import { createBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
 import { UserInfoSession } from '@/app/types/types';
-import { startOfDay } from 'date-fns';
 
 type Props = {
   onClose: () => void;
@@ -74,6 +73,7 @@ export default function CreateBookingModal({
           >
             Rum:
           </label>
+
           <input
             id="roomNumber"
             type="text"
@@ -81,6 +81,7 @@ export default function CreateBookingModal({
             value={roomNumber}
             readOnly
           />
+
           <label htmlFor="date" className="text-xs font-bold text-gray-500">
             Dato:
           </label>
@@ -91,6 +92,7 @@ export default function CreateBookingModal({
             value={startHour.toLocaleDateString()}
             readOnly
           />
+
           <label
             htmlFor="startHour"
             className="text-xs font-bold text-gray-500"
@@ -107,6 +109,7 @@ export default function CreateBookingModal({
             })}
             readOnly
           />
+
           <label htmlFor="endHour" className="text-xs font-bold text-gray-500">
             Slut:
           </label>
@@ -118,6 +121,7 @@ export default function CreateBookingModal({
             className={inputClass}
             required
           />
+
           <label htmlFor="name" className="text-xs font-bold text-gray-500">
             Navn:
           </label>
@@ -128,6 +132,7 @@ export default function CreateBookingModal({
             value={userInfoSession.name}
             readOnly
           />
+
           <label htmlFor="email" className="text-xs font-bold text-gray-500">
             Email:
           </label>
@@ -138,6 +143,7 @@ export default function CreateBookingModal({
             value={userInfoSession.email}
             readOnly
           />
+
           <label htmlFor="reason" className="text-xs font-bold text-gray-500">
             Aktivitet:
           </label>

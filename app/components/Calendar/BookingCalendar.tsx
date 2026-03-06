@@ -16,9 +16,11 @@ type Props = {
   allRooms: RoomType;
   allBookings: {
     id: number;
+    userId: number;
     startTime: Date;
     endTime: Date;
     roomId: number;
+    reason: string;
   }[];
   userInfoDb: UserInfoDb | null;
 };
@@ -39,6 +41,7 @@ export default function BookingCalendar({
     startTime: Date;
     endTime: Date;
     roomId: number;
+    reason: string;
   } | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
@@ -56,9 +59,19 @@ export default function BookingCalendar({
     setWeekCounter(firstOfPrevWeek);
   }
 
+  function WeekCounterCurrentWeek() {
+    setWeekCounter(new Date());
+  }
+
   function handleHover(
     isOpen: boolean,
-    booking?: { id: number; startTime: Date; endTime: Date; roomId: number },
+    booking?: {
+      id: number;
+      startTime: Date;
+      endTime: Date;
+      roomId: number;
+      reason: string;
+    },
     pos?: { x: number; y: number },
   ) {
     setBookingInfoOpen(isOpen);
@@ -97,7 +110,11 @@ export default function BookingCalendar({
         setRoomNumber={setRoomNumber}
         allRooms={allRooms}
       />
-      <WeekSelector nextWeek={WeekCounterNext} prevWeek={WeekCounterPrev} />
+      <WeekSelector
+        nextWeek={WeekCounterNext}
+        prevWeek={WeekCounterPrev}
+        currentWeek={WeekCounterCurrentWeek}
+      />
       <WeekAndHours
         selectedWeek={weekCounter}
         allRooms={allRooms}

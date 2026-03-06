@@ -15,6 +15,7 @@ type Booking = {
   roomId: number;
   startTime: Date;
   endTime: Date;
+  reason: string;
 };
 
 type Props = {
@@ -24,7 +25,13 @@ type Props = {
   handleHourClick: (hour: Date, disable: boolean) => void;
   handleHover: (
     disable: boolean,
-    booking?: { id: number; startTime: Date; endTime: Date; roomId: number },
+    booking?: {
+      id: number;
+      startTime: Date;
+      endTime: Date;
+      roomId: number;
+      reason: string;
+    },
     pos?: { x: number; y: number },
   ) => void;
 
