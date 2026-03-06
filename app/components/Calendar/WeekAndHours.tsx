@@ -89,9 +89,8 @@ export default function WeekAndHours({
         {hours.map((hour, index) => (
           <div
             key={index}
-            className={`h-5 px-4 flex justify-center border border-gray-200 font-semibold ${index % 4 == 0 ? 'bg-amber-50' : 'bg-white'}`}
+            className={`h-5 px-4 flex justify-center border border-gray-200 font-semibold ${index % 4 == 0 ? '' : 'bg-white'}`}
           >
-            {' '}
             {index % 4 == 0
               ? hour.toLocaleTimeString('da-DK', {
                   hour: '2-digit',
