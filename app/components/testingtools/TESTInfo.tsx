@@ -1,3 +1,7 @@
 export default function ThisIsInfo() {
-  return <div></div>;
+  return (
+    <div>
+      <p>hi there</p>
+    </div>
+  );
 }
