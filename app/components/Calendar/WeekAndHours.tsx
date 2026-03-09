@@ -85,7 +85,7 @@ export default function WeekAndHours({
 
     return (
       <div>
-        <div className="">&nbsp;</div>
+        <div>&nbsp;</div>
         {hours.map((hour, index) => (
           <div
             key={index}
@@ -108,12 +108,14 @@ export default function WeekAndHours({
 
   return (
     <div className="flex gap-10">
-      <div>{hoursInDay()}</div>
-      {fullWeek.map((week, index) => (
-        <div key={index}>
-          {week.day.toLocaleDateString('de-DE')}
-          {week.hours.map((hour, index) => (
-            <div key={index}>
+      <div className="grid grid-cols-8 w-full">
+        <div>{hoursInDay()}</div>
+        {fullWeek.map((week, index) => (
+          <div key={index}>
+            <p className="flex center-items justify-center">
+              {week.day.toLocaleDateString('de-DE')}
+            </p>
+            {week.hours.map((hour, index) => (
               <div
                 onMouseEnter={(e) => {
                   const booking = getBookingForHour(hour);
@@ -127,12 +129,13 @@ export default function WeekAndHours({
                 onClick={() => {
                   handleHourClick(hour, !getBookingForHour(hour));
                 }}
-                className={`h-4 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${getBookingForHour(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}
+                className={`h-5 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${getBookingForHour(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}
+                key={index}
               ></div>
-            </div>
-          ))}
-        </div>
-      ))}
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
