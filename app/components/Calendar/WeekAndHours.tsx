@@ -73,9 +73,9 @@ export default function WeekAndHours({
 
   function createHoursForDay(day: Date) {
     const start = new Date(day);
-    start.setHours(6, 0, 0, 0);
+    start.setHours(7, 0, 0, 0);
     const end = new Date(day);
-    end.setHours(23, 0, 0, 0);
+    end.setHours(22, 0, 0, 0);
     return eachMinuteOfInterval({ start, end }, { step: 15 });
   }
 
@@ -89,7 +89,7 @@ export default function WeekAndHours({
         {hours.map((hour, index) => (
           <div
             key={index}
-            className={`h-5 px-4 flex justify-center border border-gray-200 font-semibold ${index % 4 == 0 ? '' : 'bg-white'}`}
+            className={`h-5 px-4 flex justify-center border border-gray-200 font-semibold  ${index % 4 == 0 ? '' : 'bg-white'}`}
           >
             {index % 4 == 0
               ? hour.toLocaleTimeString('da-DK', {
@@ -97,12 +97,13 @@ export default function WeekAndHours({
                   minute: '2-digit',
                 })
               : ''}
-            {}
           </div>
         ))}
       </div>
     );
   }
+
+ 
 
   const fullWeek = createWeek(selectedWeek);
 

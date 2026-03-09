@@ -105,16 +105,19 @@ export default function BookingCalendar({
           initialPos={tooltipPos}
         />
       )}
-      <RoomSelector
-        roomNumber={roomNumber}
-        setRoomNumber={setRoomNumber}
-        allRooms={allRooms}
-      />
-      <WeekSelector
-        nextWeek={WeekCounterNext}
-        prevWeek={WeekCounterPrev}
-        currentWeek={WeekCounterCurrentWeek}
-      />
+      <div className="grid grid-cols-3 p-5">
+        <RoomSelector
+          roomNumber={roomNumber}
+          setRoomNumber={setRoomNumber}
+          allRooms={allRooms}
+        />
+
+        <WeekSelector
+          nextWeek={WeekCounterNext}
+          prevWeek={WeekCounterPrev}
+          currentWeek={WeekCounterCurrentWeek}
+        />
+      </div>
       <WeekAndHours
         selectedWeek={weekCounter}
         allRooms={allRooms}

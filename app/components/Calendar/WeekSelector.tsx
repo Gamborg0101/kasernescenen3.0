@@ -12,7 +12,7 @@ export default function WeekSelector({
   currentWeek,
 }: WeekProps) {
   return (
-    <div className="gap-10 bg flex justify-center items-center p-6">
+    <div className="gap-10 bg flex justify-center items-center">
       <button className={btnStyle} onClick={prevWeek}>
         <p>{'<<'}</p>
       </button>
