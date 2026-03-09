@@ -1,6 +1,6 @@
 'use client';
 import { RoomType } from '@/app/types/types';
-
+import BookingOverlay from './BookingOverlay';
 import {
   eachDayOfInterval,
   startOfWeek,
@@ -103,19 +103,24 @@ export default function WeekAndHours({
     );
   }
 
- 
-
   const fullWeek = createWeek(selectedWeek);
 
   return (
-    <div className="flex gap-10">
-      <div className="grid grid-cols-8 w-full">
+    <div className="flex gap-10 relative">
+      <div className="grid grid-cols-8 w-full relative">
         <div>{hoursInDay()}</div>
         {fullWeek.map((week, index) => (
-          <div key={index}>
+          <div key={index} className="relative">
             <p className="flex center-items justify-center">
               {week.day.toLocaleDateString('de-DE')}
             </p>
+            <BookingOverlay
+              bookings={allBookings.filter(
+                (booking) =>
+                  booking.roomId === currentRoom?.id &&
+                  isSameDay(booking.startTime, week.day),
+              )}
+            />
             {week.hours.map((hour, index) => (
               <div
                 onMouseEnter={(e) => {
