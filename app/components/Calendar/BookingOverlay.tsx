@@ -24,7 +24,7 @@ export default function BookingOverlay({ bookings }: BookingOverlay) {
   }
 
   return (
-    <div className="absolute w-full">
+    <div className="absolute w-full pointer-events-none">
       {bookings.map((booking, index) => {
         return (
           <div
@@ -34,9 +34,7 @@ export default function BookingOverlay({ bookings }: BookingOverlay) {
               top: `${getDivStartPosition(booking)}px`,
             }}
             className="absolute w-full bg-blue-500"
-          >
-            <p> Hi there</p>
-          </div>
+          ></div>
         );
       })}
     </div>

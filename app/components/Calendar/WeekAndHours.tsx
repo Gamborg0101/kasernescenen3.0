@@ -34,7 +34,6 @@ type Props = {
     },
     pos?: { x: number; y: number },
   ) => void;
-
   allRooms: RoomType;
 };
 
@@ -50,14 +49,10 @@ export default function WeekAndHours({
 
   function getBookingForHour(hour: Date): Booking | undefined {
     return allBookings.find((booking) => {
-      const start = new Date(booking.startTime);
-      const end = new Date(booking.endTime);
+      const start = booking.startTime;
+      const end = booking.endTime;
 
-      return (
-        booking.roomId === currentRoom?.id &&
-        isSameDay(start, hour) &&
-        isWithinInterval(hour, { start, end })
-      );
+      return booking.roomId === currentRoom?.id && hour >= start && hour < end;
     });
   }
 
@@ -74,8 +69,10 @@ export default function WeekAndHours({
   function createHoursForDay(day: Date) {
     const start = new Date(day);
     start.setHours(7, 0, 0, 0);
+
     const end = new Date(day);
     end.setHours(22, 0, 0, 0);
+
     return eachMinuteOfInterval({ start, end }, { step: 15 });
   }
 
@@ -114,6 +111,7 @@ export default function WeekAndHours({
             <p className="flex center-items justify-center">
               {week.day.toLocaleDateString('de-DE')}
             </p>
+
             <BookingOverlay
               bookings={allBookings.filter(
                 (booking) =>
@@ -121,6 +119,7 @@ export default function WeekAndHours({
                   isSameDay(booking.startTime, week.day),
               )}
             />
+
             {week.hours.map((hour, index) => (
               <div
                 onMouseEnter={(e) => {
