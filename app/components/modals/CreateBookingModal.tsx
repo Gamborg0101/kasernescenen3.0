@@ -3,6 +3,7 @@
 import { createBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
 import { UserInfoSession } from '@/app/types/types';
+import { eachMinuteOfInterval } from 'date-fns';
 
 type Props = {
   onClose: () => void;
@@ -27,6 +28,21 @@ export default function CreateBookingModal({
 
   const inputClass =
     'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
+
+  function getEndHours() {
+    const start = new Date();
+    start.setHours(7, 0, 0, 0);
+
+    const end = new Date();
+    end.setHours(22, 0, 0, 0);
+
+    const endTimeArray = eachMinuteOfInterval({ start, end }, { step: 15 });
+
+    const hoursAndMins = endTimeArray.map((item) =>
+      item.toLocaleTimeString().slice(0, 5),
+    );
+    return hoursAndMins;
+  }
 
   return (
     <div
@@ -66,14 +82,12 @@ export default function CreateBookingModal({
             id="date"
             value={startHour.toDateString()}
           />
-
           <label
             htmlFor="roomNumber"
             className="text-xs font-bold text-gray-500"
           >
             Rum:
           </label>
-
           <input
             id="roomNumber"
             type="text"
@@ -81,7 +95,6 @@ export default function CreateBookingModal({
             value={roomNumber}
             readOnly
           />
-
           <label htmlFor="date" className="text-xs font-bold text-gray-500">
             Dato:
           </label>
@@ -92,7 +105,6 @@ export default function CreateBookingModal({
             value={startHour.toLocaleDateString()}
             readOnly
           />
-
           <label
             htmlFor="startHour"
             className="text-xs font-bold text-gray-500"
@@ -109,18 +121,22 @@ export default function CreateBookingModal({
             })}
             readOnly
           />
-
           <label htmlFor="endHour" className="text-xs font-bold text-gray-500">
             Slut:
           </label>
           <input
             id="endHour"
-            type="time"
             name="endHour"
-            placeholder="sluttid"
             className={inputClass}
+            list="endtimeValues"
             required
           />
+
+          <datalist id="endtimeValues">
+            {getEndHours().map((item, index) => {
+              return <option value={item} key={index}></option>;
+            })}
+          </datalist>
 
           <label htmlFor="name" className="text-xs font-bold text-gray-500">
             Navn:
@@ -132,7 +148,6 @@ export default function CreateBookingModal({
             value={userInfoSession.name}
             readOnly
           />
-
           <label htmlFor="email" className="text-xs font-bold text-gray-500">
             Email:
           </label>
@@ -143,7 +158,6 @@ export default function CreateBookingModal({
             value={userInfoSession.email}
             readOnly
           />
-
           <label htmlFor="reason" className="text-xs font-bold text-gray-500">
             Aktivitet:
           </label>
@@ -153,11 +167,9 @@ export default function CreateBookingModal({
             id="reason"
             className={inputClass + 'bg-gray'}
           />
-
           {data?.error && (
             <p className="text-red-500 text-sm mt-1">{data.error}</p>
           )}
-
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2"

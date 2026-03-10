@@ -48,18 +48,6 @@ function Logo() {
   );
 }
 
-/*
-<Image
-            src={session.user.image || newDark}
-            alt="black picture"
-            width={96}
-            height={96}
-            className="rounded-full my-5"
-          />
-
-
-*/
-
 export function NavItem({
   text,
   href,

@@ -33,6 +33,7 @@ export default async function UserPage() {
       <div className="grid grid-2-rows w-106 h-116 sticky top-8 bg-white border border-stone-200 shadow-sm rounded-t-2xl">
         <div className="m-4 ">
           <h3 className="font-serif text-2xl font-extrabold">Profil</h3>
+
           <Image
             src={session.user.image || newDark}
             alt="black picture"
@@ -44,7 +45,6 @@ export default async function UserPage() {
           <p className="text-gray-500">{userFromDb?.email}</p>
           <p className="text-gray-500">{userFromDb?.category}</p>
           <p className="text-gray-500">{userFromDb?.studentNumber}</p>
-          {/* Fjernes inden prod*/}
           <p className="text-gray-500">{userFromDb?.role}</p>
         </div>
         {/* Following bookings */}

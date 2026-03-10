@@ -16,7 +16,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, profile }) {
       if (profile) {
+        console.log(profile);
         token.googleId = profile.sub;
+        token.picture = profile.picture;
       }
       return token;
     },
@@ -29,6 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.role = dbUser?.role ?? 'student';
       session.user.isRegistered = !!dbUser;
       session.user.googleId = token.googleId as string;
+      session.user.image = token.picture;
       return session;
     },
   },
