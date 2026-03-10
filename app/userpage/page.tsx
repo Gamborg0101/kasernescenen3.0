@@ -35,7 +35,7 @@ export default async function UserPage() {
           <h3 className="font-serif text-2xl font-extrabold">Profil</h3>
           <Image
             src={session.user.image || newDark}
-            alt="test"
+            alt="black picture"
             width={96}
             height={96}
             className="rounded-full my-5"

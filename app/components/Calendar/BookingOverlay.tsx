@@ -33,8 +33,10 @@ export default function BookingOverlay({ bookings }: BookingOverlay) {
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className="absolute w-full bg-blue-500"
-          ></div>
+            className="absolute w-full bg-blue-500 border rounded-sm"
+          >
+            <p className="p-1">{booking.reason}</p>
+          </div>
         );
       })}
     </div>

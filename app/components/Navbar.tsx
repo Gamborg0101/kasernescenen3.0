@@ -1,5 +1,7 @@
 import { auth } from '@/auth/authSetup';
 import LogoutBtn from './buttons/LogoutBtn';
+import Image from 'next/image';
+import aulogo from '../../public/aulogo.png';
 
 export async function Navbar() {
   const session = await auth();
@@ -35,12 +37,28 @@ export async function Navbar() {
 
 function Logo() {
   return (
-    <div className="flex bg-gray-400 h-full items-center justify-center w-32">
-      <img src="#" alt="" />
-      <p>Logo </p>
+    <div className="flex bg-gray-400 h-full items-center justify-center w-46 ">
+      <Image
+        src={aulogo}
+        alt="Aarhus University logo"
+        width={150}
+        height={150}
+      />
     </div>
   );
 }
+
+/*
+<Image
+            src={session.user.image || newDark}
+            alt="black picture"
+            width={96}
+            height={96}
+            className="rounded-full my-5"
+          />
+
+
+*/
 
 export function NavItem({
   text,

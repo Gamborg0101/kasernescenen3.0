@@ -134,7 +134,7 @@ export default function WeekAndHours({
                 onClick={() => {
                   handleHourClick(hour, !getBookingForHour(hour));
                 }}
-                className={`h-5 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${getBookingForHour(hour) ? `bg-red-500 hover:bg-red-400 ` : 'cursor-pointer hover:bg-black'}`}
+                className={`h-5 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${getBookingForHour(hour) ? `` : 'cursor-pointer hover:bg-black'}`}
                 key={index}
               ></div>
             ))}

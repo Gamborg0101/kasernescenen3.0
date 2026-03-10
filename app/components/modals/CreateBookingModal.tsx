@@ -30,7 +30,7 @@ export default function CreateBookingModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 flex items-center justify-center"
+      className="fixed inset-0 bg-black/60 flex items-center justify-center z-1"
       onClick={onClose}
     >
       <div

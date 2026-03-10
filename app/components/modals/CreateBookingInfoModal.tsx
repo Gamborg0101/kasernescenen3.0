@@ -32,7 +32,7 @@ export default function CreateBookingInfoModal({
 
   return (
     <div
-      className="bg-amber-200 min-h-20 rounded-2xl fixed break-word shadow-lg p-2"
+      className="bg-amber-200 min-h-20 rounded-2xl fixed break-word shadow-lg p-2 z-1"
       style={{ top: pos.y, left: pos.x }}
     >
       <div className="p-2">
