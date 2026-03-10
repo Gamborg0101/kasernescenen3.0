@@ -3,7 +3,7 @@
 import { createBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
 import { UserInfoSession } from '@/app/types/types';
-import { eachMinuteOfInterval } from 'date-fns';
+import { eachMinuteOfInterval, getHours } from 'date-fns';
 
 type Props = {
   onClose: () => void;
@@ -124,20 +124,18 @@ export default function CreateBookingModal({
           <label htmlFor="endHour" className="text-xs font-bold text-gray-500">
             Slut:
           </label>
-          <input
-            id="endHour"
-            name="endHour"
-            className={inputClass}
-            list="endtimeValues"
-            required
-          />
 
+          {/* Nej --- skal ændres til at man indtaster time og vælger minut */}
+          <select name="endHour" id="endHour" className={inputClass}>
+            {getEndHours().map((item, index) => (
+              <option key={index} value={index}>
+                {item}
+              </option>
+            ))}
+          </select>
           <datalist id="endtimeValues">
-            {getEndHours().map((item, index) => {
-              return <option value={item} key={index}></option>;
-            })}
+            <option value="asd">{}</option>
           </datalist>
-
           <label htmlFor="name" className="text-xs font-bold text-gray-500">
             Navn:
           </label>
