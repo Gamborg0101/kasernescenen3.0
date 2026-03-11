@@ -110,14 +110,14 @@ export default function CreateBookingModal({
             Slut:
           </label>
 
-          {/* SELECTOR */}
-
           <div className="flex">
             <input
               type="text"
+              minLength={1}
               maxLength={2}
               name="endHour"
               className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              defaultValue={'07'}
             />
             <select
               name="endHourMins"
@@ -132,7 +132,6 @@ export default function CreateBookingModal({
             </select>
           </div>
 
-          {/* SELECTOR */}
           <label htmlFor="name" className="text-xs font-bold text-gray-500">
             Navn:
           </label>

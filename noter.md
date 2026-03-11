@@ -1,8 +1,3 @@
-Next up:
-Setup Prisma
-
-Niels:
-Jeg ved ikke hvordan jeg skal sætte hours for rum.
 
 Stack:
 
