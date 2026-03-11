@@ -6,28 +6,19 @@ import { useState } from 'react';
 import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
-import { RoomType } from '@/app/types/types';
 import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
-import { UserInfoSession } from '@/app/types/types';
-import { UserInfoDb } from '@/app/types/types';
+import { User, SessionUser, RoomType, Booking } from '@/app/types/types';
 
 type Props = {
-  userInfoSession: UserInfoSession;
-  allRooms: RoomType;
-  allBookings: {
-    id: number;
-    userId: number;
-    startTime: Date;
-    endTime: Date;
-    roomId: number;
-    reason: string;
-  }[];
-  userInfoDb: UserInfoDb | null;
+  userInfoSession: SessionUser;
+  allRooms: RoomType[];
+  booking: Booking[];
+  userInfoDb: User | null;
 };
 
 export default function BookingCalendar({
   userInfoSession,
-  allBookings,
+  booking,
   allRooms,
   userInfoDb,
 }: Props) {
@@ -36,13 +27,7 @@ export default function BookingCalendar({
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState(new Date());
   const [bookingInfoOpen, setBookingInfoOpen] = useState(false);
-  const [hoveredBooking, setHoveredBooking] = useState<{
-    id: number;
-    startTime: Date;
-    endTime: Date;
-    roomId: number;
-    reason: string;
-  } | null>(null);
+  const [hoveredBooking, setHoveredBooking] = useState<Booking | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
   function WeekCounterNext() {
@@ -65,13 +50,7 @@ export default function BookingCalendar({
 
   function handleHover(
     isOpen: boolean,
-    booking?: {
-      id: number;
-      startTime: Date;
-      endTime: Date;
-      roomId: number;
-      reason: string;
-    },
+    booking?: Booking,
     pos?: { x: number; y: number },
   ) {
     setBookingInfoOpen(isOpen);
@@ -121,7 +100,7 @@ export default function BookingCalendar({
       <WeekAndHours
         selectedWeek={weekCounter}
         allRooms={allRooms}
-        allBookings={allBookings}
+        allBookings={booking}
         handleHourClick={handleHourClick}
         handleHover={handleHover}
         roomNumber={roomNumber}

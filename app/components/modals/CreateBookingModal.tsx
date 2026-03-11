@@ -2,13 +2,13 @@
 
 import { createBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
-import { UserInfoSession } from '@/app/types/types';
+import { SessionUser } from '@/app/types/types';
 
 type Props = {
   onClose: () => void;
   roomNumber: number;
   startHour: Date;
-  userInfoSession: UserInfoSession;
+  userInfoSession: SessionUser;
 };
 
 export default function CreateBookingModal({

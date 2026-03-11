@@ -3,7 +3,7 @@ import { RoomType } from '@/app/types/types';
 type Props = {
   roomNumber: number;
   setRoomNumber: (room: number) => void;
-  allRooms: RoomType;
+  allRooms: RoomType[];
 };
 
 export default function RoomSelector({

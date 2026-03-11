@@ -1,4 +1,4 @@
-import { UserInfoDb } from '@/app/types/types';
+import { User } from '@/app/types/types';
 import { useEffect, useRef, useState } from 'react';
 
 type Booking = {
@@ -11,7 +11,7 @@ type Booking = {
 
 type Props = {
   booking: Booking;
-  userInfoDb: UserInfoDb | null;
+  userInfoDb: User | null;
   initialPos: { x: number; y: number };
 };
 

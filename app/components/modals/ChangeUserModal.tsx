@@ -1,4 +1,4 @@
-import { User } from '../../brugere/BrugerTabel';
+import { User } from '@/app/types/types';
 import { UpdateUser } from '../../brugere/Actions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';

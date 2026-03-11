@@ -1,5 +1,5 @@
 'use client';
-import { RoomType } from '@/app/types/types';
+import { RoomType, Booking } from '@/app/types/types';
 import BookingOverlay from './BookingOverlay';
 import {
   eachDayOfInterval,
@@ -9,14 +9,6 @@ import {
   isSameDay,
 } from 'date-fns';
 
-type Booking = {
-  id: number;
-  roomId: number;
-  startTime: Date;
-  endTime: Date;
-  reason: string;
-};
-
 type Props = {
   selectedWeek: Date;
   roomNumber: number;
@@ -24,16 +16,10 @@ type Props = {
   handleHourClick: (hour: Date, disable: boolean) => void;
   handleHover: (
     disable: boolean,
-    booking?: {
-      id: number;
-      startTime: Date;
-      endTime: Date;
-      roomId: number;
-      reason: string;
-    },
+    booking?: Booking,
     pos?: { x: number; y: number },
   ) => void;
-  allRooms: RoomType;
+  allRooms: RoomType[];
 };
 
 export default function WeekAndHours({

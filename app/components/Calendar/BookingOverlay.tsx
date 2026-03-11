@@ -1,18 +1,11 @@
 import { differenceInMinutes } from 'date-fns';
+import { Booking } from '@/app/types/types';
 
-type Booking = {
-  id: number;
-  roomId: number;
-  startTime: Date;
-  endTime: Date;
-  reason: string;
-};
-
-type BookingOverlay = {
+type BookingOverlayProps = {
   bookings: Booking[];
 };
 
-export default function BookingOverlay({ bookings }: BookingOverlay) {
+export default function BookingOverlay({ bookings }: BookingOverlayProps) {
   function getDivStartPosition(booking: Booking) {
     const divStartPosition =
       (booking.startTime.getHours() - 7) * 60 + booking.startTime.getMinutes();

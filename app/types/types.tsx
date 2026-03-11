@@ -11,7 +11,7 @@ declare module 'next-auth' {
   }
 }
 
-export type UserInfoDb = {
+export type User = {
   id: number;
   googleId: string;
   firstName: string;
@@ -25,7 +25,7 @@ export type UserInfoDb = {
   cardNumber: number;
 };
 
-export type UserInfoSession = {
+export type SessionUser = {
   name: string;
   email: string;
   image?: string;
@@ -33,20 +33,23 @@ export type UserInfoSession = {
 };
 
 export type WeekViewProps = {
-  userInfo: UserInfoSession;
+  userInfo: SessionUser;
 };
 
-type allBookings = {
+export type Booking = {
+  id: number;
+  userId: number;
+  startTime: Date;
   endTime: Date;
   roomId: number;
-  startTime: Date;
-}[];
+  reason: string;
+};
 
 export type WeekProps = {
   selectedWeek: Date;
   roomNumber: number;
-  userInfo: UserInfoSession;
-  allBookings: allBookings;
+  userInfo: SessionUser;
+  Booking: Booking;
   handleHourClick: (hour: Date) => void;
 };
 
@@ -68,4 +71,4 @@ export type RoomType = {
   roomNum: number;
   capacity: number;
   location: string;
-}[];
+};

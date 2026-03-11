@@ -2,19 +2,7 @@
 import { DeleteUser } from './Actions';
 import React from 'react';
 import ChangeUserModal from '../components/modals/ChangeUserModal';
-
-export type User = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  phone: number;
-  email: string;
-  studentNumber: number;
-  cardNumber: number;
-  note: string | null;
-  category: string | null;
-  role: string;
-};
+import { User } from '../types/types';
 
 export default function BrugerTabel({ users }: { users: User[] }) {
   const [localUsers, setLocalUsers] = React.useState(users);

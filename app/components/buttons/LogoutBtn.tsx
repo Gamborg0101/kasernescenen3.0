@@ -1,5 +1,4 @@
 import { signOut } from '@/auth/authSetup';
-
 import { NavItem } from '../Navbar';
 
 export default function LogoutBtn() {
