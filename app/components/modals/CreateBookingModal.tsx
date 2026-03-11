@@ -3,7 +3,6 @@
 import { createBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
 import { UserInfoSession } from '@/app/types/types';
-import { eachMinuteOfInterval, getHours } from 'date-fns';
 
 type Props = {
   onClose: () => void;
@@ -28,21 +27,6 @@ export default function CreateBookingModal({
 
   const inputClass =
     'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
-
-  function getEndHours() {
-    const start = new Date();
-    start.setHours(7, 0, 0, 0);
-
-    const end = new Date();
-    end.setHours(22, 0, 0, 0);
-
-    const endTimeArray = eachMinuteOfInterval({ start, end }, { step: 15 });
-
-    const hoursAndMins = endTimeArray.map((item) =>
-      item.toLocaleTimeString().slice(0, 5),
-    );
-    return hoursAndMins;
-  }
 
   return (
     <div
@@ -111,6 +95,7 @@ export default function CreateBookingModal({
           >
             Start:
           </label>
+
           <input
             id="startHourShow"
             type="text"
@@ -125,17 +110,29 @@ export default function CreateBookingModal({
             Slut:
           </label>
 
-          {/* Nej --- skal ændres til at man indtaster time og vælger minut */}
-          <select name="endHour" id="endHour" className={inputClass}>
-            {getEndHours().map((item, index) => (
-              <option key={index} value={index}>
-                {item}
-              </option>
-            ))}
-          </select>
-          <datalist id="endtimeValues">
-            <option value="asd">{}</option>
-          </datalist>
+          {/* SELECTOR */}
+
+          <div className="flex">
+            <input
+              type="text"
+              maxLength={2}
+              name="endHour"
+              className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <select
+              name="endHourMins"
+              id="endHourMins"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              defaultValue={'00'}
+            >
+              <option value="00">00</option>
+              <option value="15">15</option>
+              <option value="30">30</option>
+              <option value="45">45</option>
+            </select>
+          </div>
+
+          {/* SELECTOR */}
           <label htmlFor="name" className="text-xs font-bold text-gray-500">
             Navn:
           </label>

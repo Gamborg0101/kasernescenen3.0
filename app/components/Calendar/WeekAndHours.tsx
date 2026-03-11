@@ -7,7 +7,6 @@ import {
   endOfWeek,
   eachMinuteOfInterval,
   isSameDay,
-  isWithinInterval,
 } from 'date-fns';
 
 type Booking = {
