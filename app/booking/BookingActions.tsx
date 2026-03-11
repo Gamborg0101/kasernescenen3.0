@@ -38,7 +38,7 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
   const date = formData.get('date');
   const getStartHour = formData.get('startHour');
-  const getEndHour = formData.get('endHour');
+  const getEndHour = Number(formData.get('endHour'));
   const getEndHourMins = formData.get('endHourMins');
   const getInfo = String(formData.get('reason') || '');
 
@@ -52,6 +52,17 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
   if (!room) {
     return { success: false, error: 'Lokalet findes ikke' };
+  }
+
+  if (typeof getEndHour !== 'number') {
+    return { success: false, error: 'Sluttiden skal være et tal' };
+  }
+
+  if (getInfo.length >= 35) {
+    return {
+      succes: false,
+      error: 'Du må maks bruge 35 bogstaver til beskrivelsen',
+    };
   }
 
   const endTimeWithMins = `${getEndHour}:${getEndHourMins}`;
