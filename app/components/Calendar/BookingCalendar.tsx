@@ -12,13 +12,13 @@ import { User, SessionUser, RoomType, Booking } from '@/app/types/types';
 type Props = {
   userInfoSession: SessionUser;
   allRooms: RoomType[];
-  booking: Booking[];
+  bookings: Booking[];
   userInfoDb: User | null;
 };
 
 export default function BookingCalendar({
   userInfoSession,
-  booking,
+  bookings,
   allRooms,
   userInfoDb,
 }: Props) {
@@ -100,7 +100,7 @@ export default function BookingCalendar({
       <WeekAndHours
         selectedWeek={weekCounter}
         allRooms={allRooms}
-        allBookings={booking}
+        allBookings={bookings}
         handleHourClick={handleHourClick}
         handleHover={handleHover}
         roomNumber={roomNumber}

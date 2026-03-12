@@ -30,10 +30,10 @@ export default function WeekAndHours({
   handleHourClick,
   handleHover,
 }: Props) {
-  const currentRoom = allRooms.find((room) => room.roomNum === roomNumber);
+  const currentRoom = allRooms?.find((room) => room.roomNum === roomNumber);
 
   function getBookingForHour(hour: Date): Booking | undefined {
-    return allBookings.find((booking) => {
+    return allBookings?.find((booking) => {
       const start = booking.startTime;
       const end = booking.endTime;
 
@@ -45,7 +45,7 @@ export default function WeekAndHours({
     const start = startOfWeek(selectedWeek, { weekStartsOn: 1 });
     const end = endOfWeek(selectedWeek, { weekStartsOn: 1 });
 
-    return eachDayOfInterval({ start, end }).map((day) => ({
+    return eachDayOfInterval({ start, end })?.map((day) => ({
       day,
       hours: createHoursForDay(day),
     }));
@@ -98,7 +98,7 @@ export default function WeekAndHours({
             </p>
 
             <BookingOverlay
-              bookings={allBookings.filter(
+              bookings={allBookings?.filter(
                 (booking) =>
                   booking.roomId === currentRoom?.id &&
                   isSameDay(booking.startTime, week.day),

@@ -62,8 +62,8 @@ export default function CreateBookingModal({
           />
           <input
             type="hidden"
-            name="date"
-            id="date"
+            name="getDate"
+            id="getDate"
             value={startHour.toDateString()}
           />
           <label
@@ -83,7 +83,6 @@ export default function CreateBookingModal({
             Dato:
           </label>
           <input
-            id="dateShow"
             type="text"
             className={inputClass + ' bg-gray-300'}
             value={startHour.toLocaleDateString()}

@@ -18,7 +18,7 @@ export default function BookingOverlay({ bookings }: BookingOverlayProps) {
 
   return (
     <div className="absolute w-full pointer-events-none">
-      {bookings.map((booking, index) => {
+      {bookings?.map((booking, index) => {
         return (
           <div
             key={index}

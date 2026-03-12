@@ -45,6 +45,7 @@ export type Booking = {
   reason: string;
 };
 
+
 export type WeekProps = {
   selectedWeek: Date;
   roomNumber: number;

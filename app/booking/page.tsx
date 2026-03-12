@@ -12,7 +12,7 @@ export default async function BookingPage() {
   return (
     <BookingCalendar
       userInfoSession={userInfoSession}
-      allBookings={allBookings}
+      bookings={allBookings}
       allRooms={allRooms}
       userInfoDb={userInfoDB}
     />

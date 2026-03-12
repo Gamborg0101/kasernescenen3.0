@@ -3,19 +3,18 @@
 import { prisma } from '@/db';
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
+import { convertToObject } from 'typescript';
 
 export async function getUserInfoFromSession() {
   const session = await auth();
 
   if (!session) return { name: '', email: '' };
 
-  const user = session.user;
-
   return {
-    name: user?.name || '',
-    email: user?.email || '',
-    image: user?.image || '',
-    id: user.id,
+    name: session.user?.name || '',
+    email: session.user?.email || '',
+    image: session.user?.image || '',
+    id: session.user.id,
   };
 }
 
@@ -30,21 +29,35 @@ export async function getUserFromDb() {
   });
 }
 
+function convertStartAndEndHour(
+  startHour: string,
+  getEndHour: string,
+  getDate: string,
+): { start: Date; end: Date } {
+  return { start: new Date(), end: new Date() };
+}
+
 export async function createBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
+
   if (!session) throw new Error('Ikke logget ind');
 
   const roomNumber = Number(formData.get('roomNumber'));
 
-  const date = formData.get('date');
+  const getDate = formData.get('getDate');
   const getStartHour = formData.get('startHour');
   const getEndHour = Number(formData.get('endHour'));
   const getEndHourMins = formData.get('endHourMins');
   const getInfo = String(formData.get('reason') || '');
+  console.log(getDate);
+  console.log(getStartHour);
+  console.log(getEndHour);
 
-  if (!date || !getStartHour || !getEndHour || !getInfo || !getEndHourMins) {
+  if (!getDate || !getStartHour || !getEndHour || !getInfo || !getEndHourMins) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
+
+  //const stardAndEnd = convertStartAndEndHour(getStartHour, getEndHour, getDate);
 
   const room = await prisma.room.findUnique({
     where: { roomNum: roomNumber },
@@ -67,8 +80,8 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
   const endTimeWithMins = `${getEndHour}:${getEndHourMins}`;
 
-  const startTime = new Date(`${date} ${getStartHour}`);
-  const endTime = new Date(`${date} ${endTimeWithMins}`);
+  const startTime = new Date(`${getDate} ${getStartHour}`);
+  const endTime = new Date(`${getDate} ${endTimeWithMins}`);
 
   if (startTime > endTime) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
