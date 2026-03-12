@@ -1,6 +1,6 @@
 'use client';
 
-import { createBooking } from '@/app/booking/BookingActions';
+import { makeBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
 import { SessionUser } from '@/app/types/types';
 
@@ -17,7 +17,7 @@ export default function CreateBookingModal({
   startHour,
   userInfoSession,
 }: Props) {
-  const [data, action] = useActionState(createBooking, null);
+  const [data, action] = useActionState(makeBooking, null);
 
   useEffect(() => {
     if (data?.success) {

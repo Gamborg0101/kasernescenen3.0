@@ -1,7 +1,8 @@
-import { getUserInfoFromSession, getRooms } from './BookingActions';
+import { getUserInfoFromSession, getUserFromDb } from './BookingActions';
+import { getRooms } from '../lib/api/bookings';
+import { getBookings } from '../lib/api/bookings';
+
 import BookingCalendar from '../components/calendar/BookingCalendar';
-import { getBookings } from './BookingActions';
-import { getUserFromDb } from './BookingActions';
 
 export default async function BookingPage() {
   const userInfoSession = await getUserInfoFromSession();

@@ -1,30 +1,40 @@
 'use client';
 
 import { BookingInfoProps } from '@/app/types/types';
-import { deleteBooking } from '@/app/booking/BookingActions';
+import { deleteABooking } from '@/app/booking/BookingActions';
 
-export default function BookingCard({ item }: { item: BookingInfoProps }) {
+export default function BookingCard({
+  booking,
+}: {
+  booking: BookingInfoProps;
+}) {
   return (
     <div className="h-full bg-stone-200 text-sm flex flex-col place-content-between ">
       <div className="p-1 text-gray-500">
-        {item.startTime.toLocaleDateString('da-DK', {
+        {booking.startTime.toLocaleDateString('da-DK', {
           day: '2-digit',
           month: 'short',
         })}
       </div>
-      <p className="p-1">{`${item.room.roomNum} - ${item.room.name}`}</p>
+      <p className="p-1">{`${booking.room.roomNum} - ${booking.room.name}`}</p>
       <div className="font-bold p-1">
-        {` ${item.startTime.toLocaleTimeString('da-DK', {
+        {` ${booking.startTime.toLocaleTimeString('da-DK', {
           hour: '2-digit',
           minute: '2-digit',
-        })} - ${item.endTime.toLocaleTimeString('da-DK', {
+        })} - ${booking.endTime.toLocaleTimeString('da-DK', {
           hour: '2-digit',
           minute: '2-digit',
         })}`}
       </div>
       <button
         className="bg-red-200 hover:bg-red-100"
-        onClick={() => deleteBooking(item.roomId, item.id)}
+        onClick={() =>
+          deleteABooking({
+            roomId: booking.roomId,
+            bookingId: booking.id,
+            userId: booking.userId,
+          })
+        }
       >
         Slet booking
       </button>
