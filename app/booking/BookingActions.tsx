@@ -31,10 +31,16 @@ export async function getUserFromDb() {
 
 function convertStartAndEndHour(
   startHour: string,
-  getEndHour: string,
+  endHour: number,
+  endHourMins: string,
   getDate: string,
 ): { start: Date; end: Date } {
-  return { start: new Date(), end: new Date() };
+  const endTimeWithMins = `${endHour}:${endHourMins}`;
+
+  const startTime = new Date(`${getDate} ${startHour}`);
+  const endTime = new Date(`${getDate} ${endTimeWithMins}`);
+
+  return { start: startTime, end: endTime };
 }
 
 export async function createBooking(prevState: unknown, formData: FormData) {
@@ -44,20 +50,23 @@ export async function createBooking(prevState: unknown, formData: FormData) {
 
   const roomNumber = Number(formData.get('roomNumber'));
 
-  const getDate = formData.get('getDate');
-  const getStartHour = formData.get('startHour');
+  const getDate = String(formData.get('getDate'));
+  const getStartHour = String(formData.get('startHour'));
   const getEndHour = Number(formData.get('endHour'));
-  const getEndHourMins = formData.get('endHourMins');
+  const getEndHourMins = String(formData.get('endHourMins'));
   const getInfo = String(formData.get('reason') || '');
-  console.log(getDate);
-  console.log(getStartHour);
-  console.log(getEndHour);
 
   if (!getDate || !getStartHour || !getEndHour || !getInfo || !getEndHourMins) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
+  console.log(typeof getDate);
 
-  //const stardAndEnd = convertStartAndEndHour(getStartHour, getEndHour, getDate);
+  const stardAndEnd = convertStartAndEndHour(
+    getStartHour,
+    getEndHour,
+    getEndHourMins,
+    getDate,
+  );
 
   const room = await prisma.room.findUnique({
     where: { roomNum: roomNumber },
@@ -78,24 +87,19 @@ export async function createBooking(prevState: unknown, formData: FormData) {
     };
   }
 
-  const endTimeWithMins = `${getEndHour}:${getEndHourMins}`;
-
-  const startTime = new Date(`${getDate} ${getStartHour}`);
-  const endTime = new Date(`${getDate} ${endTimeWithMins}`);
-
-  if (startTime > endTime) {
+  if (stardAndEnd.start > stardAndEnd.end) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
   }
 
-  if (startTime < new Date()) {
+  if (stardAndEnd.start < new Date()) {
     return { success: false, error: 'Du kan ikke booke i fortiden' };
   }
 
   const conflictBooking = await prisma.booking.findFirst({
     where: {
       roomId: room.id,
-      startTime: { lt: endTime },
-      endTime: { gt: startTime },
+      startTime: { lt: stardAndEnd.end },
+      endTime: { gt: stardAndEnd.start },
     },
   });
 
@@ -109,8 +113,8 @@ export async function createBooking(prevState: unknown, formData: FormData) {
   await prisma.booking.create({
     data: {
       roomId: room.id,
-      startTime: startTime,
-      endTime: endTime,
+      startTime: stardAndEnd.start,
+      endTime: stardAndEnd.end,
       userId: Number(session.user.id),
       reason: getInfo,
     },
