@@ -1,7 +1,6 @@
 import { getUserInfoFromSession, getUserFromDb } from './BookingActions';
 import { getRooms } from '../lib/api/rooms';
 import { getBookings } from '../lib/api/bookings';
-
 import BookingCalendar from '../components/calendar/BookingCalendar';
 
 export default async function BookingPage() {
