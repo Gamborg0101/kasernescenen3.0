@@ -16,7 +16,6 @@ export default function Testing() {
     );
   }
 
-  console.log(open);
   return (
     <div>
       <ul>
