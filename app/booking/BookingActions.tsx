@@ -3,7 +3,7 @@
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
 import { getUser } from '../lib/api/users';
-import { getRoom } from '../lib/api/rooms';
+import { getRoomByNum } from '../lib/api/rooms';
 import { createBooking, findBooking, deleteBooking } from '../lib/api/bookings';
 
 export async function getUserInfoFromSession() {
@@ -62,7 +62,7 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     getDate,
   );
 
-  const room = await getRoom(roomNumber);
+  const room = await getRoomByNum(roomNumber);
 
   if (!room) {
     return { success: false, error: 'Lokalet findes ikke' };

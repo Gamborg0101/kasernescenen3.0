@@ -1,18 +1,6 @@
 import { prisma } from '@/db';
 import { CreateBooking } from '@/app/types/types';
 
-export async function getRooms() {
-  return await prisma.room.findMany({
-    select: {
-      id: true,
-      name: true,
-      roomNum: true,
-      capacity: true,
-      location: true,
-    },
-  });
-}
-
 export async function getBookings() {
   return await prisma.booking.findMany({
     include: {
