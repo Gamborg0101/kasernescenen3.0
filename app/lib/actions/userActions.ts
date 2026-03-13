@@ -44,5 +44,9 @@ export async function UpdateUser(
     role: string;
   },
 ) {
+  const session = await auth();
+
+  if (session?.user.role !== 'admin') return;
+
   await UpdateUserDb(userId, data);
 }

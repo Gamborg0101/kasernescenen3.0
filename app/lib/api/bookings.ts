@@ -9,15 +9,7 @@ export async function getBookings() {
   });
 }
 
-export async function findBooking({
-  roomId,
-  startTime,
-  endTime,
-}: {
-  roomId: number;
-  startTime: Date;
-  endTime: Date;
-}) {
+export async function findBooking({ roomId, startTime, endTime }: { roomId: number; startTime: Date; endTime: Date }) {
   return await prisma.booking.findFirst({
     where: {
       roomId: roomId,
@@ -27,13 +19,7 @@ export async function findBooking({
   });
 }
 
-export async function createBooking({
-  roomId,
-  startTime,
-  endTime,
-  userId,
-  reason,
-}: CreateBooking) {
+export async function createBooking({ roomId, startTime, endTime, userId, reason }: CreateBooking) {
   await prisma.booking.create({
     data: {
       roomId: roomId,

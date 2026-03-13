@@ -6,6 +6,7 @@ import { getUser } from '../lib/api/users';
 import { getRoomByNum } from '../lib/api/rooms';
 import { createBooking, findBooking, deleteBooking } from '../lib/api/bookings';
 
+/* Skal ind i api/users.ts og kald fra page. */
 export async function getUserInfoFromSession() {
   const session = await auth();
 
@@ -18,7 +19,7 @@ export async function getUserInfoFromSession() {
     id: session.user.id,
   };
 }
-
+/* Skal omlokalisere til api/users.ts - og så kaldes fra page når den skal bruges i view. */
 export async function getUserFromDb() {
   const session = await auth();
   if (!session) throw new Error('Brugeren er ikke fundet');
@@ -55,12 +56,7 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
 
-  const stardAndEnd = convertStartAndEndHour(
-    getStartHour,
-    getEndHour,
-    getEndHourMins,
-    getDate,
-  );
+  const stardAndEnd = convertStartAndEndHour(getStartHour, getEndHour, getEndHourMins, getDate);
 
   const room = await getRoomByNum(roomNumber);
 
@@ -100,7 +96,7 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     };
   }
 
-  createBooking({
+  await createBooking({
     roomId: room.id,
     startTime: stardAndEnd.start,
     endTime: stardAndEnd.end,
@@ -125,7 +121,7 @@ export async function deleteABooking({
   if (!session) throw new Error('Ikke logget ind');
 
   if (session) {
-    deleteBooking({
+    await deleteBooking({
       userId: userId,
       roomId: roomId,
       bookingId: bookingId,
