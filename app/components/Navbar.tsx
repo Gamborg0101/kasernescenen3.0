@@ -2,6 +2,7 @@ import { auth } from '@/auth/authSetup';
 import LogoutBtn from './buttons/LogoutBtn';
 import Image from 'next/image';
 import aulogo from '../../public/aulogo.png';
+import Link from 'next/link';
 
 export async function Navbar() {
   const session = await auth();
@@ -18,9 +19,7 @@ export async function Navbar() {
             <NavItem text="Booking" href="/booking" />
             <NavItem text="Info" href="/" />
             <LogoutBtn />
-            {session?.user?.role === 'admin' && (
-              <NavItem text="Brugere" href="/brugere" />
-            )}
+            {session?.user?.role === 'admin' && <NavItem text="Brugere" href="/brugere" />}
           </>
         ) : (
           !session && (
@@ -38,34 +37,19 @@ export async function Navbar() {
 function Logo() {
   return (
     <div className="flex bg-gray-400 h-full items-center justify-center w-46 ">
-      <Image
-        src={aulogo}
-        alt="Aarhus University logo"
-        width={150}
-        height={150}
-      />
+      <Image src={aulogo} alt="Aarhus University logo" width={150} height={150} />
     </div>
   );
 }
 
-export function NavItem({
-  text,
-  href,
-  type,
-}: {
-  text: string;
-  href?: string;
-  type?: 'button' | 'submit';
-}) {
+export function NavItem({ text, href, type }: { text: string; href: string; type?: 'button' | 'submit' }) {
   return (
     <div>
       <li>
         <button type={type}>
-          <a href={href}>
-            <div className="flex justify-center items-center hover:bg-amber-700 h-16 p-5">
-              {text}
-            </div>
-          </a>
+          <Link href={href} className="flex justify-center items-center hover:bg-amber-700 h-16 p-5">
+            {text}
+          </Link>
         </button>
       </li>
     </div>

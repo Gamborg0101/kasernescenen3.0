@@ -1,3 +1,5 @@
+'use server';
+
 import { auth } from '@/auth/authSetup';
 import { getUser } from '../lib/api/users';
 import { getThreeBookings } from '../lib/api/bookings';

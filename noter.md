@@ -12,8 +12,6 @@ Authentication:
 - Auth.js
   user, moderator and admin
 
-Få brugt link component
-
 Få lavet:
 bookingActions.ts
 userActions.ts

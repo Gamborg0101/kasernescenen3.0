@@ -1,6 +1,7 @@
 import { signIn } from '@/auth/authSetup';
 import Image from 'next/image';
 import { auth } from '@/auth/authSetup';
+import Link from 'next/link';
 
 export async function Login() {
   const session = await auth();
@@ -30,17 +31,14 @@ export async function Login() {
       <div className="max-w-5xl mx-auto px-8 py-16">
         {/* Hero */}
         <div className="mb-4 pb-4">
-          <h1
-            className="text-5xl text-stone-900 leading-tight mb-6"
-            style={{ fontFamily: 'Georgia, serif' }}
-          >
+          <h1 className="text-5xl text-stone-900 leading-tight mb-6" style={{ fontFamily: 'Georgia, serif' }}>
             Kasernescenens
             <br />
             Lokaleportal
           </h1>
           <p className="text-stone-600 text-lg max-w-xl leading-relaxed">
-            Her kan studerende på Kaserneområdet oprette login og reservere
-            lokaler i studenterhuset og fagenes brugerrum.
+            Her kan studerende på Kaserneområdet oprette login og reservere lokaler i studenterhuset og fagenes
+            brugerrum.
           </p>
         </div>
 
@@ -55,15 +53,10 @@ export async function Login() {
               </h2>
               <div className="space-y-3">
                 {studensAndRooms.map(({ who, what }) => (
-                  <div
-                    key={who}
-                    className="flex gap-4 items-start py-3 border-b border-stone-100"
-                  >
+                  <div key={who} className="flex gap-4 items-start py-3 border-b border-stone-100">
                     <div className="w-1.5 h-1.5 rounded-full bg-stone-400 mt-2 shrink-0" />
                     <div>
-                      <p className="text-stone-800 font-medium text-sm">
-                        {who}
-                      </p>
+                      <p className="text-stone-800 font-medium text-sm">{who}</p>
                       <p className="text-stone-500 text-sm">{what}</p>
                     </div>
                   </div>
@@ -78,41 +71,30 @@ export async function Login() {
               </h2>
               <div className="space-y-3 text-sm text-stone-600 leading-relaxed">
                 <p>
-                  <span className="text-stone-800 font-medium">
-                    Undervisning, prøver og eksaminer
-                  </span>
+                  <span className="text-stone-800 font-medium">Undervisning, prøver og eksaminer</span>
                   <br />
-                  Studieadministrationen for Arts:{' '}
-                  <a
-                    href="mailto:team2.uvaeka.arts@au.dk"
-                    className="underline decoration-stone-300 hover:text-stone-900"
-                  >
-                    team2.uvaeka.arts@au.dk
-                  </a>
+                  Studieadministrationen for Arts:
+                  <Link href="mailto:team2.uvaeka.arts@au.dk">
+                    <span className="underline decoration-stone-300 hover:text-stone-900">
+                      team2.uvaeka.arts@au.dk{' '}
+                    </span>
+                  </Link>
                 </p>
                 <p>
-                  <span className="text-stone-800 font-medium">
-                    Faglige aktiviteter (ad hoc)
-                  </span>
+                  <span className="text-stone-800 font-medium">Faglige aktiviteter (ad hoc)</span>
                   <br />
-                  <a
-                    href="mailto:lokaler.kasernen@cc.au.dk"
-                    className="underline decoration-stone-300 hover:text-stone-900"
-                  >
-                    lokaler.kasernen@cc.au.dk
-                  </a>
+                  <Link href="mailto:lokaler.kasernen@cc.au.dk">
+                    <span className="underline decoration-stone-300 hover:text-stone-900">
+                      lokaler.kasernen@cc.au.dk
+                    </span>
+                  </Link>
                 </p>
                 <p>
-                  <span className="text-stone-800 font-medium">
-                    Øvrige forespørgelser:
-                  </span>
+                  <span className="text-stone-800 font-medium">Øvrige forespørgelser:</span>
                   <br />
-                  <a
-                    href="mailto:cg@cc.au.dk"
-                    className="underline decoration-stone-300 hover:text-stone-900"
-                  >
-                    cg@cc.au.dk
-                  </a>
+                  <Link href={'mailto:cg@cc.au.dk'}>
+                    <span className="underline decoration-stone-300 hover:text-stone-900">cg@cc.au.dk</span>
+                  </Link>
                 </p>
               </div>
             </div>
@@ -131,8 +113,7 @@ export async function Login() {
                 ))}
               </ul>
               <p className="text-xs text-stone-400 mt-4">
-                Glemte sager kan indleveres i bygning 1580, ved
-                lokalsekretariatet
+                Glemte sager kan indleveres i bygning 1580, ved lokalsekretariatet
               </p>
             </div>
           </div>
@@ -145,8 +126,7 @@ export async function Login() {
                   Log ind
                 </h2>
                 <p className="text-sm text-stone-500 mb-8 leading-relaxed">
-                  Brug din AU-Google-konto for at få adgang til
-                  reservationssystemet.
+                  Brug din AU-Google-konto for at få adgang til reservationssystemet.
                 </p>
 
                 <form
@@ -171,9 +151,7 @@ export async function Login() {
                 </form>
 
                 <p className="text-xs text-stone-400 mt-6 leading-relaxed">
-                  Kun studerende og ansatte med en{' '}
-                  <span className="text-stone-500">@au.dk</span>-konto kan logge
-                  ind.
+                  Kun studerende og ansatte med en <span className="text-stone-500">@au.dk</span>-konto kan logge ind.
                 </p>
               </div>
             </div>
