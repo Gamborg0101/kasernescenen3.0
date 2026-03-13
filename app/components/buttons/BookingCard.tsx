@@ -3,11 +3,7 @@
 import { BookingInfoProps } from '@/app/types/types';
 import { deleteABooking } from '@/app/booking/BookingActions';
 
-export default function BookingCard({
-  booking,
-}: {
-  booking: BookingInfoProps;
-}) {
+export default function BookingCard({ booking }: { booking: BookingInfoProps }) {
   return (
     <div className="h-full bg-stone-200 text-sm flex flex-col place-content-between ">
       <div className="p-1 text-gray-500">

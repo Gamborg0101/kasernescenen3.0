@@ -1,4 +1,4 @@
-import { OpretActions } from './opretActions';
+import { OpretBruger } from '../lib/actions/userActions';
 
 export default function Opret() {
   return (
@@ -10,13 +10,10 @@ export default function Opret() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Opret bruger
               </h1>
-              <form className="space-y-4 md:space-y-6" action={OpretActions}>
+              <form className="space-y-4 md:space-y-6" action={OpretBruger}>
                 <div>
                   <div className="space-y-2">
-                    <label
-                      htmlFor="firstName"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
+                    <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Fornavn
                     </label>
                     <input
@@ -29,10 +26,7 @@ export default function Opret() {
                     />
                   </div>
                   <div className="mt-4">
-                    <label
-                      htmlFor="lastName"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
+                    <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Efternavn
                     </label>
                     <input
@@ -46,10 +40,7 @@ export default function Opret() {
                   </div>
 
                   <div className="mt-4">
-                    <label
-                      htmlFor="email"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
+                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Email
                     </label>
                     <input
@@ -63,10 +54,7 @@ export default function Opret() {
                   </div>
 
                   <div className="mt-4">
-                    <label
-                      htmlFor="phone"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
+                    <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Telefon
                     </label>
                     <input
@@ -95,10 +83,7 @@ export default function Opret() {
                     />
                   </div>
                   <div className="mt-4">
-                    <label
-                      htmlFor="studie"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
+                    <label htmlFor="studie" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Studie
                     </label>
                     <select
@@ -109,12 +94,8 @@ export default function Opret() {
                       <option value="">Vælg et studie</option>
                       <option value="musikvidenskab">Musikvidenskab</option>
                       <option value="dramaturgi">Dramaturgi</option>
-                      <option value="æstetik_og_kultur">
-                        Æstetik og Kultur
-                      </option>
-                      <option value="litteraturhistorie">
-                        Litteraturhistorie
-                      </option>
+                      <option value="æstetik_og_kultur">Æstetik og Kultur</option>
+                      <option value="litteraturhistorie">Litteraturhistorie</option>
                     </select>
                   </div>
 

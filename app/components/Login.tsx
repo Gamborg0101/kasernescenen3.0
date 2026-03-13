@@ -1,6 +1,5 @@
-import { signIn } from '@/auth/authSetup';
+import { signIn, auth } from '@/auth/authSetup';
 import Image from 'next/image';
-import { auth } from '@/auth/authSetup';
 import Link from 'next/link';
 
 export async function Login() {

@@ -1,5 +1,5 @@
 import { User } from '@/app/types/types';
-import { UpdateUser } from '../../brugere/Actions';
+import { UpdateUser } from '@/app/lib/actions/userActions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 

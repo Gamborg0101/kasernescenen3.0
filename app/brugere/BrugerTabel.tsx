@@ -1,5 +1,5 @@
 'use client';
-import { DeleteUser } from './Actions';
+import { DeleteUser } from '../lib/actions/userActions';
 import React from 'react';
 import ChangeUserModal from '../components/modals/ChangeUserModal';
 import { User } from '../types/types';
@@ -34,24 +34,14 @@ export default function BrugerTabel({ users }: { users: User[] }) {
         <tbody>
           {localUsers.map((user, index) => (
             <tr key={user.id} className={index % 2 === 0 ? '' : 'bg-gray-100'}>
-              <td className="border border-gray-300 px-4 py-2">
-                {user.firstName}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {user.lastName}
-              </td>
+              <td className="border border-gray-300 px-4 py-2">{user.firstName}</td>
+              <td className="border border-gray-300 px-4 py-2">{user.lastName}</td>
               <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
               <td className="border border-gray-300 px-4 py-2">{user.email}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {user.studentNumber}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {user.cardNumber}
-              </td>
+              <td className="border border-gray-300 px-4 py-2">{user.studentNumber}</td>
+              <td className="border border-gray-300 px-4 py-2">{user.cardNumber}</td>
               <td className="border border-gray-300 px-4 py-2">{user.note}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {user.category}
-              </td>
+              <td className="border border-gray-300 px-4 py-2">{user.category}</td>
               <td className="border border-gray-300 px-4 py-2">{user.role}</td>
               <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
                 <button
@@ -77,12 +67,7 @@ export default function BrugerTabel({ users }: { users: User[] }) {
           ))}
         </tbody>
       </table>
-      {toggleModal && selectedUser && (
-        <ChangeUserModal
-          onClose={() => setToggleModal(false)}
-          user={selectedUser}
-        />
-      )}
+      {toggleModal && selectedUser && <ChangeUserModal onClose={() => setToggleModal(false)} user={selectedUser} />}
     </div>
   );
 }
