@@ -27,7 +27,15 @@ This project is build with the following technologies:
 
 - git clone https://github.com/Gamborg0101/kasernescenen3.0.git
 - bun install
-- docker compose up
+- cp .env.example .env
 - bun prisma migrate dev
 - bun prisma db seed
+- bunx auth secret
+  - add AUTH_SECRET secret to your .env (don't include BETTER)
+- Generate the following keys on google cloud console:
+  - AUTH_GOOGLE_ID
+  - AUTH_GOOGLE_SECRET
+    - For more information, look at this tutorial:
+      - https://www.youtube.com/watch?v=0Big9K5We-U
+- docker compose up
 - bun dev
