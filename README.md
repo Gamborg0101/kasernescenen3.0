@@ -27,4 +27,7 @@ This project is build with the following technologies:
 
 - git clone https://github.com/Gamborg0101/kasernescenen3.0.git
 - bun install
--
+- docker compose up
+- bun prisma migrate dev
+- bun prisma db seed
+- bun dev
