@@ -24,3 +24,7 @@ This project is build with the following technologies:
 | Auth      | Auth.js                 |
 
 ### Getting Started
+
+- git clone https://github.com/Gamborg0101/kasernescenen3.0.git
+- bun install
+-
