@@ -1,18 +1,20 @@
-# Booking System
+# 🏛️ Booking System
 
-**A fullstack room booking application built to replace an already existing legacy system.**
+> A fullstack room booking application built to replace a legacy system — with a modern stack, real-time conflict detection, and role-based access control.
 
-## Features
+---
 
-- Weekly calendar view with 15-min timeslots
-- Role-based access control (User, admin)
-- Select between multiple rooms
-- Real-time bookoing conflict detection
-- Unregistered users are forced to sign up when logging in first time
+## ✨ Features
 
-### Technologies
+- 📅 **Weekly calendar view** with 15-minute timeslots
+- 🔐 **Role-based access control** — User and Admin roles
+- 🏠 **Multi-room support** — switch between rooms seamlessly
+- ⚡ **Real-time booking conflict detection**
+- 🚪 **Auto-registration flow** — unregistered users are prompted to sign up on first login
 
-This project is build with the following technologies:
+---
+
+## 🛠️ Tech Stack
 
 | Layer     | Technology              |
 | --------- | ----------------------- |
@@ -23,19 +25,66 @@ This project is build with the following technologies:
 | ORM       | Prisma                  |
 | Auth      | Auth.js                 |
 
-### Getting Started
+---
 
-- git clone https://github.com/Gamborg0101/kasernescenen3.0.git
-- bun install
-- cp .env.example .env
-- bun prisma migrate dev
-- bun prisma db seed
-- bunx auth secret
-  - add AUTH_SECRET secret to your .env (don't include BETTER)
-- Generate the following keys on google cloud console:
-  - AUTH_GOOGLE_ID
-  - AUTH_GOOGLE_SECRET
-    - For more information, look at this tutorial:
-      - https://www.youtube.com/watch?v=0Big9K5We-U
-- docker compose up
-- bun dev
+## 🚀 Getting Started
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/Gamborg0101/kasernescenen3.0.git
+cd kasernescenen3.0
+bun install
+```
+
+### 2. Configure Environment
+
+```bash
+cp .env.example .env
+```
+
+### 3. Set Up Auth Secret
+
+```bash
+bunx auth secret
+```
+
+> Add the generated `AUTH_SECRET` value to your `.env` file.
+
+### 4. Set Up Google OAuth
+
+Generate the following credentials in the [Google Cloud Console](https://console.cloud.google.com/):
+
+- `AUTH_GOOGLE_ID`
+- `AUTH_GOOGLE_SECRET`
+
+Add them to your `.env`. New to Google OAuth? Follow [this tutorial](https://www.youtube.com/watch?v=0Big9K5We-U).
+
+### 5. Run the Database
+
+```bash
+docker compose up -d
+bun prisma migrate dev
+bun prisma db seed
+```
+
+### 6. Start Development Server
+
+```bash
+bun dev
+```
+
+The app will be available at [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 📁 Environment Variables
+
+| Variable             | Description                     |
+| -------------------- | ------------------------------- |
+| `AUTH_SECRET`        | Secret key for Auth.js sessions |
+| `AUTH_GOOGLE_ID`     | Google OAuth client ID          |
+| `AUTH_GOOGLE_SECRET` | Google OAuth client secret      |
+| `DATABASE_URL`       | PostgreSQL connection string    |
+
+> See `.env.example` for a full template.
