@@ -3,7 +3,7 @@ import { DefaultSession } from 'next-auth';
 declare module 'next-auth' {
   interface Session {
     user: {
-      id: number;
+      id: string; //Auth JS bruger typisk en streng
       role: string;
       isRegistered: boolean;
       googleId: string;
@@ -29,7 +29,7 @@ export type SessionUser = {
   name: string;
   email: string;
   image?: string;
-  id?: number;
+  id?: string;
 };
 
 export type WeekViewProps = {
