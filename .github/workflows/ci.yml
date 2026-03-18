@@ -12,13 +12,10 @@ jobs:
 
     steps:
       - name: Checkout kode
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Opsæt Node.js
+      - name: Opsæt Bun
         uses: oven-sh/setup-bun@v2
-        with:
-          node-version: '20.x'
-          cache: 'bun'
 
       - name: Installer dependencies
         run: bun install
