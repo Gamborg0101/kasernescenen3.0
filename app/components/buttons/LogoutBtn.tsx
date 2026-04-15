@@ -1,5 +1,4 @@
 import { signOut } from '@/auth/authSetup';
-import { NavItem } from '../Navbar';
 
 export default function LogoutBtn() {
   return (
@@ -11,7 +10,7 @@ export default function LogoutBtn() {
     >
       <button type="submit" className="flex justify-center items-center transition hover:bg-amber-700 h-16 p-5">
         Log ud
-      </button>{' '}
+      </button>
     </form>
   );
 }

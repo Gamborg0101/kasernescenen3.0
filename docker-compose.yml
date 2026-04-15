@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:18.3
     restart: unless-stopped
-    shm_size: 128mbπ
+    shm_size: 128mb
     environment:
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: kasernescenen

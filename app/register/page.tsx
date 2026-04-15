@@ -1,6 +1,53 @@
+'use client';
+
+import { useState, FormEvent } from 'react';
 import { OpretBruger } from '../lib/actions/userActions';
 
 export default function Opret() {
+  const [formdata, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    studentNumber: '',
+    study: '',
+    cardNumber: '',
+  });
+  const [error, setError] = useState('');
+
+  function validateStudentNumber(value: string) {
+    if (!value) return '';
+    if (!Number(value)) {
+      return 'Studienummer skal være tal';
+    }
+    if (value.length < 8) {
+      return 'Studienummer skal minimum være 8 cifre';
+    }
+    return '';
+  }
+
+  function validateCardNumber(value: string) {
+    if (!value) return '';
+    if (!Number(value)) {
+      return 'Kortnummer skal være tal';
+    }
+    if (value.length < 6) {
+      return 'Kortnummer skal minimum være 6 cifre';
+    }
+    return '';
+  }
+
+  function validatePhone(value: string) {
+    if (!value) return '';
+    if (!Number(value)) {
+      return 'Telefonnummer skal være tal';
+    }
+    if (value.length < 8) {
+      return 'Telefonnummer skal minimum være 6 cifre';
+    }
+    return '';
+  }
+
   return (
     <div>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -10,7 +57,19 @@ export default function Opret() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Opret bruger
               </h1>
-              <form className="space-y-4 md:space-y-6" action={OpretBruger}>
+              <form
+                className="space-y-4 md:space-y-6"
+                action={OpretBruger}
+                onSubmit={(e) => {
+                  const result =
+                    validateStudentNumber(formdata.studentNumber) && validateCardNumber(formdata.cardNumber);
+
+                  if (result) {
+                    e.preventDefault();
+                    setError(result);
+                  }
+                }}
+              >
                 <div>
                   <div className="space-y-2">
                     <label htmlFor="firstName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -64,6 +123,16 @@ export default function Opret() {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="22446688"
                       required
+                      onChange={(e) => {
+                        const value = e.target.value;
+
+                        setFormData((prev) => ({
+                          ...prev,
+                          phone: value,
+                        }));
+
+                        setError(validatePhone(value));
+                      }}
                     />
                   </div>
                   <div className="mt-4">
@@ -80,6 +149,16 @@ export default function Opret() {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="2016001234"
                       required
+                      onChange={(e) => {
+                        const value = e.target.value;
+
+                        setFormData((prev) => ({
+                          ...prev,
+                          studentNumber: value,
+                        }));
+
+                        setError(validateStudentNumber(value));
+                      }}
                     />
                   </div>
                   <div className="mt-4">
@@ -113,9 +192,20 @@ export default function Opret() {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="123456"
                       required
+                      onChange={(e) => {
+                        const value = e.target.value;
+
+                        setFormData((prev) => ({
+                          ...prev,
+                          cardNumber: value,
+                        }));
+
+                        setError(validateCardNumber(value));
+                      }}
                     />
                   </div>
                 </div>
+                {error && <div className="text-red-600">{error}</div>}
 
                 <button
                   type="submit"
