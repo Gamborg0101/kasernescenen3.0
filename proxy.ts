@@ -6,12 +6,12 @@ export default auth((request) => {
   const pathname = request.nextUrl.pathname;
 
   // Ikke logget ind → send til login
-  if (!session && pathname !== '/register') {
+  if (!session) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
   // Logget ind men ikke registreret → send til registrering
-  if (session && !session.user.isRegistered && pathname !== '/register') {
+  if (!session.user.isRegistered && pathname !== '/register') {
     return NextResponse.redirect(new URL('/register', request.url));
   }
 
@@ -19,5 +19,5 @@ export default auth((request) => {
 });
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|login|register).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|login).*)'],
 };

@@ -9,7 +9,9 @@ export default function LogoutBtn() {
         await signOut();
       }}
     >
-      <NavItem text="Log ud" href="/login" type="submit" />
+      <button type="submit" className="flex justify-center items-center transition hover:bg-amber-700 h-16 p-5">
+        Log ud
+      </button>{' '}
     </form>
   );
 }
