@@ -24,7 +24,7 @@ export async function Navbar() {
         ) : (
           !session && (
             <>
-              <NavItem text="Opret" href="/opret" />
+              <NavItem text="Opret" href="/register" />
               <NavItem text="Log ind" href="/" />
             </>
           )
@@ -37,7 +37,9 @@ export async function Navbar() {
 function Logo() {
   return (
     <div className="flex h-full items-center justify-center w-46 ">
-      <Image src={aulogo} style={{ background: 'none' }} alt="Aarhus University logo" width={150} height={150} />
+      <Link href={'/'}>
+        <Image src={aulogo} style={{ background: 'none' }} alt="Aarhus University logo" width={150} height={150} />
+      </Link>
     </div>
   );
 }
