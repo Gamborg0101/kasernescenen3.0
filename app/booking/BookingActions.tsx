@@ -22,9 +22,18 @@ export async function getUserInfoFromSession() {
 /* Skal omlokalisere til api/users.ts - og så kaldes fra page når den skal bruges i view. */
 export async function getUserFromDb() {
   const session = await auth();
-  if (!session) throw new Error('Brugeren er ikke fundet');
 
-  return getUser(Number(session.user.id));
+  if (!session?.user?.id) {
+    throw new Error('Brugeren mangler id');
+  }
+
+  const user = await getUser(Number(session.user.id));
+
+  if (!user) {
+    throw new Error('Bruger ikke fundet');
+  }
+
+  return user;
 }
 
 function convertStartAndEndHour(
