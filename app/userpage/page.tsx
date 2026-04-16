@@ -6,7 +6,8 @@ import { getThreeBookings } from '../../lib/db/bookings';
 import Image from 'next/image';
 import BookingCard from '../../components/buttons/BookingCard';
 import newDark from '../../public/newDark.png';
-import { CTLBtn } from '@/components/buttons/CTLBtn';
+import ChangePasswordButton from '@/components/buttons/ChangePasswordButton';
+import DeleteUserButton from '../../components/buttons/DeleteUserButton';
 
 export default async function UserPage() {
   const session = await auth();
@@ -40,8 +41,10 @@ export default async function UserPage() {
               <p className="text-gray-500">{user?.role}</p>
             </div>
             <div className="flex flex-col justify-end items-center w-40">
-              <CTLBtn text="Ændre Kode" type="submit" />
-              <CTLBtn text="Logout" type="button" />
+              <ChangePasswordButton />
+
+              {/* Lav dobbelt validation på Slet Bruger */}
+              <DeleteUserButton userId={Number(session.user.id)} />
             </div>
           </div>
         </div>
