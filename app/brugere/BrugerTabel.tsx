@@ -1,8 +1,8 @@
 'use client';
-import { DeleteUser } from '../lib/actions/userActions';
+import { DeleteUser } from '../../lib/actions/userActions';
 import React from 'react';
-import ChangeUserModal from '../components/modals/ChangeUserModal';
-import { User } from '../types/types';
+import ChangeUserModal from '../../components/modals/ChangeUserModal';
+import { User } from '../../lib/types/types';
 
 export default function BrugerTabel({ users }: { users: User[] }) {
   const [localUsers, setLocalUsers] = React.useState(users);

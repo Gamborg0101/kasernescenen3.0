@@ -1,4 +1,4 @@
-import { User } from '@/app/types/types';
+import { User } from '@/lib/types/types';
 import { useEffect, useRef, useState } from 'react';
 
 type Booking = {
@@ -15,11 +15,7 @@ type Props = {
   initialPos: { x: number; y: number };
 };
 
-export default function CreateBookingInfoModal({
-  booking,
-  userInfoDb,
-  initialPos,
-}: Props) {
+export default function CreateBookingInfoModal({ booking, userInfoDb, initialPos }: Props) {
   const [pos, setPos] = useState(initialPos);
   const ref = useRef<HTMLDivElement>(null);
 

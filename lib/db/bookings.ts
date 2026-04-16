@@ -1,5 +1,5 @@
 import { prisma } from '@/db';
-import { CreateBooking } from '@/app/types/types';
+import { CreateBooking } from '@/lib/types/types';
 
 export async function getBookings() {
   return await prisma.booking.findMany({

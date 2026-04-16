@@ -1,5 +1,5 @@
 import { differenceInMinutes } from 'date-fns';
-import { Booking, User } from '@/app/types/types';
+import { Booking, User } from '@/lib/types/types';
 
 type BookingOverlayProps = {
   bookings: Booking[];

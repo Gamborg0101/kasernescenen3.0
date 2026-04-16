@@ -1,6 +1,6 @@
 'use client';
 
-import { BookingInfoProps } from '@/app/types/types';
+import { BookingInfoProps } from '@/lib/types/types';
 import { deleteABooking } from '@/app/booking/BookingActions';
 
 export default function BookingCard({ booking }: { booking: BookingInfoProps }) {

@@ -1,10 +1,10 @@
 'use server';
 
 import { auth } from '@/auth/authSetup';
-import { getUser } from '../lib/api/users';
-import { getThreeBookings } from '../lib/api/bookings';
+import { getUser } from '../../lib/db/users';
+import { getThreeBookings } from '../../lib/db/bookings';
 import Image from 'next/image';
-import BookingCard from '../components/buttons/BookingCard';
+import BookingCard from '../../components/buttons/BookingCard';
 import newDark from '../../public/newDark.png';
 
 export default async function UserPage() {

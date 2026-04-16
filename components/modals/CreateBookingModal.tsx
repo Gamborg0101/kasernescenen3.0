@@ -2,7 +2,7 @@
 
 import { makeBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
-import { SessionUser } from '@/app/types/types';
+import { SessionUser } from '@/lib/types/types';
 
 type Props = {
   onClose: () => void;
@@ -11,12 +11,7 @@ type Props = {
   userInfoSession: SessionUser;
 };
 
-export default function CreateBookingModal({
-  onClose,
-  roomNumber,
-  startHour,
-  userInfoSession,
-}: Props) {
+export default function CreateBookingModal({ onClose, roomNumber, startHour, userInfoSession }: Props) {
   const [data, action] = useActionState(makeBooking, null);
 
   useEffect(() => {
@@ -29,14 +24,8 @@ export default function CreateBookingModal({
     'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
 
   return (
-    <div
-      className="fixed inset-0 bg-black/60 flex items-center justify-center z-1"
-      onClick={onClose}
-    >
-      <div
-        className="bg-white rounded-xl w-80 p-6 relative shadow-lg"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-1" onClick={onClose}>
+      <div className="bg-white rounded-xl w-80 p-6 relative shadow-lg" onClick={(e) => e.stopPropagation()}>
         <div className="flex flex-row-reverse">
           <button
             className="w-6 h-6 bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition flex justify-center items-center"
@@ -45,9 +34,7 @@ export default function CreateBookingModal({
             x
           </button>
         </div>
-        <h2 className="text-2xl font-semibold mb-2 text-center">
-          Book et lokale
-        </h2>
+        <h2 className="text-2xl font-semibold mb-2 text-center">Book et lokale</h2>
 
         <form action={action}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
@@ -60,38 +47,16 @@ export default function CreateBookingModal({
               minute: '2-digit',
             })}
           />
-          <input
-            type="hidden"
-            name="getDate"
-            id="getDate"
-            value={startHour.toDateString()}
-          />
-          <label
-            htmlFor="roomNumber"
-            className="text-xs font-bold text-gray-500"
-          >
+          <input type="hidden" name="getDate" id="getDate" value={startHour.toDateString()} />
+          <label htmlFor="roomNumber" className="text-xs font-bold text-gray-500">
             Rum:
           </label>
-          <input
-            id="roomNumber"
-            type="text"
-            className={inputClass + ' bg-gray-300'}
-            value={roomNumber}
-            readOnly
-          />
+          <input id="roomNumber" type="text" className={inputClass + ' bg-gray-300'} value={roomNumber} readOnly />
           <label htmlFor="date" className="text-xs font-bold text-gray-500">
             Dato:
           </label>
-          <input
-            type="text"
-            className={inputClass + ' bg-gray-300'}
-            value={startHour.toLocaleDateString()}
-            readOnly
-          />
-          <label
-            htmlFor="startHour"
-            className="text-xs font-bold text-gray-500"
-          >
+          <input type="text" className={inputClass + ' bg-gray-300'} value={startHour.toLocaleDateString()} readOnly />
+          <label htmlFor="startHour" className="text-xs font-bold text-gray-500">
             Start:
           </label>
 
@@ -134,13 +99,7 @@ export default function CreateBookingModal({
           <label htmlFor="name" className="text-xs font-bold text-gray-500">
             Navn:
           </label>
-          <input
-            id="name"
-            type="text"
-            className={inputClass + ' bg-gray-300'}
-            value={userInfoSession.name}
-            readOnly
-          />
+          <input id="name" type="text" className={inputClass + ' bg-gray-300'} value={userInfoSession.name} readOnly />
           <label htmlFor="email" className="text-xs font-bold text-gray-500">
             Email:
           </label>
@@ -154,15 +113,8 @@ export default function CreateBookingModal({
           <label htmlFor="reason" className="text-xs font-bold text-gray-500">
             Aktivitet:
           </label>
-          <input
-            type="text"
-            name="reason"
-            id="reason"
-            className={inputClass + 'bg-gray'}
-          />
-          {data?.error && (
-            <p className="text-red-500 text-sm mt-1">{data.error}</p>
-          )}
+          <input type="text" name="reason" id="reason" className={inputClass + 'bg-gray'} />
+          {data?.error && <p className="text-red-500 text-sm mt-1">{data.error}</p>}
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2"

@@ -2,39 +2,10 @@
 
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
-import { getUser } from '../lib/api/users';
-import { getRoomByNum } from '../lib/api/rooms';
-import { createBooking, findBooking, deleteBooking } from '../lib/api/bookings';
+import { getRoomByNum } from '../../lib/db/rooms';
+import { createBooking, findBooking, deleteBooking } from '../../lib/db/bookings';
 
 /* Skal ind i api/users.ts og kald fra page. */
-export async function getUserInfoFromSession() {
-  const session = await auth();
-
-  if (!session) return { name: '', email: '' };
-
-  return {
-    name: session.user?.name || '',
-    email: session.user?.email || '',
-    image: session.user?.image || '',
-    id: session.user.id,
-  };
-}
-/* Skal omlokalisere til api/users.ts - og så kaldes fra page når den skal bruges i view. */
-export async function getUserFromDb() {
-  const session = await auth();
-
-  if (!session?.user?.id) {
-    throw new Error('Brugeren mangler id');
-  }
-
-  const user = await getUser(Number(session.user.id));
-
-  if (!user) {
-    throw new Error('Bruger ikke fundet');
-  }
-
-  return user;
-}
 
 function convertStartAndEndHour(
   startHour: string,

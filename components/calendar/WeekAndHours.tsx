@@ -1,5 +1,5 @@
 'use client';
-import { RoomType, Booking, User } from '@/app/types/types';
+import { RoomType, Booking, User } from '@/lib/types/types';
 import BookingOverlay from './BookingOverlay';
 import { eachDayOfInterval, startOfWeek, endOfWeek, eachMinuteOfInterval, isSameDay } from 'date-fns';
 

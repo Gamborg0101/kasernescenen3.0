@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { OpretBruger } from '../lib/actions/userActions';
+import { OpretBruger } from '../../lib/actions/userActions';
 
 export default function Opret() {
   const [formdata, setFormData] = useState({

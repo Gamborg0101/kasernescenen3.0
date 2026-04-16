@@ -2,7 +2,7 @@
 import { auth } from '@/auth/authSetup';
 import { createUser } from '@/app/register/createUser';
 import { redirect } from 'next/navigation';
-import { DeleteUserBookings as DeleteUserBookingDB, updateUser as UpdateUserDb } from '../api/users';
+import { DeleteUserBookings as DeleteUserBookingDB, updateUser as UpdateUserDb } from '../db/users';
 
 export async function OpretBruger(formData: FormData) {
   const session = await auth();
@@ -28,7 +28,6 @@ export async function DeleteUser(userId: number) {
   if (session?.user.role !== 'admin') return;
 
   DeleteUserBookingDB(userId);
-  DeleteUser(userId);
 }
 
 export async function UpdateUser(

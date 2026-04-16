@@ -1,5 +1,5 @@
-import { User } from '@/app/types/types';
-import { UpdateUser } from '@/app/lib/actions/userActions';
+import { User } from '@/lib/types/types';
+import { UpdateUser } from '@/lib/actions/userActions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -42,10 +42,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
 
   return (
     <div className="relative">
-      <div
-        className="fixed inset-0 bg-opacity-10 flex items-center justify-center"
-        onClick={onClose}
-      >
+      <div className="fixed inset-0 bg-opacity-10 flex items-center justify-center" onClick={onClose}>
         <div className="">
           <div
             className="modal-content"
@@ -62,9 +59,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   x
                 </button>
               </div>
-              <h2 className="text-2xl font-semibold mb-2 text-center">
-                Ændre bruger
-              </h2>
+              <h2 className="text-2xl font-semibold mb-2 text-center">Ændre bruger</h2>
 
               <form onSubmit={handleSubmit}>
                 <label htmlFor="">Id</label>
