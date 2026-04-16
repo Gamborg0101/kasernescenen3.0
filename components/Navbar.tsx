@@ -1,7 +1,7 @@
 import { auth } from '@/auth/authSetup';
 import LogoutBtn from './buttons/LogoutBtn';
 import Image from 'next/image';
-import aulogo from '../../public/aulogo.png';
+import aulogo from '../public/aulogo.png';
 import Link from 'next/link';
 
 export async function Navbar() {
