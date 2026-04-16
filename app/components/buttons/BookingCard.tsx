@@ -22,6 +22,7 @@ export default function BookingCard({ booking }: { booking: BookingInfoProps }) 
           minute: '2-digit',
         })}`}
       </div>
+
       <button
         className="bg-red-200 hover:bg-red-100"
         onClick={() =>

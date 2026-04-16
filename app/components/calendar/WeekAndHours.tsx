@@ -1,25 +1,16 @@
 'use client';
-import { RoomType, Booking } from '@/app/types/types';
+import { RoomType, Booking, User } from '@/app/types/types';
 import BookingOverlay from './BookingOverlay';
-import {
-  eachDayOfInterval,
-  startOfWeek,
-  endOfWeek,
-  eachMinuteOfInterval,
-  isSameDay,
-} from 'date-fns';
+import { eachDayOfInterval, startOfWeek, endOfWeek, eachMinuteOfInterval, isSameDay } from 'date-fns';
 
 type Props = {
   selectedWeek: Date;
   roomNumber: number;
   allBookings: Booking[];
   handleHourClick: (hour: Date, disable: boolean) => void;
-  handleHover: (
-    disable: boolean,
-    booking?: Booking,
-    pos?: { x: number; y: number },
-  ) => void;
+  handleHover: (disable: boolean, booking?: Booking, pos?: { x: number; y: number }) => void;
   allRooms: RoomType[];
+  userInfoDb: User;
 };
 
 export default function WeekAndHours({
@@ -29,6 +20,7 @@ export default function WeekAndHours({
   allBookings,
   handleHourClick,
   handleHover,
+  userInfoDb,
 }: Props) {
   const currentRoom = allRooms?.find((room) => room.roomNum === roomNumber);
 
@@ -93,18 +85,14 @@ export default function WeekAndHours({
         <div>{hoursInDay()}</div>
         {fullWeek.map((week, index) => (
           <div key={index} className="relative">
-            <p className="flex center-items justify-center">
-              {week.day.toLocaleDateString('de-DE')}
-            </p>
+            <p className="flex center-items justify-center">{week.day.toLocaleDateString('de-DE')}</p>
 
             <BookingOverlay
               bookings={allBookings?.filter(
-                (booking) =>
-                  booking.roomId === currentRoom?.id &&
-                  isSameDay(booking.startTime, week.day),
+                (booking) => booking.roomId === currentRoom?.id && isSameDay(booking.startTime, week.day),
               )}
+              userInfoDb={userInfoDb}
             />
-
             {week.hours.map((hour, index) => (
               <div
                 onMouseEnter={(e) => {

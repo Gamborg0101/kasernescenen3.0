@@ -13,15 +13,10 @@ type Props = {
   userInfoSession: SessionUser;
   allRooms: RoomType[];
   bookings: Booking[];
-  userInfoDb: User | null;
+  userInfoDb: User;
 };
 
-export default function BookingCalendar({
-  userInfoSession,
-  bookings,
-  allRooms,
-  userInfoDb,
-}: Props) {
+export default function BookingCalendar({ userInfoSession, bookings, allRooms, userInfoDb }: Props) {
   const [weekCounter, setWeekCounter] = useState(new Date());
   const [roomNumber, setRoomNumber] = useState(126);
   const [showModal, setShowModal] = useState(false);
@@ -48,11 +43,7 @@ export default function BookingCalendar({
     setWeekCounter(new Date());
   }
 
-  function handleHover(
-    isOpen: boolean,
-    booking?: Booking,
-    pos?: { x: number; y: number },
-  ) {
+  function handleHover(isOpen: boolean, booking?: Booking, pos?: { x: number; y: number }) {
     setBookingInfoOpen(isOpen);
     setHoveredBooking(booking || null);
     if (pos) setTooltipPos(pos);
@@ -78,24 +69,12 @@ export default function BookingCalendar({
         />
       )}
       {bookingInfoOpen && hoveredBooking && (
-        <CreateBookingInfoModal
-          booking={hoveredBooking}
-          userInfoDb={userInfoDb}
-          initialPos={tooltipPos}
-        />
+        <CreateBookingInfoModal booking={hoveredBooking} userInfoDb={userInfoDb} initialPos={tooltipPos} />
       )}
       <div className="grid grid-cols-3 p-5">
-        <RoomSelector
-          roomNumber={roomNumber}
-          setRoomNumber={setRoomNumber}
-          allRooms={allRooms}
-        />
+        <RoomSelector roomNumber={roomNumber} setRoomNumber={setRoomNumber} allRooms={allRooms} />
 
-        <WeekSelector
-          nextWeek={WeekCounterNext}
-          prevWeek={WeekCounterPrev}
-          currentWeek={WeekCounterCurrentWeek}
-        />
+        <WeekSelector nextWeek={WeekCounterNext} prevWeek={WeekCounterPrev} currentWeek={WeekCounterCurrentWeek} />
       </div>
       <WeekAndHours
         selectedWeek={weekCounter}
@@ -104,6 +83,7 @@ export default function BookingCalendar({
         handleHourClick={handleHourClick}
         handleHover={handleHover}
         roomNumber={roomNumber}
+        userInfoDb={userInfoDb}
       />
     </div>
   );
