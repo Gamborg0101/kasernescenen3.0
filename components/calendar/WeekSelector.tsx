@@ -8,7 +8,7 @@ type WeekProps = {
 export default function WeekSelector({ nextWeek, prevWeek, currentWeek, weekCounter }: WeekProps) {
   console.log(weekCounter);
   return (
-    <div className=" grid grid-cols-3 gap-4 bg-gray-400 rounded-r-2xl rounded-l-2xl shadow-md w-70">
+    <div className=" grid grid-cols-3 gap-4 bg-white rounded-r-2xl rounded-l-2xl shadow-md w-70">
       <div className="flex justify-center items-center h-12">
         <button className="flex items-center justify-center h-4 w-6 text-sm" onClick={prevWeek}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="cursor-pointer">
@@ -36,9 +36,9 @@ export default function WeekSelector({ nextWeek, prevWeek, currentWeek, weekCoun
         <button className="flex items-center justify-center w-6 text-sm" onClick={nextWeek}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="cursor-pointer">
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
-              clip-rule="evenodd"
+              clipRule="evenodd"
             />
           </svg>
         </button>
