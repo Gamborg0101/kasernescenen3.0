@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default function BookingCalendar({ userInfoSession, bookings, allRooms, userInfoDb }: Props) {
-  const [weekCounter, setWeekCounter] = useState(new Date());
+  const [weekCounter, setWeekCounter] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
   const [roomNumber, setRoomNumber] = useState(126);
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState(new Date());
@@ -40,7 +40,7 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
   }
 
   function WeekCounterCurrentWeek() {
-    setWeekCounter(new Date());
+    setWeekCounter(startOfWeek(new Date(), { weekStartsOn: 1 }));
   }
 
   function handleHover(isOpen: boolean, booking?: Booking, pos?: { x: number; y: number }) {
@@ -72,9 +72,17 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
         <CreateBookingInfoModal booking={hoveredBooking} userInfoDb={userInfoDb} initialPos={tooltipPos} />
       )}
       <div className="grid grid-cols-3 p-5">
-        <RoomSelector roomNumber={roomNumber} setRoomNumber={setRoomNumber} allRooms={allRooms} />
-
-        <WeekSelector nextWeek={WeekCounterNext} prevWeek={WeekCounterPrev} currentWeek={WeekCounterCurrentWeek} />
+        <div>
+          <RoomSelector roomNumber={roomNumber} setRoomNumber={setRoomNumber} allRooms={allRooms} />
+        </div>
+        <div className="flex items-center justify-center">
+          <WeekSelector
+            nextWeek={WeekCounterNext}
+            prevWeek={WeekCounterPrev}
+            currentWeek={WeekCounterCurrentWeek}
+            weekCounter={weekCounter}
+          />
+        </div>
       </div>
       <WeekAndHours
         selectedWeek={weekCounter}

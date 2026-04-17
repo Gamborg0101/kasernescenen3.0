@@ -30,7 +30,6 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            
             className="absolute w-full bg-blue-500 truncate border rounded-sm"
           >
             <div className="flex items-center gap-1 text-sm">
