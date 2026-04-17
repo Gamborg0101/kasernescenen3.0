@@ -30,11 +30,17 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className="absolute w-full bg-blue-500  truncate font-semibold border rounded-sm"
+            
+            className="absolute w-full bg-blue-500 truncate border rounded-sm"
           >
-            <p className=" text-white ml-2 ">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
-            <p className=" text-white ml-2">{`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)} `}</p>
-            <p className=" text-white ml-2">{booking.reason}</p>
+            <div className="flex items-center gap-1 text-sm">
+              <p className="text-white ml-2 font-lgith">
+                {`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)}`}
+              </p>
+              <span className="text-white">-</span>
+              <p className="text-white font-bold">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
+            </div>
+            <p className=" text-white ml-2 text-sm font-bold">{booking.reason}</p>
           </div>
         );
       })}

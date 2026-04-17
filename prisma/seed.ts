@@ -136,12 +136,7 @@ async function main() {
         cardNumber: faker.number.int({ min: 10000000, max: 99999999 }),
         email: faker.internet.email(),
         note: faker.lorem.sentence(),
-        category: faker.helpers.arrayElement([
-          'dramaturgi',
-          'musikvidenskab',
-          'æstetik og kultur',
-          'retorik',
-        ]),
+        category: faker.helpers.arrayElement(['dramaturgi', 'musikvidenskab', 'æstetik og kultur', 'retorik']),
       },
     });
 
@@ -169,8 +164,8 @@ async function main() {
           from: new Date(),
           to: faker.date.soon({ days: 1 }),
         }),
-        endTime: faker.date.soon({ days: 2 }),
-        reason: faker.lorem.lines(2),
+        endTime: faker.date.between({ from: new Date(), to: new Date().setHours(336) }),
+        reason: faker.lorem.lines(1),
       },
     });
   }
