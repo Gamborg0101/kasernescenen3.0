@@ -7,10 +7,8 @@ import Link from 'next/link';
 export async function Navbar() {
   const session = await auth();
 
-  //Skal bruges til at lave role check
-
   return (
-    <nav className="flex justify-between h-16 bg-[rgb(55,160,203)]  items-center">
+    <nav className="flex justify-between h-16 items-center">
       <Logo />
 
       <ul className="flex font-semibold gap-8 pr-10">
@@ -18,7 +16,6 @@ export async function Navbar() {
           <>
             <NavItem text="Min side" href="/userpage" />
             {!session.user.isRegistered && <NavItem text="Registrer" href="/register" />}
-
             <NavItem text="Booking" href="/booking" />
             <NavItem text="Info" href="/" />
             <LogoutBtn />

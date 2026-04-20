@@ -21,7 +21,7 @@ export default function WeekSelector({ nextWeek, prevWeek, currentWeek, weekCoun
       </div>
       <div className="flex justify-center items-center flex-row ">
         <button onClick={currentWeek}>
-          <p className=" whitespace-nowrap cursor-pointer capitalize text-sm">
+          <p className="whitespace-nowrap cursor-pointer capitalize text-sm">
             {weekCounter.toLocaleDateString('da-DK', {
               weekday: 'long',
               day: 'numeric',
@@ -31,7 +31,7 @@ export default function WeekSelector({ nextWeek, prevWeek, currentWeek, weekCoun
           </p>
         </button>
       </div>
-      <div className="flex justify-center items-center ">
+      <div className="flex justify-center items-center">
         <button className="flex items-center justify-center w-6 text-sm" onClick={nextWeek}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="cursor-pointer">
             <path

@@ -63,7 +63,7 @@ export default function WeekAndHours({
         {hours.map((hour, index) => (
           <div
             key={index}
-            className={`h-5 px-4 flex justify-center border border-gray-200 font-semibold  ${index % 4 == 0 ? '' : 'bg-white'}`}
+            className={`h-5 px-4 flex justify-center border border-gray-200 font-semibold items-center ${index % 4 == 0 ? '' : 'bg-white'}`}
           >
             {index % 4 == 0
               ? hour.toLocaleTimeString('da-DK', {
@@ -107,7 +107,7 @@ export default function WeekAndHours({
                 onClick={() => {
                   handleHourClick(hour, !getBookingForHour(hour));
                 }}
-                className={`h-5 border-b border-r border-[#f0ebe3] hover:bg-black transition-colors duration-100 ${getBookingForHour(hour) ? `` : 'cursor-pointer hover:bg-black'}`}
+                className={`h-5 border-b border-t border-r border-[#f0ebe3] hover:bg-gray-400 transition-colors duration-100 ${getBookingForHour(hour) ? `` : 'cursor-pointer hover:bg-black'}`}
                 key={index}
               ></div>
             ))}
