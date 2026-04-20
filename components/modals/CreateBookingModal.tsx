@@ -3,6 +3,8 @@
 import { makeBooking } from '@/app/booking/BookingActions';
 import { useActionState, useEffect } from 'react';
 import { SessionUser } from '@/lib/types/types';
+import { addHours } from 'date-fns';
+import { start } from 'node:repl';
 
 type Props = {
   onClose: () => void;
@@ -99,7 +101,7 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
               maxLength={2}
               name="endHour"
               className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              defaultValue={'07'}
+              defaultValue={addHours(startHour, 1).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}
             />
             <select
               name="endHourMins"
