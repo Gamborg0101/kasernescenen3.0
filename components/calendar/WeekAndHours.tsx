@@ -87,7 +87,7 @@ export default function WeekAndHours({
           {fullWeek.map((week, index) => (
             <div key={index} className="relative">
               <p className="flex center-items justify-center h-11 items-center border-l border-gray-200 shadow">
-                {week.day.toLocaleDateString('dk-DK')}
+                {week.day.toLocaleDateString('da-DK')}
               </p>
 
               <BookingOverlay

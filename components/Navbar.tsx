@@ -8,10 +8,10 @@ export async function Navbar() {
   const session = await auth();
 
   return (
-    <nav className="flex justify-between h-16 items-center">
+    <nav className="flex justify-between h-16 items-center border-b border-gray-200">
       <Logo />
 
-      <ul className="flex font-semibold gap-8 pr-10">
+      <ul className="flex font-semibold gap-8 pr-10 ">
         {session ? (
           <>
             <NavItem text="Min side" href="/userpage" />
