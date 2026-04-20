@@ -58,12 +58,12 @@ export default function WeekAndHours({
     const hours = createHoursForDay(day);
 
     return (
-      <div>
-        <div>&nbsp;</div>
+      <div className="">
+        <div className="mt-5">&nbsp;</div>
         {hours.map((hour, index) => (
           <div
             key={index}
-            className={`h-5 px-4 flex justify-center border border-gray-200 font-semibold items-center ${index % 4 == 0 ? '' : 'bg-white'}`}
+            className={`h-5 px-4  flex justify-center border border-gray-200 font-semibold items-center ${index % 4 == 0 ? '' : 'bg-white'}`}
           >
             {index % 4 == 0
               ? hour.toLocaleTimeString('da-DK', {
@@ -81,38 +81,42 @@ export default function WeekAndHours({
 
   return (
     <div className="flex gap-10 relative">
-      <div className="grid grid-cols-8 w-full relative">
-        <div>{hoursInDay()}</div>
-        {fullWeek.map((week, index) => (
-          <div key={index} className="relative">
-            <p className="flex center-items justify-center">{week.day.toLocaleDateString('de-DE')}</p>
+      <div className="grid  grid-cols-[1fr_12fr] w-full relative">
+        <div className="">{hoursInDay()}</div>
+        <div className="grid grid-cols-7 ">
+          {fullWeek.map((week, index) => (
+            <div key={index} className="relative">
+              <p className="flex center-items justify-center h-11 items-center border-l border-gray-200 shadow">
+                {week.day.toLocaleDateString('dk-DK')}
+              </p>
 
-            <BookingOverlay
-              bookings={allBookings?.filter(
-                (booking) => booking.roomId === currentRoom?.id && isSameDay(booking.startTime, week.day),
-              )}
-              userInfoDb={userInfoDb}
-            />
-            {week.hours.map((hour, index) => (
-              <div
-                onMouseEnter={(e) => {
-                  const booking = getBookingForHour(hour);
-                  if (booking)
-                    handleHover(true, booking, {
-                      x: e.clientX + 12,
-                      y: e.clientY + 12,
-                    });
-                }}
-                onMouseLeave={() => handleHover(false)}
-                onClick={() => {
-                  handleHourClick(hour, !getBookingForHour(hour));
-                }}
-                className={`h-5 border-b border-t border-r border-[#f0ebe3] hover:bg-gray-400 transition-colors duration-100 ${getBookingForHour(hour) ? `` : 'cursor-pointer hover:bg-black'}`}
-                key={index}
-              ></div>
-            ))}
-          </div>
-        ))}
+              <BookingOverlay
+                bookings={allBookings?.filter(
+                  (booking) => booking.roomId === currentRoom?.id && isSameDay(booking.startTime, week.day),
+                )}
+                userInfoDb={userInfoDb}
+              />
+              {week.hours.map((hour, index) => (
+                <div
+                  onMouseEnter={(e) => {
+                    const booking = getBookingForHour(hour);
+                    if (booking)
+                      handleHover(true, booking, {
+                        x: e.clientX + 12,
+                        y: e.clientY + 12,
+                      });
+                  }}
+                  onMouseLeave={() => handleHover(false)}
+                  onClick={() => {
+                    handleHourClick(hour, !getBookingForHour(hour));
+                  }}
+                  className={`h-5 border-b border-t border-r border-[#f0ebe3] hover:bg-gray-400 transition-colors duration-100 ${getBookingForHour(hour) ? `` : 'cursor-pointer hover:bg-black'}`}
+                  key={index}
+                ></div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
