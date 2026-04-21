@@ -1142,7 +1142,7 @@ export namespace Prisma {
     studentNumber: number | null
     cardNumber: number | null
     note: string | null
-    category: string | null
+    study: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1156,7 +1156,7 @@ export namespace Prisma {
     studentNumber: number | null
     cardNumber: number | null
     note: string | null
-    category: string | null
+    study: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1170,7 +1170,7 @@ export namespace Prisma {
     studentNumber: number
     cardNumber: number
     note: number
-    category: number
+    study: number
     _all: number
   }
 
@@ -1200,7 +1200,7 @@ export namespace Prisma {
     studentNumber?: true
     cardNumber?: true
     note?: true
-    category?: true
+    study?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1214,7 +1214,7 @@ export namespace Prisma {
     studentNumber?: true
     cardNumber?: true
     note?: true
-    category?: true
+    study?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1228,7 +1228,7 @@ export namespace Prisma {
     studentNumber?: true
     cardNumber?: true
     note?: true
-    category?: true
+    study?: true
     _all?: true
   }
 
@@ -1329,7 +1329,7 @@ export namespace Prisma {
     studentNumber: number
     cardNumber: number
     note: string | null
-    category: string | null
+    study: string
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1362,7 +1362,7 @@ export namespace Prisma {
     studentNumber?: boolean
     cardNumber?: boolean
     note?: boolean
-    category?: boolean
+    study?: boolean
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1378,7 +1378,7 @@ export namespace Prisma {
     studentNumber?: boolean
     cardNumber?: boolean
     note?: boolean
-    category?: boolean
+    study?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1392,7 +1392,7 @@ export namespace Prisma {
     studentNumber?: boolean
     cardNumber?: boolean
     note?: boolean
-    category?: boolean
+    study?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1406,10 +1406,10 @@ export namespace Prisma {
     studentNumber?: boolean
     cardNumber?: boolean
     note?: boolean
-    category?: boolean
+    study?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "googleId" | "firstName" | "lastName" | "role" | "phone" | "email" | "studentNumber" | "cardNumber" | "note" | "category", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "googleId" | "firstName" | "lastName" | "role" | "phone" | "email" | "studentNumber" | "cardNumber" | "note" | "study", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1433,7 +1433,7 @@ export namespace Prisma {
       studentNumber: number
       cardNumber: number
       note: string | null
-      category: string | null
+      study: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1868,7 +1868,7 @@ export namespace Prisma {
     readonly studentNumber: FieldRef<"User", 'Int'>
     readonly cardNumber: FieldRef<"User", 'Int'>
     readonly note: FieldRef<"User", 'String'>
-    readonly category: FieldRef<"User", 'String'>
+    readonly study: FieldRef<"User", 'String'>
   }
     
 
@@ -4557,7 +4557,7 @@ export namespace Prisma {
     studentNumber: 'studentNumber',
     cardNumber: 'cardNumber',
     note: 'note',
-    category: 'category'
+    study: 'study'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -4688,7 +4688,7 @@ export namespace Prisma {
     studentNumber?: IntFilter<"User"> | number
     cardNumber?: IntFilter<"User"> | number
     note?: StringNullableFilter<"User"> | string | null
-    category?: StringNullableFilter<"User"> | string | null
+    study?: StringFilter<"User"> | string
     bookings?: BookingListRelationFilter
   }
 
@@ -4703,7 +4703,7 @@ export namespace Prisma {
     studentNumber?: SortOrder
     cardNumber?: SortOrder
     note?: SortOrderInput | SortOrder
-    category?: SortOrderInput | SortOrder
+    study?: SortOrder
     bookings?: BookingOrderByRelationAggregateInput
   }
 
@@ -4721,7 +4721,7 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     note?: StringNullableFilter<"User"> | string | null
-    category?: StringNullableFilter<"User"> | string | null
+    study?: StringFilter<"User"> | string
     bookings?: BookingListRelationFilter
   }, "id" | "googleId" | "phone" | "email" | "studentNumber" | "cardNumber">
 
@@ -4736,7 +4736,7 @@ export namespace Prisma {
     studentNumber?: SortOrder
     cardNumber?: SortOrder
     note?: SortOrderInput | SortOrder
-    category?: SortOrderInput | SortOrder
+    study?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -4758,7 +4758,7 @@ export namespace Prisma {
     studentNumber?: IntWithAggregatesFilter<"User"> | number
     cardNumber?: IntWithAggregatesFilter<"User"> | number
     note?: StringNullableWithAggregatesFilter<"User"> | string | null
-    category?: StringNullableWithAggregatesFilter<"User"> | string | null
+    study?: StringWithAggregatesFilter<"User"> | string
   }
 
   export type RoomWhereInput = {
@@ -4893,7 +4893,7 @@ export namespace Prisma {
     studentNumber: number
     cardNumber: number
     note?: string | null
-    category?: string | null
+    study: string
     bookings?: BookingCreateNestedManyWithoutUserInput
   }
 
@@ -4908,7 +4908,7 @@ export namespace Prisma {
     studentNumber: number
     cardNumber: number
     note?: string | null
-    category?: string | null
+    study: string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -4922,7 +4922,7 @@ export namespace Prisma {
     studentNumber?: IntFieldUpdateOperationsInput | number
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    study?: StringFieldUpdateOperationsInput | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
   }
 
@@ -4937,7 +4937,7 @@ export namespace Prisma {
     studentNumber?: IntFieldUpdateOperationsInput | number
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    study?: StringFieldUpdateOperationsInput | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -4952,7 +4952,7 @@ export namespace Prisma {
     studentNumber: number
     cardNumber: number
     note?: string | null
-    category?: string | null
+    study: string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -4965,7 +4965,7 @@ export namespace Prisma {
     studentNumber?: IntFieldUpdateOperationsInput | number
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    study?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -4979,7 +4979,7 @@ export namespace Prisma {
     studentNumber?: IntFieldUpdateOperationsInput | number
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    study?: StringFieldUpdateOperationsInput | string
   }
 
   export type RoomCreateInput = {
@@ -5164,7 +5164,7 @@ export namespace Prisma {
     studentNumber?: SortOrder
     cardNumber?: SortOrder
     note?: SortOrder
-    category?: SortOrder
+    study?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -5185,7 +5185,7 @@ export namespace Prisma {
     studentNumber?: SortOrder
     cardNumber?: SortOrder
     note?: SortOrder
-    category?: SortOrder
+    study?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -5199,7 +5199,7 @@ export namespace Prisma {
     studentNumber?: SortOrder
     cardNumber?: SortOrder
     note?: SortOrder
-    category?: SortOrder
+    study?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -5763,7 +5763,7 @@ export namespace Prisma {
     studentNumber: number
     cardNumber: number
     note?: string | null
-    category?: string | null
+    study: string
   }
 
   export type UserUncheckedCreateWithoutBookingsInput = {
@@ -5777,7 +5777,7 @@ export namespace Prisma {
     studentNumber: number
     cardNumber: number
     note?: string | null
-    category?: string | null
+    study: string
   }
 
   export type UserCreateOrConnectWithoutBookingsInput = {
@@ -5832,7 +5832,7 @@ export namespace Prisma {
     studentNumber?: IntFieldUpdateOperationsInput | number
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    study?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateWithoutBookingsInput = {
@@ -5846,7 +5846,7 @@ export namespace Prisma {
     studentNumber?: IntFieldUpdateOperationsInput | number
     cardNumber?: IntFieldUpdateOperationsInput | number
     note?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    study?: StringFieldUpdateOperationsInput | string
   }
 
   export type BookingCreateManyUserInput = {

@@ -17,7 +17,7 @@ export async function OpretBruger(formData: FormData) {
     email: formData.get('email') as string,
     studentNumber: Number(formData.get('studentNumber')),
     cardNumber: Number(formData.get('cardNumber')),
-    category: formData.get('studie') as string,
+    study: formData.get('studie') as string,
   });
   redirect('/booking');
 }
@@ -39,7 +39,7 @@ export async function UpdateUser(
     email?: string;
     studentNumber?: number;
     cardNumber?: number;
-    category?: string;
+    study?: string;
     role: string;
   },
 ) {

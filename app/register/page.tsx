@@ -43,7 +43,7 @@ export default function Opret() {
       return 'Telefonnummer skal være tal';
     }
     if (value.length < 8) {
-      return 'Telefonnummer skal minimum være 6 cifre';
+      return 'Telefonnummer skal minimum være 8 cifre';
     }
     return '';
   }

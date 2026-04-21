@@ -15,7 +15,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
   const [email, setEmail] = useState(user.email);
   const [studentNumber, setStudentNumber] = useState(user.studentNumber);
   const [cardNumber, setCardNumber] = useState(user.cardNumber);
-  const [category, setCategory] = useState(user.category);
+  const [study, setStudy] = useState(user.study);
   const [role, setRole] = useState(user.role);
   const router = useRouter();
 
@@ -33,7 +33,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
       email: email ?? undefined,
       studentNumber: studentNumber ?? undefined,
       cardNumber: cardNumber ?? undefined,
-      category: category ?? undefined,
+      study: study ?? undefined,
       role: role ?? undefined,
     });
     router.refresh();
@@ -136,7 +136,7 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   id="departments"
                   className={SetClassName()}
                   onChange={(e) => {
-                    setCategory(e.target.value);
+                    setStudy(e.target.value);
                   }}
                 >
                   <option value="">Vælg en afdeling</option>

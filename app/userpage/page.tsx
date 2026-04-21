@@ -36,7 +36,7 @@ export default async function UserPage() {
               />
               <p className="font-extrabold ">{`${user?.firstName} ${user?.lastName}`}</p>
               <p className="text-gray-500">{user?.email}</p>
-              <p className="text-gray-500">{user?.category}</p>
+              <p className="text-gray-500">{user?.study}</p>
               <p className="text-gray-500">{user?.studentNumber}</p>
               <p className="text-gray-500">{user?.role}</p>
             </div>

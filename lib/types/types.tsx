@@ -18,7 +18,7 @@ export type User = {
   lastName: string;
   role: string;
   studentNumber: number;
-  category: string | null;
+  study: string;
   phone: number;
   email: string;
   note: string | null;

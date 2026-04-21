@@ -41,7 +41,7 @@ export default function BrugerTabel({ users }: { users: User[] }) {
               <td className="border border-gray-300 px-4 py-2">{user.studentNumber}</td>
               <td className="border border-gray-300 px-4 py-2">{user.cardNumber}</td>
               <td className="border border-gray-300 px-4 py-2">{user.note}</td>
-              <td className="border border-gray-300 px-4 py-2">{user.category}</td>
+              <td className="border border-gray-300 px-4 py-2">{user.study}</td>
               <td className="border border-gray-300 px-4 py-2">{user.role}</td>
               <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
                 <button

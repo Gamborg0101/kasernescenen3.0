@@ -18,7 +18,7 @@ model User {
   studentNumber Int       @unique
   cardNumber    Int       @unique
   note          String?
-  category      String?
+  study         String
   bookings      Booking[]
 }
 

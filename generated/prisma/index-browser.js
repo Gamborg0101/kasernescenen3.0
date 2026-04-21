@@ -131,7 +131,7 @@ exports.Prisma.UserScalarFieldEnum = {
   studentNumber: 'studentNumber',
   cardNumber: 'cardNumber',
   note: 'note',
-  category: 'category'
+  study: 'study'
 };
 
 exports.Prisma.RoomScalarFieldEnum = {

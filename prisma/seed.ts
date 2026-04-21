@@ -121,7 +121,7 @@ async function main() {
       cardNumber: 123456,
       email: 'casperGamborg@hotmail.com',
       note: faker.lorem.sentence(),
-      category: 'musikvidenskab',
+      study: 'musikvidenskab',
     },
   });
   for (let i = 0; i < 10; i++) {
@@ -136,7 +136,7 @@ async function main() {
         cardNumber: faker.number.int({ min: 10000000, max: 99999999 }),
         email: faker.internet.email(),
         note: faker.lorem.sentence(),
-        category: faker.helpers.arrayElement(['dramaturgi', 'musikvidenskab', 'æstetik og kultur', 'retorik']),
+        study: faker.helpers.arrayElement(['dramaturgi', 'musikvidenskab', 'æstetik og kultur', 'retorik']),
       },
     });
 
