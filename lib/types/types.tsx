@@ -1,4 +1,5 @@
 import { DefaultSession } from 'next-auth';
+import { StudyProgram } from '../colors';
 
 declare module 'next-auth' {
   interface Session {
@@ -18,7 +19,7 @@ export type User = {
   lastName: string;
   role: string;
   studentNumber: number;
-  study: string;
+  study: StudyProgram;
   phone: number;
   email: string;
   note: string | null;

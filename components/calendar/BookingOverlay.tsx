@@ -21,14 +21,6 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
     return time.toLocaleTimeString('da-DK', { hour: 'numeric', minute: 'numeric' });
   }
 
-  function colorBasedOnRole(booking: Booking) {
-    console.log();
-    // if (booking.userId === userInfoDb.id && userInfoDb.role === 'student') {
-    //   return 'bg-blue-200';
-    // }
-    // return 'bg-yellow-200';
-  }
-
   return (
     <div className="absolute w-full pointer-events-none">
       {bookings?.map((booking, index) => {
@@ -39,16 +31,16 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className={`absolute w-full ${colorBasedOnRole(booking)} truncate border rounded-sm`}
+            className={`absolute w-full  ${bookingColors[userInfoDb.study] ?? bookingColors.unknown1} truncate border rounded-sm`}
           >
             <div className="flex items-center gap-1 text-sm">
-              <p className="text-black ml-2 font-lgith">
+              <p className=" ml-2 font-lgith">
                 {`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)}`}
               </p>
-              <span className="text-black">-</span>
-              <p className="text-black font-bold">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
+              <span className="">-</span>
+              <p className=" font-bold">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
             </div>
-            <p className=" text-black ml-2 text-sm font-bold">{booking.reason}</p>
+            <p className="  ml-2 text-sm font-bold">{booking.reason}</p>
           </div>
         );
       })}
