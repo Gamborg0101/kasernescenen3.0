@@ -6,7 +6,6 @@ import { getThreeBookings } from '../../lib/db/bookings';
 import Image from 'next/image';
 import BookingCard from '../../components/buttons/BookingCard';
 import newDark from '../../public/newDark.png';
-import ChangePasswordButton from '@/components/buttons/ChangePasswordButton';
 import DeleteUserButton from '../../components/buttons/DeleteUserButton';
 
 export default async function UserPage() {
@@ -41,9 +40,6 @@ export default async function UserPage() {
               <p className="text-gray-500">{user?.role}</p>
             </div>
             <div className="flex flex-col justify-end items-center w-40">
-              <ChangePasswordButton />
-
-              {/* Lav dobbelt validation på Slet Bruger */}
               <DeleteUserButton userId={Number(session.user.id)} />
             </div>
           </div>

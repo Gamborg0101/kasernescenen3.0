@@ -15,6 +15,11 @@ export default auth((request) => {
     return NextResponse.redirect(new URL('/register', request.url));
   }
 
+  // Du kan ikke se users liste, medmindre du er admin
+  if (session.user.role !== 'admin' && pathname == '/users') {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+
   return NextResponse.next();
 });
 
