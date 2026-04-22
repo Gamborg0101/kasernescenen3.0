@@ -10,6 +10,21 @@ export async function getUser(userId: number) {
   });
 }
 
+export async function createUser(data: {
+  googleId: string;
+
+  firstName: string;
+  lastName: string;
+  role: string;
+  phone: number;
+  email: string;
+  studentNumber: number;
+  cardNumber: number;
+  study: string;
+}) {
+  return await prisma.user.create({ data });
+}
+
 export async function getUsers() {
   return await prisma.user.findMany();
 }

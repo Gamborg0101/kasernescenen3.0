@@ -1,6 +1,6 @@
 'use server';
 import { auth } from '@/auth/authSetup';
-import { createUser } from '@/app/register/createUser';
+import { createUser } from '../db/users';
 import { redirect } from 'next/navigation';
 import { DeleteUserBookings as DeleteUserBookingDB, updateUser as UpdateUserDb } from '../db/users';
 

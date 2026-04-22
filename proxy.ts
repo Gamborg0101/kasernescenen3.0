@@ -5,9 +5,9 @@ export default auth((request) => {
   const session = request.auth;
   const pathname = request.nextUrl.pathname;
 
-  // Ikke logget ind → send til login
+  // Ikke logget ind → send til /
   if (!session) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   // Logget ind men ikke registreret → send til registrering
@@ -19,5 +19,5 @@ export default auth((request) => {
 });
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|login).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|login|$).*)'],
 };
