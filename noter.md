@@ -23,7 +23,9 @@ Niels:
 
 - Mappe struktur - actions / page
 
+Note til selv:
+Alle pages skal være server kompoentns.
 
-Farve palette: 
+Hent fra db - brug i page - send data til komponenter som bliver renderet i page
 
-1:
+Så - db henter data - page modtager, ændrerer og videresender data - components viser data

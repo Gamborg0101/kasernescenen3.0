@@ -1,7 +1,6 @@
 import { auth } from '@/auth/authSetup';
 import LogoutBtn from './buttons/LogoutBtn';
-import Image from 'next/image';
-import aulogo from '../public/aulogo.png';
+import Logo from './Logo';
 import Link from 'next/link';
 
 export async function Navbar() {
@@ -30,16 +29,6 @@ export async function Navbar() {
         )}
       </ul>
     </nav>
-  );
-}
-
-function Logo() {
-  return (
-    <div className="flex h-full items-center justify-center w-46 ">
-      <Link href={'/'}>
-        <Image src={aulogo} style={{ background: 'none' }} alt="Aarhus University logo" width={150} height={150} />
-      </Link>
-    </div>
   );
 }
 

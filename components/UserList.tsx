@@ -1,10 +1,10 @@
 'use client';
-import { DeleteUser } from '../../lib/actions/userActions';
+import { DeleteUser } from '@/lib/actions/userActions';
 import React from 'react';
-import ChangeUserModal from '../../components/modals/ChangeUserModal';
+import ChangeUserModal from '@/components/modals/ChangeUserModal';
 import { User } from '@/generated/prisma';
 
-export default function BrugerTabel({ users }: { users: User[] }) {
+export default function UserList({ users }: { users: User[] }) {
   const [localUsers, setLocalUsers] = React.useState(users);
   const [toggleModal, setToggleModal] = React.useState(false);
   const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
@@ -13,6 +13,8 @@ export default function BrugerTabel({ users }: { users: User[] }) {
     await DeleteUser(userId);
     setLocalUsers(localUsers.filter((user) => user.id !== userId));
   };
+
+  //Need logic for changing userinfo
 
   return (
     <div>
