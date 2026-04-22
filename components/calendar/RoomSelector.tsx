@@ -1,4 +1,4 @@
-import { RoomType } from '@/lib/types/types';
+import { Room as RoomType } from '@/generated/prisma';
 
 type Props = {
   roomNumber: number;

@@ -1,10 +1,9 @@
 'use client';
 
-import { makeBooking } from '@/app/booking/BookingActions';
+import { makeBooking } from '@/lib/actions/bookingActions';
 import { useActionState, useEffect } from 'react';
-import { SessionUser } from '@/lib/types/types';
+import { SessionUser } from '@/lib/types';
 import { addHours } from 'date-fns';
-import { start } from 'node:repl';
 
 type Props = {
   onClose: () => void;

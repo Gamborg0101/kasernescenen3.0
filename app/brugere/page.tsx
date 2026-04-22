@@ -1,9 +1,9 @@
 'use server';
-import { prisma } from '@/db';
 import BrugerTabel from './BrugerTabel';
 import { JSX } from 'react';
 import { auth } from '@/auth/authSetup';
 import { redirect } from 'next/navigation';
+import { getUsers } from '@/lib/db/users';
 
 export default async function Page(): Promise<JSX.Element> {
   const session = await auth();
@@ -12,7 +12,7 @@ export default async function Page(): Promise<JSX.Element> {
     redirect('/booking');
   }
 
-  const users = await prisma.user.findMany();
+  const users = await getUsers();
 
   return <BrugerTabel users={users} />;
 }

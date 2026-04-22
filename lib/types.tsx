@@ -1,5 +1,5 @@
 import { DefaultSession } from 'next-auth';
-import { StudyProgram } from '../colors';
+import { StudyProgram } from './colors';
 
 declare module 'next-auth' {
   interface Session {
@@ -72,12 +72,4 @@ export type BookingInfoProps = {
     roomNum: number;
     name: string;
   };
-};
-
-export type RoomType = {
-  id: number;
-  name: string;
-  roomNum: number;
-  capacity: number;
-  location: string;
 };

@@ -2,10 +2,8 @@
 
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
-import { getRoomByNum } from '../../lib/db/rooms';
-import { createBooking, findBooking, deleteBooking } from '../../lib/db/bookings';
-
-/* Skal ind i api/users.ts og kald fra page. */
+import { getRoomByNum } from '../db/rooms';
+import { createBooking, findBooking, deleteBooking } from '../db/bookings';
 
 function convertStartAndEndHour(
   startHour: string,

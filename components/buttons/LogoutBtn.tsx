@@ -1,3 +1,4 @@
+'use client';
 import { signOut } from '@/auth/authSetup';
 
 export default function LogoutBtn() {

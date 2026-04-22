@@ -1,7 +1,6 @@
 import { differenceInMinutes } from 'date-fns';
-import { Booking } from '@/lib/types/types';
-import { User } from '@/generated/prisma';
-import { bookingColors, StudyProgram } from '@/lib/colors';
+import { User, Booking } from '@/generated/prisma';
+import { bookingColors } from '@/lib/colors';
 import { getBookingColor } from '@/lib/colors';
 
 type BookingOverlayProps = {

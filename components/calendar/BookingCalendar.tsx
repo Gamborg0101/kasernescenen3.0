@@ -7,8 +7,8 @@ import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
 import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
-import { SessionUser, RoomType } from '@/lib/types/types';
-import { Booking, User } from '@/generated/prisma';
+import { SessionUser } from '@/lib/types';
+import { Booking, User, Room as RoomType } from '@/generated/prisma';
 
 type Props = {
   userInfoSession: SessionUser;

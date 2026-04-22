@@ -1,5 +1,5 @@
 import { prisma } from '@/db';
-import { User } from '@/lib/types/types';
+import { User } from '@/generated/prisma';
 import { auth } from '@/auth/authSetup';
 
 export async function getUser(userId: number) {
@@ -10,8 +10,12 @@ export async function getUser(userId: number) {
   });
 }
 
+export async function getUsers() {
+  return await prisma.user.findMany();
+}
+
 export async function DeleteUserBookings(userId: number) {
-  await prisma.booking.deleteMany({
+  return await prisma.booking.deleteMany({
     where: {
       userId: userId,
     },
@@ -19,7 +23,7 @@ export async function DeleteUserBookings(userId: number) {
 }
 
 export async function DeleteUser(userId: number) {
-  await prisma.user.delete({
+  return await prisma.user.delete({
     where: {
       id: userId,
     },
@@ -27,7 +31,7 @@ export async function DeleteUser(userId: number) {
 }
 
 export async function updateUser(userId: number, data: Partial<User>) {
-  await prisma.user.update({
+  return await prisma.user.update({
     where: {
       id: userId,
     },

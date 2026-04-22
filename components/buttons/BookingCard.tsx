@@ -1,11 +1,11 @@
 'use client';
 
-import { BookingInfoProps } from '@/lib/types/types';
-import { deleteABooking } from '@/app/booking/BookingActions';
+import { BookingInfoProps } from '@/lib/types';
+import { deleteABooking } from '@/lib/actions/bookingActions';
 
 export default function BookingCard({ booking }: { booking: BookingInfoProps }) {
   return (
-    <div className="h-full bg-stone-200 text-sm flex flex-col place-content-between ">
+    <div className="h-full bg-stone-200 text-sm flex flex-col place-content-between">
       <div className="p-1 text-gray-500">
         {booking.startTime.toLocaleDateString('da-DK', {
           day: '2-digit',
