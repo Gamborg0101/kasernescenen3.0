@@ -16,7 +16,7 @@ export default function DeleteUserButton({ userId }: { userId: number }) {
   return (
     <button
       type="button"
-      className="w-full  text-white rounded-md py-2 bg-indigo-600 hover:bg-indigo-700 transition mt-2"
+      className="w-full  text-white rounded-md py-2 bg-red-500 hover:bg-red-700 transition mt-2"
       onClick={handleDelete}
     >
       Slet bruger

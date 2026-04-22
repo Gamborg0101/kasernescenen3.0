@@ -1,5 +1,4 @@
 'use client';
-
 import { BookingInfoProps } from '@/lib/types';
 import { deleteABooking } from '@/lib/actions/bookingActions';
 

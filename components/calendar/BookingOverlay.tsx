@@ -8,6 +8,20 @@ type BookingOverlayProps = {
   userInfoDb: User;
 };
 
+/*
+Logik: Hvis brugeren ejer bookingen, så skal de også kunne slette den selv.
+
+if(booking.userId === session.user.id){
+
+<div onClick={slet booking (med slet-booking validering)}> 
+  <Img  />
+</div>
+}
+
+
+
+*/
+
 export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayProps) {
   function getDivStartPosition(booking: Booking) {
     const divStartPosition = (booking.startTime.getHours() - 7) * 60 + booking.startTime.getMinutes();
