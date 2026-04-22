@@ -1,5 +1,6 @@
 'use client';
-import { RoomType, Booking, User } from '@/lib/types/types';
+import { RoomType, Booking } from '@/lib/types/types';
+import { User } from '@/generated/prisma';
 import BookingOverlay from './BookingOverlay';
 import { eachDayOfInterval, startOfWeek, endOfWeek, eachMinuteOfInterval, isSameDay } from 'date-fns';
 

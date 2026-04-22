@@ -1,6 +1,8 @@
 import { differenceInMinutes } from 'date-fns';
-import { Booking, User } from '@/lib/types/types';
-import { bookingColors } from '@/lib/colors';
+import { Booking } from '@/lib/types/types';
+import { User } from '@/generated/prisma';
+import { bookingColors, StudyProgram } from '@/lib/colors';
+import { getBookingColor } from '@/lib/colors';
 
 type BookingOverlayProps = {
   bookings: Booking[];
@@ -31,7 +33,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className={`absolute w-full  ${bookingColors[userInfoDb.study] ?? bookingColors.unknown1} truncate border rounded-sm`}
+            className={`absolute w-full  ${getBookingColor(userInfoDb.study) ?? bookingColors.unknown1} truncate border rounded-sm`}
           >
             <div className="flex items-center gap-1 text-sm">
               <p className=" ml-2 font-lgith">

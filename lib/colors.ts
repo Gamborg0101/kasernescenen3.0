@@ -8,3 +8,7 @@ export const bookingColors: Record<StudyProgram, string> = {
   unknown1: 'bg-red-100 border-red-600 text-red-900',
   unknown2: 'bg-pink-100 border-pink-600 text-pink-900',
 };
+
+export function getBookingColor(study: string): string {
+  return bookingColors[study as StudyProgram] ?? bookingColors.unknown1;
+}

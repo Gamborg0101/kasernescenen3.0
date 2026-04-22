@@ -2,7 +2,7 @@
 import { DeleteUser } from '../../lib/actions/userActions';
 import React from 'react';
 import ChangeUserModal from '../../components/modals/ChangeUserModal';
-import { User } from '../../lib/types/types';
+import { User } from '@/generated/prisma';
 
 export default function BrugerTabel({ users }: { users: User[] }) {
   const [localUsers, setLocalUsers] = React.useState(users);

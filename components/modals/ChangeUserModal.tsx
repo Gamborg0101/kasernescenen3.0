@@ -1,4 +1,4 @@
-import { User } from '@/lib/types/types';
+import { User } from '@/generated/prisma';
 import { UpdateUser } from '@/lib/actions/userActions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';

@@ -1,4 +1,4 @@
-import { User } from '@/lib/types/types';
+import { User } from '@/generated/prisma';
 import { useEffect, useRef, useState } from 'react';
 
 type Booking = {
