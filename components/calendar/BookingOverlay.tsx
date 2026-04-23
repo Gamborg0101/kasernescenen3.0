@@ -4,23 +4,12 @@ import { differenceInMinutes } from 'date-fns';
 import { User, Booking } from '@/generated/prisma';
 import { bookingColors } from '@/lib/colors';
 import { getBookingColor } from '@/lib/colors';
+import { deleteABooking } from '@/lib/actions/bookingActions';
 
 type BookingOverlayProps = {
   bookings: Booking[];
   userInfoDb: User;
 };
-
-/*
-Logik: Hvis brugeren ejer bookingen, så skal de også kunne slette den selv.
-
-if(booking.userId === session.user.id){
-
-<div onClick={slet booking (med slet-booking validering)}> 
-  <Img  />
-</div>
-}
-
-*/
 
 export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayProps) {
   function getDivStartPosition(booking: Booking) {
@@ -36,7 +25,9 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
     return time.toLocaleTimeString('da-DK', { hour: 'numeric', minute: 'numeric' });
   }
 
-  
+  function bookingBelongsToUser(user: User, booking: Booking) {
+    return booking.userId === user.id;
+  }
 
   return (
     <div className="absolute w-full ltr">
@@ -59,21 +50,23 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
                 <p className="font-bold">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
               </div>
               <div className="flex items-center pr-2">
-                <div>
-                  <svg
-                    className="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="15" y1="9" x2="9" y2="15" />
-                    <line x1="9" y1="9" x2="15" y2="15" />
-                  </svg>
-                </div>
+                {bookingBelongsToUser(userInfoDb, booking) && (
+                  <div onClick={() => deleteABooking(booking.id, userInfoDb.id)}>
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="15" y1="9" x2="9" y2="15" />
+                      <line x1="9" y1="9" x2="15" y2="15" />
+                    </svg>
+                  </div>
+                )}
               </div>
             </div>
             <p className="ml-2 text-sm font-bold">{booking.reason}</p>

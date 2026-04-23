@@ -44,20 +44,8 @@ export async function getThreeBookings(id: number) {
   });
 }
 
-export async function deleteBooking({
-  userId,
-  roomId,
-  bookingId,
-}: {
-  userId: number;
-  roomId: number;
-  bookingId: number;
-}) {
+export async function deleteBooking(bookingId: number, userId: number) {
   return await prisma.booking.delete({
-    where: {
-      userId: userId,
-      roomId: roomId,
-      id: bookingId,
-    },
+    where: { id: bookingId, userId: userId },
   });
 }

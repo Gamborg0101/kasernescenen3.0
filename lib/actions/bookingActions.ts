@@ -89,24 +89,12 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
   return { success: true, error: null };
 }
 
-export async function deleteABooking({
-  roomId,
-  bookingId,
-  userId,
-}: {
-  roomId: number;
-  bookingId: number;
-  userId: number;
-}) {
+export async function deleteABooking(bookingId: number, userId: number) {
   const session = await auth();
   if (!session) throw new Error('Ikke logget ind');
 
   if (session) {
-    await deleteBooking({
-      userId: userId,
-      roomId: roomId,
-      bookingId: bookingId,
-    });
+    await deleteBooking(bookingId, userId);
     revalidatePath('/userpage');
   }
 }
