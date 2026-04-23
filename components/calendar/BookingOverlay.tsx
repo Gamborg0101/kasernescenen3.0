@@ -51,9 +51,12 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               </div>
               <div className="flex items-center pr-2">
                 {bookingBelongsToUser(userInfoDb, booking) && (
-                  <div onClick={() => deleteABooking(booking.id, userInfoDb.id)}>
+                  <div
+                    onClick={() => deleteABooking(booking.id, userInfoDb.id)}
+                    className="group cursor-pointer rounded-full transition-colors duration-200 hover:bg-red-100"
+                  >
                     <svg
-                      className="w-4 h-4"
+                      className="w-4 h-4 text-gray-400 transition-colors duration-200 group-hover:text-red-400"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
