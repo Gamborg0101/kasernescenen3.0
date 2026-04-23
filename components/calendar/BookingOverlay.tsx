@@ -4,7 +4,6 @@ import { differenceInMinutes } from 'date-fns';
 import { User, Booking } from '@/generated/prisma';
 import { bookingColors } from '@/lib/colors';
 import { getBookingColor } from '@/lib/colors';
-import { useState } from 'react';
 
 type BookingOverlayProps = {
   bookings: Booking[];
@@ -24,10 +23,6 @@ if(booking.userId === session.user.id){
 */
 
 export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayProps) {
-  const [mouseOver, setMouseOver] = useState(false);
-
-  console.log(mouseOver);
-
   function getDivStartPosition(booking: Booking) {
     const divStartPosition = (booking.startTime.getHours() - 7) * 60 + booking.startTime.getMinutes();
     return (divStartPosition / 15) * 20;
@@ -41,6 +36,8 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
     return time.toLocaleTimeString('da-DK', { hour: 'numeric', minute: 'numeric' });
   }
 
+  
+
   return (
     <div className="absolute w-full ltr">
       {bookings?.map((booking, index) => {
@@ -52,8 +49,6 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               top: `${getDivStartPosition(booking)}px`,
             }}
             className={`absolute w-full ${getBookingColor(userInfoDb.study) ?? bookingColors.unknown1} truncate rounded-sm`}
-            onMouseEnter={() => setMouseOver(true)}
-            onMouseLeave={() => setMouseOver(false)}
           >
             <div className="flex justify-between pointer-events-auto">
               <div className="flex items-center gap-1 text-sm">
@@ -64,7 +59,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
                 <p className="font-bold">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
               </div>
               <div className="flex items-center pr-2">
-                <div className={`transition-opacity duration-300 ${mouseOver ? 'opacity-100' : 'opacity-0'}`}>
+                <div>
                   <svg
                     className="w-4 h-4"
                     viewBox="0 0 24 24"

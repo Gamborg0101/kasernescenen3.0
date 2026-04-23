@@ -54,6 +54,11 @@ export default function WeekAndHours({
     return eachMinuteOfInterval({ start, end }, { step: 15 });
   }
 
+  function getBookingsForDay(day: Date) {
+    if (!currentRoom) return [];
+    return allBookings?.filter((booking) => booking.roomId === currentRoom.id && isSameDay(booking.startTime, day));
+  }
+
   function hoursInDay() {
     const day = new Date();
     const hours = createHoursForDay(day);
@@ -91,12 +96,7 @@ export default function WeekAndHours({
                 {week.day.toLocaleDateString('da-DK')}
               </p>
 
-              <BookingOverlay
-                bookings={allBookings?.filter(
-                  (booking) => booking.roomId === currentRoom?.id && isSameDay(booking.startTime, week.day),
-                )}
-                userInfoDb={userInfoDb}
-              />
+              <BookingOverlay bookings={getBookingsForDay(week.day)} userInfoDb={userInfoDb} />
               {week.hours.map((hour, index) => (
                 <div
                   onMouseEnter={(e) => {
