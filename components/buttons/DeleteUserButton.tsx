@@ -10,7 +10,7 @@ export default function DeleteUserButton({ userId }: { userId: number }) {
     const check = window.confirm('Er du sikker på, at du vil slette din bruger?');
     if (!check) return;
     await DeleteUser(userId);
-    await signOut({ redirectTo: '/' }); // logger ud og redirecter
+    await signOut({ redirectTo: '/' });
   };
 
   return (

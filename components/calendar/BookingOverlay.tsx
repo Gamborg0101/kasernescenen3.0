@@ -1,7 +1,10 @@
+'use client';
+
 import { differenceInMinutes } from 'date-fns';
 import { User, Booking } from '@/generated/prisma';
 import { bookingColors } from '@/lib/colors';
 import { getBookingColor } from '@/lib/colors';
+import { useState } from 'react';
 
 type BookingOverlayProps = {
   bookings: Booking[];
@@ -18,11 +21,13 @@ if(booking.userId === session.user.id){
 </div>
 }
 
-
-
 */
 
 export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayProps) {
+  const [mouseOver, setMouseOver] = useState(false);
+
+  console.log(mouseOver);
+
   function getDivStartPosition(booking: Booking) {
     const divStartPosition = (booking.startTime.getHours() - 7) * 60 + booking.startTime.getMinutes();
     return (divStartPosition / 15) * 20;
@@ -37,7 +42,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
   }
 
   return (
-    <div className="absolute w-full pointer-events-none">
+    <div className="absolute w-full ltr">
       {bookings?.map((booking, index) => {
         return (
           <div
@@ -46,16 +51,37 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className={`absolute w-full  ${getBookingColor(userInfoDb.study) ?? bookingColors.unknown1} truncate border rounded-sm`}
+            className={`absolute w-full ${getBookingColor(userInfoDb.study) ?? bookingColors.unknown1} truncate rounded-sm`}
+            onMouseEnter={() => setMouseOver(true)}
+            onMouseLeave={() => setMouseOver(false)}
           >
-            <div className="flex items-center gap-1 text-sm">
-              <p className=" ml-2 font-lgith">
-                {`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)}`}
-              </p>
-              <span className="">-</span>
-              <p className=" font-bold">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
+            <div className="flex justify-between pointer-events-auto">
+              <div className="flex items-center gap-1 text-sm">
+                <p className="ml-2 font-light ">
+                  {`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)}`}
+                </p>
+                <span className="">-</span>
+                <p className="font-bold">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
+              </div>
+              <div className="flex items-center pr-2">
+                <div className={`transition-opacity duration-300 ${mouseOver ? 'opacity-100' : 'opacity-0'}`}>
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="15" y1="9" x2="9" y2="15" />
+                    <line x1="9" y1="9" x2="15" y2="15" />
+                  </svg>
+                </div>
+              </div>
             </div>
-            <p className="  ml-2 text-sm font-bold">{booking.reason}</p>
+            <p className="ml-2 text-sm font-bold">{booking.reason}</p>
           </div>
         );
       })}
