@@ -22,16 +22,7 @@ export default function BookingCard({ booking }: { booking: BookingInfoProps }) 
         })}`}
       </div>
 
-      <button
-        className="bg-red-200 hover:bg-red-100"
-        onClick={() =>
-          deleteABooking({
-            roomId: booking.roomId,
-            bookingId: booking.id,
-            userId: booking.userId,
-          })
-        }
-      >
+      <button className="bg-red-200 hover:bg-red-100" onClick={() => deleteABooking(booking.id, booking.userId)}>
         Slet booking
       </button>
     </div>
