@@ -1,16 +1,16 @@
 'use client';
 
 import { DeleteUser } from '@/lib/actions/userActions';
+import { signOut } from 'next-auth/react';
 
 export default function DeleteUserButton({ userId }: { userId: number }) {
+  console.log('Mit id: ', userId);
+
   const handleDelete = async () => {
-    const firstCheck = window.confirm('Er du sikker på, at du vil slette din bruger?');
-    if (!firstCheck) return;
-
-    const secondCheck = window.confirm('Dette kan IKKE fortrydes. Vil du fortsætte?');
-    if (!secondCheck) return;
-
+    const check = window.confirm('Er du sikker på, at du vil slette din bruger?');
+    if (!check) return;
     await DeleteUser(userId);
+    await signOut({ redirectTo: '/' }); // logger ud og redirecter
   };
 
   return (
