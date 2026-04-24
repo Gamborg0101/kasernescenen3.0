@@ -30,7 +30,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
   }
 
   return (
-    <div className="absolute w-full ltr">
+    <div className="absolute w-full">
       {bookings?.map((booking, index) => {
         return (
           <div

@@ -18,26 +18,32 @@ export default async function UserPage() {
   const user = await getUser(Number(userId));
 
   const threeBookings = await getThreeBookings(Number(userId));
+  // Få sat "slet bruger" ned i bunden, og lad navnet på full width
 
   return (
     <div className="flex justify-center center-bookings bg-stone-50 font-serif py-52 ">
       <div className="grid grid-2-rows w-106 h-116 sticky top-8 bg-white border border-stone-200 shadow-sm rounded-t-2xl">
-        <div className="m-4 ">
+        <div className="m-4">
           <h3 className="font-serif text-2xl font-extrabold">Profil</h3>
           <div className="flex justify-between">
             <div>
-              <Image
-                src={session.user.image || newDark}
-                alt="black picture"
-                width={96}
-                height={96}
-                className="rounded-full my-5"
-              />
-              <p className="font-extrabold ">{`${user?.firstName} ${user?.lastName}`}</p>
-              <p className="text-gray-500">{user?.email}</p>
-              <p className="text-gray-500">{user?.study}</p>
-              <p className="text-gray-500">{user?.studentNumber}</p>
-              <p className="text-gray-500">{user?.role}</p>
+              <div className="flex items-center w-full">
+                <Image
+                  src={session.user.image || newDark}
+                  alt="black picture"
+                  width={96}
+                  height={96}
+                  className="rounded-full my-5 whitespace-nowrap"
+                />
+                <p className="font-extrabold ">{`${user?.firstName} ${user?.lastName}`}</p>
+              </div>
+
+              <div>
+                <p className="text-gray-500">{user?.email}</p>
+                <p className="text-gray-500">{user?.study}</p>
+                <p className="text-gray-500">{user?.studentNumber}</p>
+                <p className="text-gray-500">{user?.role}</p>
+              </div>
             </div>
             <div className="flex flex-col justify-end items-center w-40">
               <DeleteUserButton userId={Number(session.user.id)} />
