@@ -1,4 +1,4 @@
-import UserList from '@/components/UserList';
+import UserList from '@/components/lists/UserList';
 import { getUsers } from '@/lib/db/users';
 
 export default async function Users() {

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import aulogo from '../public/aulogo.png';
+import aulogo from '../../public/aulogo.png';
 import Link from 'next/link';
 
 export default function Logo() {

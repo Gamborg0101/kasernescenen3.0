@@ -21,7 +21,7 @@ export default function WeekSelector({ nextWeek, prevWeek, currentWeek, weekCoun
       </div>
       <div className="flex justify-center items-center flex-row ">
         <button onClick={currentWeek}>
-          <p className="whitespace-nowrap cursor-pointer capitalize text-sm">
+          <p className="whitespace-nowrap cursor-pointer capitalize text-sm select-none">
             {weekCounter.toLocaleDateString('da-DK', {
               weekday: 'long',
               day: 'numeric',

@@ -39,15 +39,15 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className={`absolute w-full ${getBookingColor(userInfoDb.study) ?? bookingColors.unknown1} truncate rounded-sm`}
+            className={`absolute w-full pointer-events-none ${getBookingColor(userInfoDb.study) ?? bookingColors.unknown1} truncate rounded-sm`}
           >
             <div className="flex justify-between pointer-events-auto">
               <div className="flex items-center gap-1 text-sm">
-                <p className="ml-2 font-light ">
+                <p className="ml-2 font-light select-none">
                   {`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)}`}
                 </p>
-                <span className="">-</span>
-                <p className="font-bold">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
+                <span className="select-none">-</span>
+                <p className="font-bold select-none">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
               </div>
               <div className="flex items-center pr-2">
                 {bookingBelongsToUser(userInfoDb, booking) && (
@@ -72,7 +72,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
                 )}
               </div>
             </div>
-            <p className="ml-2 text-sm font-bold">{booking.reason}</p>
+            <p className="ml-2 text-sm font-bold select-none">{booking.reason}</p>
           </div>
         );
       })}

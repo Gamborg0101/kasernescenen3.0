@@ -1,5 +1,5 @@
 import { auth } from '@/auth/authSetup';
-import LogoutBtn from './buttons/LogoutBtn';
+import LogoutBtn from './../buttons/LogoutBtn';
 import Logo from './Logo';
 import Link from 'next/link';
 
@@ -39,7 +39,7 @@ export function NavItem({ text, href, type }: { text: string; href: string; type
         <button type={type}>
           <Link
             href={href}
-            className="flex justify-center items-center transition delay-75 duration-150 ease-in-out hover:bg-amber-700 h-16 p-5"
+            className="flex justify-center items-center transition delay-75 duration-150 ease-in-out hover:bg-amber-700 h-16 p-5 select-none"
           >
             {text}
           </Link>

@@ -69,7 +69,7 @@ export default function WeekAndHours({
         {hours.map((hour, index) => (
           <div
             key={index}
-            className={`h-5 px-4  flex justify-center border border-gray-200 font-semibold items-center ${index % 4 == 0 ? '' : 'bg-white'}`}
+            className={`h-5 px-4 p-1 flex justify-center border border-gray-200 font-semibold items-center ${index % 4 == 0 ? '' : 'bg-white'} select-none`}
           >
             {index % 4 == 0
               ? hour.toLocaleTimeString('da-DK', {
@@ -89,13 +89,12 @@ export default function WeekAndHours({
     <div className="flex gap-10 relative">
       <div className="grid  grid-cols-[1fr_12fr] w-full relative">
         <div className="">{hoursInDay()}</div>
-        <div className="grid grid-cols-7 ">
+        <div className="grid grid-cols-7">
           {fullWeek.map((week, index) => (
             <div key={index} className="relative">
-              <p className="flex center-items justify-center h-11 items-center border-l border-gray-200 shadow">
+              <p className="flex center-items justify-center h-11 items-center border-l border-gray-200 shadow select-none">
                 {week.day.toLocaleDateString('da-DK')}
               </p>
-
               <BookingOverlay bookings={getBookingsForDay(week.day)} userInfoDb={userInfoDb} />
               {week.hours.map((hour, index) => (
                 <div
