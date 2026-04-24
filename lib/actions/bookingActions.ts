@@ -59,7 +59,7 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
   if (stardAndEnd.start > stardAndEnd.end) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
   }
-
+  
   if (stardAndEnd.start < new Date()) {
     return { success: false, error: 'Du kan ikke booke i fortiden' };
   }

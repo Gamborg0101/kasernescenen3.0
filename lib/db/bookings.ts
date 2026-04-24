@@ -12,13 +12,11 @@ export async function getBookings() {
 export async function findBooking({ roomId, startTime, endTime }: { roomId: number; startTime: Date; endTime: Date }) {
   return await prisma.booking.findFirst({
     where: {
-      roomId: roomId,
-      startTime: { lt: startTime },
-      endTime: { gt: endTime },
+      roomId,
+      AND: [{ startTime: { lt: endTime } }, { endTime: { gt: startTime } }],
     },
   });
 }
-
 export async function createBooking({ roomId, startTime, endTime, userId, reason }: CreateBooking) {
   await prisma.booking.create({
     data: {
