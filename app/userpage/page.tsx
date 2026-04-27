@@ -18,72 +18,75 @@ export default async function UserPage() {
   const user = await getUser(Number(userId));
 
   const threeBookings = await getThreeBookings(Number(userId));
-  // Få sat "slet bruger" ned i bunden, og lad navnet på full width
 
   return (
-    <div className="flex justify-center center-bookings bg-stone-50 font-serif py-52 ">
-      <div className="w-146 h-116 sticky top-8 bg-white border border-stone-200 shadow-sm rounded-t-2xl">
-        <h3 className="font-serif text-2xl font-extrabold">Profil</h3>
-        <div className="flex items-center">
-          <Image
-            src={session.user.image || newDark}
-            alt="black picture"
-            width={96}
-            height={96}
-            className="rounded-full my-5 whitespace-nowrap"
-          />
-          <div className="pl-4">
-            <p className="font-extrabold">{`${user?.firstName} ${user?.lastName}`}</p>
-            <p className="text-gray-500">{user?.email}</p>
+    <div className="flex flex-row justify-center bg-stone-50 mt-20">
+      <div>
+        <div className="w-146 h-86 top-8 bg-white border border-stone-200 shadow-sm rounded-2xl mb-4">
+          <h3 className="font-serif text-2xl font-extrabold ml-3 mt-3">Profil</h3>
+          <div className="flex items-center ml-3 mt-3">
+            <Image
+              src={session.user.image || newDark}
+              alt="black picture"
+              width={96}
+              height={96}
+              className="rounded-full my-5 whitespace-nowrap"
+            />
+            <div className="pl-4">
+              <p className="font-extrabold">{`${user?.firstName} ${user?.lastName}`}</p>
+              <p className="text-gray-500">{user?.email}</p>
+            </div>
+          </div>
+
+          {/* Userinfo section */}
+          <div className="grid grid-cols-2 p-2 ">
+            <div className="flex flex-col border-t border-r">
+              <div>
+                <div className="pt-3 pl-2 text-gray-500">
+                  <p>Studie</p>
+                </div>
+                <div className="flex flex-col  pl-2">
+                  <p className="capitalize">{user?.study} </p>
+                </div>
+              </div>
+              <div>
+                <div className="border-t pt-3 pl-2 text-gray-500">
+                  <p>Studienummer</p>
+                </div>
+                <div className=" pl-2">
+                  <p>{user?.studentNumber}</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div>
+                <div className="border-t pt-3 pl-2 text-gray-500">
+                  <p className="ml-2">Rolle</p>
+                </div>
+                <div className="ml-2  pl-2">
+                  <p className="capitalize">{user?.role} </p>
+                </div>
+              </div>
+              <div>
+                <div className="border-t pt-3 pl-2 text-gray-500">
+                  <p className="ml-2">Kortnummer</p>
+                </div>
+                <div className="ml-2 pl-2">
+                  <p className="">{user?.cardNumber} </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Userinfo section */}
-        <div className="grid grid-cols-2 p-2">
-          <div className="flex flex-col border-t border-r">
-            <div>
-              <div className="pt-3 pl-2 text-gray-500">
-                <p>Studie</p>
-              </div>
-              <div className="flex flex-col  pl-2">
-                <p>{user?.study} </p>
-              </div>
-            </div>
-            <div>
-              <div className="border-t pt-3 pl-2 text-gray-500">
-                <p>Studienummer</p>
-              </div>
-              <div className=" pl-2">
-                <p>{user?.studentNumber}</p>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <div className="border-t pt-3 pl-2 text-gray-500">
-                <p className="ml-2">Rolle</p>
-              </div>
-              <div className="ml-2  pl-2">
-                <p>{user?.role} </p>
-              </div>
-            </div>
-            <div>
-              <div className="border-t pt-3 pl-2 text-gray-500">
-                <p className="ml-2">Kortnummer</p>
-              </div>
-              <div className="ml-2 mb-5 pl-2">
-                <p className="">{user?.cardNumber} </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Following bookings */}
-        <div className="flex flex-cols ">
-          <div className="grid grid-cols-3 grow">
+        <p className="text-gray-500 text-s font-bold mb-2">
+          BOOKINGER <span className="text-xs">(Dine 3 næste bookinger)</span>
+        </p>
+        <div className="flex flex-cols">
+          <div className="grid grid-cols-3 grow gap-3 ">
             {threeBookings.map((booking) => (
-              <div key={booking.id} className="flex flex-col border ">
+              <div key={booking.id} className="flex flex-col ">
                 <BookingCard booking={booking} />
               </div>
             ))}

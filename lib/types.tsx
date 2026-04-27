@@ -68,6 +68,7 @@ export type BookingInfoProps = {
   userId: number;
   startTime: Date;
   endTime: Date;
+  reason: string;
   room: {
     roomNum: number;
     name: string;
