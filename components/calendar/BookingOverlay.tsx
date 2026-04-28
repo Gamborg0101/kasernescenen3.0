@@ -52,7 +52,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               <div className="flex items-center pr-2">
                 {bookingBelongsToUser(userInfoDb, booking) && (
                   <div
-                    onClick={() => deleteABooking(booking.id, userInfoDb.id)}
+                    onClick={() => deleteABooking(booking.id)}
                     className="group cursor-pointer rounded-full transition-colors duration-200 hover:bg-red-100"
                   >
                     <svg
