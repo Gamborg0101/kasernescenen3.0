@@ -19,9 +19,8 @@ export default function ChangeUserModal({ onClose, user }: Props) {
   const [role, setRole] = useState(user.role);
   const router = useRouter();
 
-  function SetClassName() {
-    return 'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4';
-  }
+  const getClassName =
+    'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4';
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -62,79 +61,85 @@ export default function ChangeUserModal({ onClose, user }: Props) {
               <h2 className="text-2xl font-semibold mb-2 text-center">Ændre bruger</h2>
 
               <form onSubmit={handleSubmit}>
-                <label htmlFor="">Id</label>
+                <label htmlFor="id">Id</label>
                 <input
                   type="text"
+                  name="id"
                   placeholder="Id"
                   defaultValue={user.id}
-                  className={SetClassName() + ' bg-gray-200 cursor-not-allowed'}
+                  className={getClassName + ' bg-gray-200 cursor-not-allowed'}
                   readOnly
                 />
-                <label htmlFor="">Fornavn</label>
+                <label htmlFor="firstName">Fornavn</label>
                 <input
                   type="text"
-                  className={SetClassName()}
+                  name="firstName"
+                  className={getClassName}
                   placeholder="Fornavn"
                   defaultValue={user.firstName}
                   onChange={(e) => {
                     setFirstName(e.target.value);
                   }}
                 />
-                <label htmlFor="">Efternavn</label>
-
+                <label htmlFor="lastName">Efternavn</label>
                 <input
                   type="text"
-                  className={SetClassName()}
+                  name="lastName"
+                  className={getClassName}
                   defaultValue={user.lastName}
                   onChange={(e) => {
                     setlastName(e.target.value);
                   }}
                 />
-                <label htmlFor="">Telefon</label>
+                <label htmlFor="phone">Telefon</label>
                 <input
                   type="text"
+                  name="phone"
                   placeholder="Telefon"
-                  className={SetClassName()}
+                  className={getClassName}
                   defaultValue={user.phone}
                   onChange={(e) => {
                     setPhone(Number(e.target.value));
                   }}
                 />
-                <label htmlFor="">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="text"
+                  name="email"
                   placeholder="email"
-                  className={SetClassName()}
+                  className={getClassName}
                   defaultValue={user.email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
-                <label htmlFor="">Studentnummer</label>
+                <label htmlFor="studentNumber">Studentnummer</label>
                 <input
                   type="text"
+                  name="studentNumber"
                   placeholder="Studentnummer"
-                  className={SetClassName()}
+                  className={getClassName}
                   defaultValue={user.studentNumber}
                   onChange={(e) => {
                     setStudentNumber(Number(e.target.value));
                   }}
                 />
-                <label htmlFor="">Kortnummer</label>
+                <label htmlFor="cardNumber">Kortnummer</label>
                 <input
                   type="text"
+                  name="cardNumber"
                   placeholder="Kortnummer"
-                  className={SetClassName()}
+                  className={getClassName}
                   defaultValue={user.cardNumber}
                   onChange={(e) => {
                     setCardNumber(Number(e.target.value));
                   }}
                 />
-                <label htmlFor="">Afdeling</label>
+                <label htmlFor="afdeling">Afdeling</label>
                 <select
-                  name="afdelinger"
+                  name="afdeling"
                   id="departments"
-                  className={SetClassName()}
+                  className={getClassName}
                   onChange={(e) => {
                     setStudy(e.target.value);
                   }}
@@ -145,11 +150,11 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   <option value="kunsthistorie">Kunsthistorie</option>
                 </select>
 
-                <label htmlFor="">Rolle</label>
+                <label htmlFor="role">Rolle</label>
                 <select
                   name="role"
                   id="role"
-                  className={SetClassName()}
+                  className={getClassName}
                   onChange={(e) => {
                     setRole(e.target.value);
                   }}
@@ -160,7 +165,6 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   <option value="admin">Admin</option>
                 </select>
 
-                <input type="phone" />
                 <button
                   type="submit"
                   className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition"

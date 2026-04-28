@@ -8,7 +8,7 @@ import {
   DeleteUser as DeleteUserFromDB,
 } from '../db/users';
 
-export async function OpretBruger(formData: FormData) {
+export async function CreateUser(formData: FormData) {
   const session = await auth();
   const googleId = session?.user?.googleId as string;
 

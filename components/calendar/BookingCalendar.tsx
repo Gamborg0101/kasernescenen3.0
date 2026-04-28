@@ -26,21 +26,21 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
   const [hoveredBooking, setHoveredBooking] = useState<Booking | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
-  function WeekCounterNext() {
+  function weekCounterNext() {
     const newDate = new Date(weekCounter);
     newDate.setDate(newDate.getDate() + 7);
     const firstOfNextWeek = startOfWeek(newDate, { weekStartsOn: 1 });
     setWeekCounter(firstOfNextWeek);
   }
 
-  function WeekCounterPrev() {
+  function weekCounterPrev() {
     const newDate = new Date(weekCounter);
     newDate.setDate(newDate.getDate() - 7);
     const firstOfPrevWeek = startOfWeek(newDate, { weekStartsOn: 1 });
     setWeekCounter(firstOfPrevWeek);
   }
 
-  function WeekCounterCurrentWeek() {
+  function weekCounterCurrentWeek() {
     setWeekCounter(startOfWeek(new Date(), { weekStartsOn: 1 }));
   }
 
@@ -78,9 +78,9 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
         </div>
         <div className="flex items-center justify-center">
           <WeekSelector
-            nextWeek={WeekCounterNext}
-            prevWeek={WeekCounterPrev}
-            currentWeek={WeekCounterCurrentWeek}
+            nextWeek={weekCounterNext}
+            prevWeek={weekCounterPrev}
+            currentWeek={weekCounterCurrentWeek}
             weekCounter={weekCounter}
           />
         </div>

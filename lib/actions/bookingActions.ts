@@ -37,7 +37,7 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
 
-  const stardAndEnd = convertStartAndEndHour(getStartHour, getEndHour, getEndHourMins, getDate);
+  const startAndEnd = convertStartAndEndHour(getStartHour, getEndHour, getEndHourMins, getDate);
 
   const room = await getRoomByNum(roomNumber);
 
@@ -51,23 +51,23 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 
   if (getInfo.length >= 35) {
     return {
-      succes: false,
+      success: false,
       error: 'Du må maks bruge 35 bogstaver til beskrivelsen',
     };
   }
 
-  if (stardAndEnd.start > stardAndEnd.end) {
+  if (startAndEnd.start > startAndEnd.end) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
   }
 
-  if (stardAndEnd.start < new Date()) {
+  if (startAndEnd.start < new Date()) {
     return { success: false, error: 'Du kan ikke booke i fortiden' };
   }
 
   const conflictBooking = await findBooking({
     roomId: room.id,
-    startTime: stardAndEnd.start,
-    endTime: stardAndEnd.end,
+    startTime: startAndEnd.start,
+    endTime: startAndEnd.end,
   });
 
   if (conflictBooking) {
@@ -79,8 +79,8 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 
   await createBooking({
     roomId: room.id,
-    startTime: stardAndEnd.start,
-    endTime: stardAndEnd.end,
+    startTime: startAndEnd.start,
+    endTime: startAndEnd.end,
     userId: Number(session.user.id),
     reason: getInfo,
   });
