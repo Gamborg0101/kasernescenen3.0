@@ -38,7 +38,7 @@ export default function Register() {
   }
 
   function validatePhone(value: string) {
-    if (!value) return '';
+    if (!value) return 'Der mangler et telefonnummer';
     if (!Number(value)) {
       return 'Telefonnummer skal være tal';
     }
