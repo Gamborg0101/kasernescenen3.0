@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { getRoomByNum } from '../db/rooms';
 import { createBooking, findBooking, deleteBooking } from '../db/bookings';
 
-function convertStartAndEndHour(
+export function convertStartAndEndHour(
   startHour: string,
   endHour: number,
   endHourMins: string,
