@@ -18,7 +18,7 @@
 
 | Layer     | Technology              |
 | --------- | ----------------------- |
-| Framework | Next.js 14 (App Router) |
+| Framework | Next.js 16              |
 | Language  | TypeScript              |
 | Styling   | Tailwind CSS            |
 | Database  | PostgreSQL              |

@@ -27,7 +27,7 @@ export default function BookingCard({ booking }: { booking: BookingInfoProps }) 
       <div className="flex justify-center items-center">
         <button
           className="bg-red-200 hover:bg-red-100 p-2 rounded-xl mb-2 font-bold"
-          onClick={() => deleteABooking(booking.id, booking.userId)}
+          onClick={() => deleteABooking(booking.id)}
         >
           Slet booking
         </button>

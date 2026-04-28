@@ -4,8 +4,6 @@ import { DeleteUser } from '@/lib/actions/userActions';
 import { signOut } from 'next-auth/react';
 
 export default function DeleteUserButton({ userId }: { userId: number }) {
-  console.log('Mit id: ', userId);
-
   const handleDelete = async () => {
     const check = window.confirm('Er du sikker på, at du vil slette din bruger?');
     if (!check) return;

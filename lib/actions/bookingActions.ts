@@ -59,7 +59,7 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
   if (stardAndEnd.start > stardAndEnd.end) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
   }
-  
+
   if (stardAndEnd.start < new Date()) {
     return { success: false, error: 'Du kan ikke booke i fortiden' };
   }
@@ -89,12 +89,12 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
   return { success: true, error: null };
 }
 
-export async function deleteABooking(bookingId: number, userId: number) {
+export async function deleteABooking(bookingId: number) {
   const session = await auth();
   if (!session) throw new Error('Ikke logget ind');
 
   if (session) {
-    await deleteBooking(bookingId, userId);
+    await deleteBooking(bookingId, Number(session.user.id));
     revalidatePath('/userpage');
   }
 }
