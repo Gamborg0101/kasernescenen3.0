@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { OpretBruger } from '@/lib/actions/userActions';
+import { CreateUser } from '@/lib/actions/userActions';
 
 export default function Register() {
   const [formdata, setFormData] = useState({
@@ -59,7 +59,7 @@ export default function Register() {
               </h1>
               <form
                 className="space-y-4 md:space-y-6"
-                action={OpretBruger}
+                action={CreateUser}
                 onSubmit={(e) => {
                   const result =
                     validateStudentNumber(formdata.studentNumber) && validateCardNumber(formdata.cardNumber);
