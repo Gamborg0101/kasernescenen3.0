@@ -18,7 +18,7 @@ export async function Navbar() {
             <NavItem text="Booking" href="/booking" />
             <NavItem text="Info" href="/" />
             <LogoutBtn />
-            {session?.user?.role === 'admin' && <NavItem text="Brugere" href="/brugere" />}
+            {session?.user?.role === 'admin' && <NavItem text="Adminpanel" href="/adminpanel" />}
           </>
         ) : (
           !session && (

@@ -1,4 +1,5 @@
-import { getUserInfoFromSession } from '../../lib/db/users';
+import 
+{ getUserInfoFromSession } from '../../lib/db/users';
 import { getUserFromDb } from '../../lib/db/users';
 import { getRooms } from '../../lib/db/rooms';
 import { getBookings } from '../../lib/db/bookings';

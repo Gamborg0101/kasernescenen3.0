@@ -47,3 +47,5 @@ export async function deleteBooking(bookingId: number, userId: number) {
     where: { id: bookingId, userId: userId },
   });
 }
+
+function deleteOldBookings() {}

@@ -1,4 +1,3 @@
-'use server';
 export function convertStartAndEndHour(
   startHour: string,
   endHour: number,
