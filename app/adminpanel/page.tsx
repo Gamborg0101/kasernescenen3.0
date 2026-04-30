@@ -1,22 +1,21 @@
-export default function adminPanel() {
+'use server';
+import AdminPanelGrid from '@/components/admin/AdminPanelGrid';
+
+export default async function AdminPanel() {
   return (
     <div>
-      <p>This is an adminpanel</p>
+      <AdminPanelGrid />
     </div>
   );
 }
 
-
-
-/**
- * Make room 
+/*
+ * Make room
  * See all users
-  * Delete users 
-  * Modify users
- * See latest bookings 
+ * Delete users
+ * Modify users
+ * See latest bookings
  * Have access to delete all bookings (update seeding to see bookings from other users)
  * Clean up server (Delete bookings more than 1 year old)
- * Import fra UVAEKA 
- * 
- * 
+ * Import fra UVAEKA
  */
