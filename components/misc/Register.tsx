@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { CreateUser } from '@/lib/actions/userActions';
+import { User } from '@/generated/prisma';
 
-export default function Register() {
+export default function Register({ users }: { users: User[] }) {
   const [formdata, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -17,6 +18,13 @@ export default function Register() {
 
   function validateStudentNumber(value: string) {
     if (!value) return '';
+
+    const existing = users.some((item) => Number(value) === item.studentNumber);
+
+    if (existing) {
+      return 'Dette studienummer er allerede brugt';
+    }
+
     if (!Number(value)) {
       return 'Studienummer skal være tal';
     }
@@ -28,6 +36,12 @@ export default function Register() {
 
   function validateCardNumber(value: string) {
     if (!value) return '';
+    const existing = users.some((item) => Number(value) === item.cardNumber);
+
+    if (existing) {
+      return 'Dette kortnummer er allerede brugt';
+    }
+
     if (!Number(value)) {
       return 'Kortnummer skal være tal';
     }
@@ -39,6 +53,13 @@ export default function Register() {
 
   function validatePhone(value: string) {
     if (!value) return 'Der mangler et telefonnummer';
+
+    const existing = users.some((item) => Number(value) === item.phone);
+
+    if (existing) {
+      return 'Dette telefonnummer er allerede brugt';
+    }
+
     if (!Number(value)) {
       return 'Telefonnummer skal være tal';
     }

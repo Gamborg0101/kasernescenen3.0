@@ -1,9 +1,12 @@
 import Register from '@/components/misc/Register';
+import { prisma } from '@/db';
 
-export default function Opret() {
+export default async function Opret() {
+  const users = await prisma.user.findMany();
+
   return (
     <div>
-      <Register />
+      <Register users={users} />
     </div>
   );
 }
