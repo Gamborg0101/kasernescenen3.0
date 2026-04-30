@@ -10,13 +10,25 @@ export default function AdminPanelGrid() {
       <div className="grid grid-cols-2 gap-4">
         <PanelElement
           title="Adminstrer rooms"
-          body=""
+          body="Se, tilføj eller slet rum"
           btnText="Se rum"
           onClick={handleMessage}
           url="adminpanel/managerooms"
         />
-        <PanelElement title="Adminstrer users" body="" btnText="Se brugere" onClick={handleMessage} url="users" />
-        <PanelElement title="Adminstrer bookings" body="" btnText="Se bookinger" onClick={handleMessage} url="" />
+        <PanelElement
+          title="Adminstrer brugere"
+          body="Se, rediger eller slet brugere"
+          btnText="Se brugere"
+          onClick={handleMessage}
+          url="users"
+        />
+        <PanelElement
+          title="Adminstrer bookings"
+          body="Se, slet eller opret bookinger"
+          btnText="Se bookinger"
+          onClick={handleMessage}
+          url=""
+        />
         <PanelElement
           title="Ryd op i DB"
           body="Sletter gamle bookinger (1år)"

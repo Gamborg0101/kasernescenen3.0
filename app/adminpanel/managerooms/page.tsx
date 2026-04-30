@@ -7,7 +7,6 @@ export default async function manageRooms() {
   return (
     <div>
       <RoomsList rooms={getRooms} />
-      <p>Hello from manageRooms</p>
     </div>
   );
 }

@@ -12,7 +12,6 @@ export async function getUser(userId: number) {
 
 export async function createUser(data: {
   googleId: string;
-
   firstName: string;
   lastName: string;
   role: string;

@@ -1,4 +1,5 @@
 import { prisma } from '@/db';
+import { Room } from '@/generated/prisma';
 
 export async function getRooms() {
   return await prisma.room.findMany({
@@ -15,5 +16,14 @@ export async function getRooms() {
 export async function getRoomByNum(roomNumber: number) {
   return await prisma.room.findUnique({
     where: { roomNum: roomNumber },
+  });
+}
+
+export async function updateRoom(roomId: number, data: Partial<Room>) {
+  return await prisma.room.update({
+    where: {
+      id: roomId,
+    },
+    data,
   });
 }
