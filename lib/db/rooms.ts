@@ -19,7 +19,7 @@ export async function getRoomByNum(roomNumber: number) {
   });
 }
 
-export async function updateRoom(roomId: number, data: Partial<Room>) {
+export async function updateRoom(roomId: number, data: Partial<Omit<Room, 'id'>>) {
   return await prisma.room.update({
     where: {
       id: roomId,

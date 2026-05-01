@@ -21,7 +21,12 @@ export default function ChangeRoomModal({ onClose, room }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    await updateRoomAction(room.id, room);
+    await updateRoomAction(room.id, {
+      name: name ?? undefined,
+      roomNum: roomNumber ?? undefined,
+      location: location ?? undefined,
+      capacity: capacity ?? undefined,
+    });
     router.refresh();
     onClose();
   }
