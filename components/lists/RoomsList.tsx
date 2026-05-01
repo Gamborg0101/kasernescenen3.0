@@ -2,10 +2,17 @@
 import { Room } from '@/generated/prisma';
 import React from 'react';
 import ChangeRoomModal from '../modals/ChangeRoomModal';
+import { deleteRoom } from '@/lib/actions/roomActions';
 
 export default function RoomsList({ rooms }: { rooms: Room[] }) {
+  const [roomsState, setRooms] = React.useState(rooms);
   const [toggleModal, setToggleModal] = React.useState(false);
   const [selectedRoom, setSelectedRoom] = React.useState<Room | null>(null);
+
+  const handleDelete = async (roomId: number) => {
+    await deleteRoom(roomId);
+    setRooms(roomsState.filter((room) => room.id !== roomId));
+  };
 
   return (
     <div>
@@ -22,7 +29,7 @@ export default function RoomsList({ rooms }: { rooms: Room[] }) {
             </tr>
           </thead>
           <tbody>
-            {rooms.map((room, index) => (
+            {roomsState.map((room, index) => (
               <tr key={room.id} className={index % 2 === 0 ? '' : 'bg-gray-100'}>
                 <td className="border border-gray-300 px-4 py-2">{room.id}</td>
                 <td className="border border-gray-300 px-4 py-2">{room.name}</td>
@@ -43,7 +50,7 @@ export default function RoomsList({ rooms }: { rooms: Room[] }) {
                 <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
                   <button
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                    onClick={() => null}
+                    onClick={() => console.log(handleDelete(room.id))}
                     type="submit"
                   >
                     Slet

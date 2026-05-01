@@ -27,3 +27,19 @@ export async function updateRoom(roomId: number, data: Partial<Omit<Room, 'id'>>
     data,
   });
 }
+
+export async function DeleteRoomBookings(roomId: number) {
+  return await prisma.booking.deleteMany({
+    where: {
+      roomId: roomId,
+    },
+  });
+}
+
+export async function deleteRoomFromDb(roomId: number) {
+  return await prisma.room.delete({
+    where: {
+      id: roomId,
+    },
+  });
+}
