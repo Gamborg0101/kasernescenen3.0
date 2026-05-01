@@ -1,8 +1,10 @@
 import { prisma } from '@/db';
 import { Room } from '@/generated/prisma';
 
-export async function getRooms() {
+export async function getRoomsFromDB() {
   return await prisma.room.findMany({
+    orderBy: { id: 'asc' },
+
     select: {
       id: true,
       name: true,
