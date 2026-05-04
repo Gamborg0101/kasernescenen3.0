@@ -1,5 +1,5 @@
 'use client';
-import { Booking } from '@/lib/types';
+import { BookingWithUser } from '@/lib/types';
 import { User, Room as RoomType } from '@/generated/prisma';
 import BookingOverlay from './BookingOverlay';
 import { eachDayOfInterval, startOfWeek, endOfWeek, eachMinuteOfInterval, isSameDay } from 'date-fns';
@@ -7,9 +7,9 @@ import { eachDayOfInterval, startOfWeek, endOfWeek, eachMinuteOfInterval, isSame
 type Props = {
   selectedWeek: Date;
   roomNumber: number;
-  allBookings: Booking[];
+  allBookings: BookingWithUser[];
   handleHourClick: (hour: Date, disable: boolean) => void;
-  handleHover: (disable: boolean, booking?: Booking, pos?: { x: number; y: number }) => void;
+  handleHover: (disable: boolean, booking?: BookingWithUser, pos?: { x: number; y: number }) => void;
   allRooms: RoomType[];
   userInfoDb: User;
 };

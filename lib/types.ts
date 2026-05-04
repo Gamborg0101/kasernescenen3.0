@@ -46,6 +46,16 @@ export type Booking = {
   reason: string;
 };
 
+export type BookingWithUser = Booking & {
+  user: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    study: string;
+  };
+};
+
 export type CreateBooking = {
   userId: number;
   startTime: Date;

@@ -7,13 +7,13 @@ import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
 import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
-import { SessionUser } from '@/lib/types';
-import { Booking, User, Room as RoomType } from '@/generated/prisma';
+import { SessionUser, BookingWithUser } from '@/lib/types';
+import { User, Room as RoomType } from '@/generated/prisma';
 
 type Props = {
   userInfoSession: SessionUser;
   allRooms: RoomType[];
-  bookings: Booking[];
+  bookings: BookingWithUser[];
   userInfoDb: User;
 };
 
@@ -23,7 +23,7 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState(new Date());
   const [bookingInfoOpen, setBookingInfoOpen] = useState(false);
-  const [hoveredBooking, setHoveredBooking] = useState<Booking | null>(null);
+  const [hoveredBooking, setHoveredBooking] = useState<BookingWithUser | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
   function weekCounterNext() {
@@ -44,7 +44,7 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
     setWeekCounter(startOfWeek(new Date(), { weekStartsOn: 1 }));
   }
 
-  function handleHover(isOpen: boolean, booking?: Booking, pos?: { x: number; y: number }) {
+  function handleHover(isOpen: boolean, booking?: BookingWithUser, pos?: { x: number; y: number }) {
     setBookingInfoOpen(isOpen);
     setHoveredBooking(booking || null);
     if (pos) setTooltipPos(pos);
@@ -70,7 +70,7 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
         />
       )}
       {bookingInfoOpen && hoveredBooking && (
-        <CreateBookingInfoModal booking={hoveredBooking} userInfoDb={userInfoDb} initialPos={tooltipPos} />
+        <CreateBookingInfoModal booking={hoveredBooking} initialPos={tooltipPos} />
       )}
       <div className="grid grid-cols-3 p-5 bg-gray-200/70">
         <div>

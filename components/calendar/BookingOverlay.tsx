@@ -1,23 +1,24 @@
 'use client';
 
 import { differenceInMinutes } from 'date-fns';
-import { User, Booking } from '@/generated/prisma';
+import { User } from '@/generated/prisma';
+import { BookingWithUser } from '@/lib/types';
 import { bookingColors } from '@/lib/colors';
 import { getBookingColor } from '@/lib/colors';
 import { deleteABooking } from '@/lib/actions/bookingActions';
 
 type BookingOverlayProps = {
-  bookings: Booking[];
+  bookings: BookingWithUser[];
   userInfoDb: User;
 };
 
 export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayProps) {
-  function getDivStartPosition(booking: Booking) {
+  function getDivStartPosition(booking: BookingWithUser) {
     const divStartPosition = (booking.startTime.getHours() - 7) * 60 + booking.startTime.getMinutes();
     return (divStartPosition / 15) * 20;
   }
 
-  function getDivHeight(booking: Booking) {
+  function getDivHeight(booking: BookingWithUser) {
     return (differenceInMinutes(booking.endTime, booking.startTime) / 15) * 20;
   }
 
@@ -25,8 +26,8 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
     return time.toLocaleTimeString('da-DK', { hour: 'numeric', minute: 'numeric' });
   }
 
-  function bookingBelongsToUser(user: User, booking: Booking) {
-    return booking.userId === user.id;
+  function bookingBelongsToUser(booking: BookingWithUser) {
+    return booking.userId === userInfoDb.id;
   }
 
   return (
@@ -39,7 +40,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className={`absolute w-full pointer-events-none ${getBookingColor(userInfoDb.study) ?? bookingColors.unknown1} truncate rounded-sm`}
+            className={`absolute w-full pointer-events-none ${getBookingColor(booking.user.study) ?? bookingColors.unknown1} truncate rounded-sm`}
           >
             <div className="flex justify-between pointer-events-auto">
               <div className="flex items-center gap-1 text-sm">
@@ -47,10 +48,10 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
                   {`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)}`}
                 </p>
                 <span className="select-none">-</span>
-                <p className="font-bold select-none">{`${userInfoDb.firstName} ${userInfoDb.lastName}`}</p>
+                <p className="font-bold select-none">{`${booking.user.firstName} ${booking.user.lastName}`}</p>
               </div>
               <div className="flex items-center pr-2">
-                {bookingBelongsToUser(userInfoDb, booking) && (
+                {bookingBelongsToUser(booking) && (
                   <div
                     onClick={() => deleteABooking(booking.id)}
                     className="group cursor-pointer rounded-full transition-colors duration-200 hover:bg-red-100"

@@ -1,21 +1,12 @@
-import { User } from '@/generated/prisma';
 import { useEffect, useRef, useState } from 'react';
-
-type Booking = {
-  id: number;
-  roomId: number;
-  startTime: Date;
-  endTime: Date;
-  reason: string;
-};
+import { BookingWithUser } from '@/lib/types';
 
 type Props = {
-  booking: Booking;
-  userInfoDb: User | null;
+  booking: BookingWithUser;
   initialPos: { x: number; y: number };
 };
 
-export default function CreateBookingInfoModal({ booking, userInfoDb, initialPos }: Props) {
+export default function CreateBookingInfoModal({ booking, initialPos }: Props) {
   const [pos, setPos] = useState(initialPos);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -50,8 +41,8 @@ export default function CreateBookingInfoModal({ booking, userInfoDb, initialPos
       style={{ top: pos.y, left: pos.x }}
     >
       <div className="p-2">
-        <p>{userInfoDb?.firstName}</p>
-        <p>{userInfoDb?.email}</p>
+        <p>{booking.user.firstName} {booking.user.lastName}</p>
+        <p>{booking.user.email}</p>
         <p>
           {`
           ${new Date(booking.startTime).toLocaleTimeString('da-DK', {

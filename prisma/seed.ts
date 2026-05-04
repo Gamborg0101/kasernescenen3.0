@@ -105,25 +105,37 @@ const rooms = [
   },
 ];
 
+function bookingData() {
+  const now = new Date();
+  const days = faker.number.int({ min: 0, max: 30 });
+  const startHour = faker.number.int({ min: 8, max: 18 });
+  const duration = faker.number.int({ min: 1, max: 3 });
+
+  const startTime = new Date(now);
+  startTime.setDate(startTime.getDate() + days);
+  startTime.setHours(startHour, 0, 0, 0);
+
+  const endTime = new Date(startTime);
+  endTime.setHours(startTime.getHours() + duration);
+
+  return { startTime, endTime };
+}
+
 async function main() {
-  await prisma.user.upsert({
-    where: {
-      phone: 12345678,
-    },
-    update: {},
-    create: {
-      firstName: 'Casper',
-      lastName: 'G',
-      googleId: faker.string.uuid(),
-      phone: 12345678,
-      role: 'admin',
-      studentNumber: 20160012,
-      cardNumber: 123456,
-      email: 'casperGamborg@hotmail.com',
-      note: faker.lorem.sentence(),
-      study: 'musikvidenskab',
-    },
-  });
+  const createdRooms = [];
+  for (const room of rooms) {
+    const createdRoom = await prisma.room.upsert({
+      where: { roomNum: room.roomNum },
+      update: {},
+      create: {
+        roomNum: room.roomNum,
+        name: room.name,
+        capacity: room.capacity,
+        location: room.location,
+      },
+    });
+    createdRooms.push(createdRoom);
+  }
   for (let i = 0; i < 10; i++) {
     const user = await prisma.user.create({
       data: {
@@ -139,35 +151,19 @@ async function main() {
         study: faker.helpers.arrayElement(['dramaturgi', 'musikvidenskab', 'æstetik og kultur', 'retorik']),
       },
     });
-
-    const createdRooms = [];
-    for (const room of rooms) {
-      const createdRoom = await prisma.room.upsert({
-        where: { roomNum: room.roomNum },
-        update: {},
-        create: {
-          roomNum: room.roomNum,
-          name: room.name,
-          capacity: room.capacity,
-          location: room.location,
+    for (let n = 0; n < 100; n++) {
+      const roomForBooking = faker.helpers.arrayElement(createdRooms);
+      const { startTime, endTime } = bookingData();
+      await prisma.booking.create({
+        data: {
+          userId: user.id,
+          roomId: roomForBooking.id,
+          startTime: startTime,
+          endTime: endTime,
+          reason: faker.lorem.lines(1),
         },
       });
-      createdRooms.push(createdRoom);
     }
-
-    const roomForBooking = faker.helpers.arrayElement(createdRooms);
-    await prisma.booking.create({
-      data: {
-        userId: user.id,
-        roomId: roomForBooking.id,
-        startTime: faker.date.between({
-          from: new Date(),
-          to: faker.date.soon({ days: 1 }),
-        }),
-        endTime: faker.date.between({ from: new Date(), to: new Date().setHours(336) }),
-        reason: faker.lorem.lines(1),
-      },
-    });
   }
 }
 
