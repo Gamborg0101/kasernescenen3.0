@@ -10,6 +10,19 @@ export async function getBookings() {
   });
 }
 
+export async function deleteOldBooking() {
+  const oneYearAgo = new Date();
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+  return await prisma.booking.deleteMany({
+    where: {
+      startTime: {
+        lt: oneYearAgo,
+      },
+    },
+  });
+}
+
 export async function findBooking({ roomId, startTime, endTime }: { roomId: number; startTime: Date; endTime: Date }) {
   return await prisma.booking.findFirst({
     where: {
