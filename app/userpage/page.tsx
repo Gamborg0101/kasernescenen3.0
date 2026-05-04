@@ -14,15 +14,13 @@ export default async function UserPage() {
   if (!session) return <div>Not logged in</div>;
 
   const userId = Number(session.user.id);
-
   const user = await getUser(Number(userId));
-
   const threeBookings = await getThreeBookings(Number(userId));
 
   return (
     <div className="flex flex-row justify-center bg-stone-50 mt-20">
       <div>
-        <div className="w-146 h-86 top-8 bg-white border border-stone-200 shadow-sm rounded-2xl mb-4">
+        <div className="w-176 top-8 bg-white border border-stone-200 shadow-sm rounded-2xl mb-4">
           <h3 className="font-serif text-2xl font-extrabold ml-3 mt-3">Profil</h3>
           <div className="flex items-center ml-3 mt-3">
             <Image
@@ -39,43 +37,25 @@ export default async function UserPage() {
           </div>
 
           {/* Userinfo section */}
-          <div className="grid grid-cols-2 p-2 ">
-            <div className="flex flex-col border-t border-r">
-              <div>
-                <div className="pt-3 pl-2 text-gray-500">
-                  <p>Studie</p>
-                </div>
-                <div className="flex flex-col  pl-2">
-                  <p className="capitalize">{user?.study} </p>
-                </div>
-              </div>
-              <div>
-                <div className="border-t pt-3 pl-2 text-gray-500">
-                  <p>Studienummer</p>
-                </div>
-                <div className=" pl-2">
-                  <p>{user?.studentNumber}</p>
-                </div>
-              </div>
+          <div className="grid grid-cols-2 gap-px bg-stone-100 rounded-2xl overflow-hidden border border-stone-100 m-2">
+            <div className="bg-white px-4 py-4">
+              <p className="text-gray-500 text-xs tracking-wider uppercase mb-1">Studie</p>
+              <p className="capitalize">{user?.study}</p>
             </div>
 
-            <div>
-              <div>
-                <div className="border-t pt-3 pl-2 text-gray-500">
-                  <p className="ml-2">Rolle</p>
-                </div>
-                <div className="ml-2  pl-2">
-                  <p className="capitalize">{user?.role} </p>
-                </div>
-              </div>
-              <div>
-                <div className="border-t pt-3 pl-2 text-gray-500">
-                  <p className="ml-2">Kortnummer</p>
-                </div>
-                <div className="ml-2 pl-2">
-                  <p className="">{user?.cardNumber} </p>
-                </div>
-              </div>
+            <div className="bg-white px-4 py-4">
+              <p className="text-gray-500 text-xs tracking-wider uppercase mb-1">Rolle</p>
+              <p className="capitalize">{user?.role}</p>
+            </div>
+
+            <div className="bg-white px-4 py-4">
+              <p className="text-gray-500 text-xs tracking-wider uppercase mb-1">Studienummer</p>
+              <p>{user?.studentNumber}</p>
+            </div>
+
+            <div className="bg-white px-4 py-4">
+              <p className="text-gray-500 text-xs tracking-wider uppercase mb-1">Kortnummer</p>
+              <p>{user?.cardNumber}</p>
             </div>
           </div>
         </div>
