@@ -40,17 +40,17 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className={`absolute w-full pointer-events-none ${getBookingColor(booking.user.study) ?? bookingColors.unknown1} truncate rounded-sm`}
+            className={`absolute w-full pointer-events-none overflow-hidden rounded-sm ${getBookingColor(booking.user.study) ?? bookingColors.unknown1}`}
           >
-            <div className="flex justify-between pointer-events-auto">
-              <div className="flex items-center gap-1 text-sm">
-                <p className="ml-2 font-light select-none">
+            <div className="flex justify-between pointer-events-auto ">
+              <div className="flex items-center gap-1 text-sm overflow-hidden ">
+                <p className="ml-2 font-light select-none shrink-0">
                   {`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)}`}
                 </p>
-                <span className="select-none">-</span>
-                <p className="font-bold select-none">{`${booking.user.firstName} ${booking.user.lastName}`}</p>
+                <span className="select-none shrink-0">-</span>
+                <p className="font-bold select-none truncate">{`${booking.user.firstName} ${booking.user.lastName}`}</p>
               </div>
-              <div className="flex items-center pr-2">
+              <div className="flex items-center pr-2 shrink-0">
                 {bookingBelongsToUser(booking) && (
                   <div
                     onClick={() => deleteABooking(booking.id)}
@@ -73,7 +73,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
                 )}
               </div>
             </div>
-            <p className="ml-2 text-sm font-bold select-none">{booking.reason}</p>
+            <p className="ml-2 text-sm font-bold select-none truncate">{booking.reason}</p>
           </div>
         );
       })}

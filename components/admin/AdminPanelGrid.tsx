@@ -27,7 +27,7 @@ export default function AdminPanelGrid() {
           body="Se, slet eller opret bookinger"
           btnText="Se bookinger"
           onClick={handleMessage}
-          url=""
+          url="/booking"
         />
         <PanelElement
           title="Ryd op i DB"
