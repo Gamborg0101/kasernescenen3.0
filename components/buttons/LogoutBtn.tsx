@@ -8,7 +8,10 @@ export default function LogoutBtn() {
         await signOut();
       }}
     >
-      <button type="submit" className="flex justify-center items-center transition hover:bg-amber-700 h-16 p-5">
+      <button
+        type="submit"
+        className="text-sm text-stone-400 hover:text-red-500 hover:bg-red-50 px-4 py-2 rounded-xl transition-colors duration-150 font-medium cursor-pointer select-none"
+      >
         Log ud
       </button>
     </form>

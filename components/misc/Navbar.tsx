@@ -7,25 +7,25 @@ export async function Navbar() {
   const session = await auth();
 
   return (
-    <nav className="flex justify-between h-16 items-center border-b border-gray-200">
+    <nav className="flex justify-between h-14 items-center border-b border-stone-100 bg-white px-6">
       <Logo />
 
-      <ul className="flex font-semibold gap-8 pr-10 ">
+      <ul className="flex items-center gap-1">
         {session ? (
           <>
             <NavItem text="Min side" href="/userpage" />
             {!session.user.isRegistered && <NavItem text="Registrer" href="/register" />}
             <NavItem text="Booking" href="/booking" />
             <NavItem text="Info" href="/" />
-            <LogoutBtn />
             {session?.user?.role === 'admin' && <NavItem text="Adminpanel" href="/adminpanel" />}
+
+            {/* Skillelinje før logout */}
+            <li className="list-none w-px h-4 bg-stone-200 mx-2" />
+
+            <LogoutBtn />
           </>
         ) : (
-          !session && (
-            <>
-              <NavItem text="Log ind" href="/" />
-            </>
-          )
+          <NavItem text="Log ind" href="/" />
         )}
       </ul>
     </nav>
@@ -34,17 +34,15 @@ export async function Navbar() {
 
 export function NavItem({ text, href, type }: { text: string; href: string; type?: 'button' | 'submit' }) {
   return (
-    <div>
-      <li>
-        <button type={type}>
-          <Link
-            href={href}
-            className="flex justify-center items-center transition delay-75 duration-150 ease-in-out hover:bg-amber-700 h-16 p-5 select-none"
-          >
-            {text}
-          </Link>
-        </button>
-      </li>
-    </div>
+    <li className="list-none">
+      <button type={type}>
+        <Link
+          href={href}
+          className="text-sm text-stone-700 hover:text-stone-900 hover:bg-stone-100 px-4 py-2 rounded-xl transition-colors duration-150 font-medium select-none"
+        >
+          {text}
+        </Link>
+      </button>
+    </li>
   );
 }

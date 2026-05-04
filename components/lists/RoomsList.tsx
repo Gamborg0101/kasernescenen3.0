@@ -15,50 +15,56 @@ export default function RoomsList({ rooms }: { rooms: Room[] }) {
   };
 
   return (
-    <div>
-      <table className="w-full border-collapse border border-gray-300">
+    <div className="bg-white border border-stone-100 shadow-sm rounded-2xl overflow-hidden">
+      {/* Gradient top-stribe — matcher booking- og profilkortet */}
+
+      <table className="w-full">
         <thead>
-          <tr className="bg-gray-200">
-            <th className="border border-gray-300 px-4 py-2">ID</th>
-            <th className="border border-gray-300 px-4 py-2">Lokale navn</th>
-            <th className="border border-gray-300 px-4 py-2">Lokale nummer</th>
-            <th className="border border-gray-300 px-4 py-2">Lokale location</th>
-            <th className="border border-gray-300 px-4 py-2">Lokale capacitet</th>
-            <th className="border border-gray-300 px-4 py-2">Ændre / slet</th>
+          <tr className="bg-stone-50 border-b border-stone-100">
+            <th className="text-xs text-stone-400 uppercase tracking-wider font-medium px-5 py-3 text-left">ID</th>
+            <th className="text-xs text-stone-400 uppercase tracking-wider font-medium px-5 py-3 text-left">Navn</th>
+            <th className="text-xs text-stone-400 uppercase tracking-wider font-medium px-5 py-3 text-left">Nummer</th>
+            <th className="text-xs text-stone-400 uppercase tracking-wider font-medium px-5 py-3 text-left">
+              Lokation
+            </th>
+            <th className="text-xs text-stone-400 uppercase tracking-wider font-medium px-5 py-3 text-left">
+              Kapacitet
+            </th>
+            <th className="px-5 py-3" />
           </tr>
         </thead>
-        <tbody>
-          {roomsState.map((room, index) => (
-            <tr key={room.id} className={index % 2 === 0 ? '' : 'bg-gray-100'}>
-              <td className="border border-gray-300 px-4 py-2">{room.id}</td>
-              <td className="border border-gray-300 px-4 py-2">{room.name}</td>
-              <td className="border border-gray-300 px-4 py-2">{room.roomNum}</td>
-              <td className="border border-gray-300 px-4 py-2">{room.location}</td>
-              <td className="border border-gray-300 px-4 py-2">{room.capacity}</td>
-              <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                  onClick={() => {
-                    setSelectedRoom(room);
-                    setToggleModal(true);
-                  }}
-                >
-                  Ændre
-                </button>
-              </td>
-              <td className="border border-gray-300 flex items-center justify-center px-4 py-2">
-                <button
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                  onClick={() => console.log(handleDelete(room.id))}
-                  type="submit"
-                >
-                  Slet
-                </button>
+        <tbody className="divide-y divide-stone-100">
+          {roomsState.map((room) => (
+            <tr key={room.id} className="hover:bg-stone-50 transition-colors duration-100">
+              <td className="px-5 py-3 text-sm text-stone-300 font-mono">{room.id}</td>
+              <td className="px-5 py-3 text-sm text-stone-800 font-medium">{room.name}</td>
+              <td className="px-5 py-3 text-sm text-stone-600">{room.roomNum}</td>
+              <td className="px-5 py-3 text-sm text-stone-600">{room.location}</td>
+              <td className="px-5 py-3 text-sm text-stone-600">{room.capacity}</td>
+              <td className="px-5 py-3">
+                <div className="flex items-center justify-end gap-2">
+                  <button
+                    className="text-xs text-stone-400 hover:text-stone-800 hover:bg-stone-100 border border-stone-100 px-3 py-1.5 rounded-xl transition-colors duration-150 font-medium"
+                    onClick={() => {
+                      setSelectedRoom(room);
+                      setToggleModal(true);
+                    }}
+                  >
+                    Ændre
+                  </button>
+                  <button
+                    className="text-xs text-stone-400 hover:text-red-500 hover:bg-red-50 border border-stone-100 hover:border-red-100 px-3 py-1.5 rounded-xl transition-colors duration-150 font-medium"
+                    onClick={() => handleDelete(room.id)}
+                  >
+                    Slet
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
       {toggleModal && selectedRoom && <ChangeRoomModal onClose={() => setToggleModal(false)} room={selectedRoom} />}
     </div>
   );
