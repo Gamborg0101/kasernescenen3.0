@@ -27,7 +27,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
   }
 
   function bookingBelongsToUser(booking: BookingWithUser) {
-    return booking.userId === userInfoDb.id;
+    return booking.userId === userInfoDb.id || userInfoDb.role === 'admin';
   }
 
   return (

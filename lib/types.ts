@@ -53,6 +53,7 @@ export type BookingWithUser = Booking & {
     lastName: string;
     email: string;
     study: string;
+    role: string;
   };
 };
 

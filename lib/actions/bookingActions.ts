@@ -76,10 +76,11 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 
 export async function deleteABooking(bookingId: number) {
   const session = await auth();
+
   if (!session) throw new Error('Ikke logget ind');
 
   if (session) {
-    await deleteBooking(bookingId, Number(session.user.id));
+    await deleteBooking(bookingId, Number(session.user.id), session.user.role);
     revalidatePath('/userpage');
   }
 }
