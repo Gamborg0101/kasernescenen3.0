@@ -41,7 +41,10 @@ export default function ChangeUserModal({ onClose, user }: Props) {
 
   return (
     <div className="relative">
-      <div className="fixed inset-0 bg-opacity-10 flex items-center justify-center" onClick={onClose}>
+      <div
+        className="fixed inset-0 bg-black/60  z-1 select-none bg-opacity-10 flex items-center justify-center"
+        onClick={onClose}
+      >
         <div className="">
           <div
             className="modal-content"
