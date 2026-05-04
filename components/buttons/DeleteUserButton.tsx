@@ -12,20 +12,18 @@ export default function DeleteUserButton({ userId }: { userId: number }) {
   };
 
   return (
-    <div className="flex bg-gray-200 w-full justify-between items-center p-2 border border-gray-200 rounded-xl mt-3">
+    <div className="flex justify-between items-center bg-white border border-stone-100 shadow-sm rounded-2xl p-4 mt-3 w-full">
       <div>
-        <p className="font-bold">Slet konto</p>
-        <p className="font-extralight">Denne handling kan ikke fortrydes</p>
+        <p className="text-stone-800 font-semibold text-sm">Slet konto</p>
+        <p className="text-stone-400 text-xs mt-0.5">Denne handling kan ikke fortrydes</p>
       </div>
-      <div>
-        <button
-          type="button"
-          className="w-full text-white rounded-md py-2 bg-red-500 hover:bg-red-700 transition shadow shadow-white p-2"
-          onClick={handleDelete}
-        >
-          Slet bruger
-        </button>
-      </div>
+      <button
+        type="button"
+        className="text-xs text-stone-400 hover:text-red-500 hover:bg-red-50 border border-stone-100 hover:border-red-100 px-4 py-1.5 rounded-xl transition-colors duration-150 font-medium"
+        onClick={handleDelete}
+      >
+        Slet bruger
+      </button>
     </div>
   );
 }
