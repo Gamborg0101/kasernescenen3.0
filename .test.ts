@@ -1,6 +1,6 @@
 'use server';
 
-import { expect, test, toEqual } from 'bun:test';
+import { expect, test } from 'bun:test';
 import { convertStartAndEndHour } from './lib/utils/convertStartAndEndHour';
 import { signIn } from './auth/authSetup';
 

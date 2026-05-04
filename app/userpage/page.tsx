@@ -65,11 +65,13 @@ export default async function UserPage() {
         </p>
         <div className="flex flex-cols">
           <div className="grid grid-cols-3 grow gap-3 ">
-            {threeBookings.map((booking) => (
-              <div key={booking.id} className="flex flex-col ">
-                <BookingCard booking={booking} />
-              </div>
-            ))}
+            {threeBookings
+              .filter((booking) => booking.endTime > new Date())
+              .map((booking) => (
+                <div key={booking.id} className="flex flex-col ">
+                  <BookingCard booking={booking} />
+                </div>
+              ))}
           </div>
         </div>
         <div className="flex flex-col justify-end items-center w-full">
