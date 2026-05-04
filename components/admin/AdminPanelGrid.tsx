@@ -1,6 +1,6 @@
 'use client';
 import PanelElement from '@/components/admin/PanelElement';
-import { deleteOldBooking } from '@/lib/db/bookings';
+import { deleteOldBookings } from '@/lib/actions/bookingActions';
 
 export default function AdminPanelGrid() {
   function handleMessage() {
@@ -36,7 +36,7 @@ export default function AdminPanelGrid() {
           body="Sletter gamle bookinger (1år)"
           btnText="Slet ældre bookinger"
           url="/"
-          onClick={deleteOldBooking}
+          onClick={deleteOldBookings}
         />
       </div>
     </div>

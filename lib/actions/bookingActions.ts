@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { getRoomByNum } from '../db/rooms';
 import { createBooking, findBooking, deleteBooking } from '../db/bookings';
 import { convertStartAndEndHour } from '../utils/convertStartAndEndHour';
+import { deleteOldBooking } from '../db/bookings';
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
@@ -83,4 +84,8 @@ export async function deleteABooking(bookingId: number) {
     await deleteBooking(bookingId, Number(session.user.id), session.user.role);
     revalidatePath('/userpage');
   }
+}
+
+export async function deleteOldBookings() {
+  return deleteOldBooking();
 }
