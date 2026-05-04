@@ -25,7 +25,7 @@ export default function WeekAndHours({
 }: Props) {
   const currentRoom = allRooms?.find((room) => room.roomNum === roomNumber);
 
-  function getBookingForHour(hour: Date): Booking | undefined {
+  function getBookingForHour(hour: Date): BookingWithUser | undefined {
     return allBookings?.find((booking) => {
       const start = booking.startTime;
       const end = booking.endTime;
