@@ -80,10 +80,8 @@ export async function deleteABooking(bookingId: number) {
 
   if (!session) throw new Error('Ikke logget ind');
 
-  if (session) {
-    await deleteBooking(bookingId, Number(session.user.id), session.user.role);
-    revalidatePath('/userpage');
-  }
+  await deleteBooking(bookingId, Number(session.user.id), session.user.role);
+  revalidatePath('/userpage');
 }
 
 export async function deleteOldBookings() {
