@@ -16,16 +16,19 @@ export default auth((request) => {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  if (!session.user.id && pathname !== '/register') {
-    return NextResponse.redirect(new URL('/register', request.url));
-  }
-
   if (session.user.role !== 'admin' && pathname === '/users') {
     return NextResponse.redirect(new URL('/', request.url));
   }
+  if (!session.user.id && pathname !== '/register') {
+    const registerUrl = new URL('/register', request.url);
+    registerUrl.searchParams.set('message', 'Du skal registrere dig før du kan tilgå denne side');
+    return NextResponse.redirect(registerUrl);
+  }
 
   if (!session.user.isRegistered && pathname !== '/register') {
-    return NextResponse.redirect(new URL('/register', request.url));
+    const registerUrl = new URL('/register', request.url);
+    registerUrl.searchParams.set('message', 'Du skal registrere dig før du kan tilgå denne side');
+    return NextResponse.redirect(registerUrl);
   }
 
   return NextResponse.next();
