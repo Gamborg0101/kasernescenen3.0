@@ -21,34 +21,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.googleId = profile.sub;
         token.picture = profile.picture;
       }
-
-      if (token.googleId) {
-        const dbUser = await prisma.user.findUnique({
-          where: { googleId: token.googleId as string },
-        });
-
-        if (!dbUser) {
-          return {};
-        }
-      }
       return token;
     },
+
     async session({ session, token }) {
-      if (!token.googleId) {
-        return session;
+      if (token.googleId) {
+        session.user.googleId = token.googleId as string;
       }
 
-      const dbUser = await prisma.user.findUnique({
-        where: { googleId: token.googleId as string },
-      });
+      const dbUser = token.googleId
+        ? await prisma.user.findUnique({
+            where: { googleId: token.googleId as string },
+          })
+        : null;
+
       if (!dbUser) {
+        session.user.isRegistered = false;
         return session;
       }
 
-      session.user.id = dbUser?.id.toString();
-      session.user.role = dbUser?.role ?? 'student';
-      session.user.isRegistered = !!dbUser;
-      session.user.googleId = token.googleId as string;
+      session.user.id = dbUser.id.toString();
+      session.user.role = dbUser.role ?? 'student';
+      session.user.isRegistered = true;
       session.user.image = token.picture;
 
       return session;
