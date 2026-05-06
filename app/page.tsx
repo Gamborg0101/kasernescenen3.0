@@ -5,7 +5,6 @@ import Link from 'next/link';
 export default async function Home() {
   const session = await auth();
 
-
   const studensAndRooms = [
     {
       who: 'Musikvidenskabsstuderende',
@@ -28,6 +27,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-stone-50 font-serif">
+      <h1>TEST TEST</h1>
       <div className="max-w-5xl mx-auto px-8 py-16">
         {/* Hero */}
         <div className="mb-4 pb-4">
