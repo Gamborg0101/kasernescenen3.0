@@ -22,14 +22,14 @@ https://kasernescenen3.vercel.app/
 
 ## 🛠️ Tech Stack
 
-| Layer     | Technology              |
-| --------- | ----------------------- |
-| Framework | Next.js 16              |
-| Language  | TypeScript              |
-| Styling   | Tailwind CSS            |
-| Database  | PostgreSQL              |
-| ORM       | Prisma                  |
-| Auth      | Auth.js                 |
+| Layer     | Technology   |
+| --------- | ------------ |
+| Framework | Next.js 15   |
+| Language  | TypeScript   |
+| Styling   | Tailwind CSS |
+| Database  | PostgreSQL   |
+| ORM       | Prisma       |
+| Auth      | Auth.js      |
 
 ---
 

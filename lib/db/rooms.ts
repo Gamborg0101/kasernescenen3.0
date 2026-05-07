@@ -45,3 +45,7 @@ export async function deleteRoomFromDb(roomId: number) {
     },
   });
 }
+
+export async function createRoomDB(room: Omit<Room, 'id'>) {
+  return await prisma.room.create({ data: room });
+}

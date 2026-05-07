@@ -3,21 +3,33 @@ import { Room } from '@/generated/prisma';
 import React from 'react';
 import ChangeRoomModal from '../modals/ChangeRoomModal';
 import { deleteRoom } from '@/lib/actions/roomActions';
+import CreateRoomModal from '../modals/CreateRoomModal';
+import { useRouter } from 'next/navigation';
 
 export default function RoomsList({ rooms }: { rooms: Room[] }) {
-  const [roomsState, setRooms] = React.useState(rooms);
   const [toggleModal, setToggleModal] = React.useState(false);
   const [selectedRoom, setSelectedRoom] = React.useState<Room | null>(null);
 
+  const router = useRouter();
+
   const handleDelete = async (roomId: number) => {
     await deleteRoom(roomId);
-    setRooms(roomsState.filter((room) => room.id !== roomId));
+    router.refresh();
   };
 
   return (
     <div className="bg-white border border-stone-100 shadow-sm rounded-2xl overflow-hidden">
-      {/* Gradient top-stribe — matcher booking- og profilkortet */}
-
+      {/* Gradient top-stripe */}
+      <div>
+        <button
+          className="w-36 bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2 flex justify-center items-center "
+          onClick={() => {
+            setToggleModal(true);
+          }}
+        >
+          Add Rooms
+        </button>
+      </div>
       <table className="w-full">
         <thead>
           <tr className="bg-stone-50 border-b border-stone-100">
@@ -34,7 +46,7 @@ export default function RoomsList({ rooms }: { rooms: Room[] }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-stone-100">
-          {roomsState.map((room) => (
+          {rooms.map((room) => (
             <tr key={room.id} className="hover:bg-stone-50 transition-colors duration-100">
               <td className="px-5 py-3 text-sm text-stone-300 font-mono">{room.id}</td>
               <td className="px-5 py-3 text-sm text-stone-800 font-medium">{room.name}</td>
@@ -64,6 +76,7 @@ export default function RoomsList({ rooms }: { rooms: Room[] }) {
           ))}
         </tbody>
       </table>
+      {toggleModal && <CreateRoomModal onClose={() => setToggleModal(false)} />}
 
       {toggleModal && selectedRoom && <ChangeRoomModal onClose={() => setToggleModal(false)} room={selectedRoom} />}
     </div>

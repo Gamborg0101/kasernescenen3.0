@@ -53,7 +53,7 @@ export default function ChangeRoomModal({ onClose, room }: Props) {
                   x
                 </button>
               </div>
-              <h2 className="text-2xl font-semibold mb-2 text-center">Ændre bruger</h2>
+              <h2 className="text-2xl font-semibold mb-2 text-center">Ændre Rum</h2>
 
               <form onSubmit={handleSubmit}>
                 <label htmlFor="id">Id</label>
@@ -113,7 +113,7 @@ export default function ChangeRoomModal({ onClose, room }: Props) {
                   type="submit"
                   className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition"
                 >
-                  Ændre bruger
+                  Ændre rum
                 </button>
               </form>
             </div>
