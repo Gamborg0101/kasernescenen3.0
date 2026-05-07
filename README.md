@@ -1,6 +1,8 @@
 # 🏛️ Booking System
 
-> A fullstack room booking application built to replace a legacy system — with a modern stack, real-time conflict detection, and role-based access control.
+> A fullstack room booking system developed for music rehearsal rooms at Aarhus University, designed to replace an older and less optimal solution.
+
+> The system is built to handle complex booking scenarios, ensure data integrity, and provide a simple and reliable user experience for both students and administrators.
 
 ---
 
@@ -14,7 +16,7 @@
 
 ---
 
-## 🛜 Deployed URL
+## 🛜 Demo
 
 https://kasernescenen3.vercel.app/
 
