@@ -18,10 +18,10 @@ export async function CreateUser(formData: FormData) {
 
   const userId = Number(session?.user.id);
 
-  const { success } = await ratelimit.limit(`user:create:${userId}`);
+  const success = await ratelimit.limit(`user:create:${userId}`);
 
   if (!success) {
-    return { success: false, error: 'Ratelimit reached' };
+    throw new Error('Ratelimit reached');
   }
 
   await createUser({
