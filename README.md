@@ -30,6 +30,7 @@ https://kasernescenen3.vercel.app/
 | Database  | PostgreSQL   |
 | ORM       | Prisma       |
 | Auth      | Auth.js      |
+| Ratelimit | Upstash      |
 
 ---
 
