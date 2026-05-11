@@ -43,6 +43,17 @@ export async function DeleteUser(userId: number) {
 
   if (!session) throw new Error('Du er ikke logget ind');
 
+  const currentUserId = Number(session?.user.id);
+
+  const { success } = await ratelimit.limit(`user:delete:${currentUserId}`);
+
+  if (!success) {
+    return {
+      success: false,
+      error: 'Ratelimit reached',
+    };
+  }
+
   if (session?.user.role !== 'admin' && Number(session?.user.id) !== userId) return;
 
   await DeleteUserBookingDB(userId);
@@ -64,6 +75,18 @@ export async function UpdateUser(
 ) {
   const session = await auth();
 
+  if (!session) throw new Error('Du er ikke logget ind');
+
+  const currentUserId = Number(session?.user.id);
+
+  const { success } = await ratelimit.limit(`user:update:${currentUserId}`);
+
+  if (!success) {
+    return {
+      success: false,
+      error: 'Ratelimit reached',
+    };
+  }
   if (session?.user.role !== 'admin') return;
 
   await UpdateUserDb(userId, data);

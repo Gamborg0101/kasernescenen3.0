@@ -89,12 +89,37 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 export async function deleteABooking(bookingId: number) {
   const session = await auth();
 
-  if (!session) throw new Error('Ikke logget ind');
+  if (!session) throw new Error('Du er ikke logget ind');
+
+  const userId = Number(session?.user.id);
+
+  const { success } = await ratelimit.limit(`booking:delete:${userId}`);
+
+  if (!success) {
+    return {
+      success: false,
+      error: 'Ratelimit reached',
+    };
+  }
 
   await deleteBooking(bookingId, Number(session.user.id), session.user.role);
   revalidatePath('/userpage');
 }
 
 export async function deleteOldBookings() {
+  const session = await auth();
+
+  if (!session) throw new Error('Du er ikke logget ind');
+
+  const userId = Number(session?.user.id);
+
+  const { success } = await ratelimit.limit(`booking:delete:${userId}`);
+
+  if (!success) {
+    return {
+      success: false,
+      error: 'Ratelimit reached',
+    };
+  }
   return deleteOldBooking();
 }
