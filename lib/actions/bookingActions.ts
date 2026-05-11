@@ -6,11 +6,22 @@ import { getRoomByNum } from '../db/rooms';
 import { createBooking, findBooking, deleteBooking } from '../db/bookings';
 import { convertStartAndEndHour } from '../utils/convertStartAndEndHour';
 import { deleteOldBooking } from '../db/bookings';
+import { ratelimit } from '../ratelimiter';
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
-
   if (!session) throw new Error('Du er ikke logget ind');
+
+  const userId = Number(session.user.id);
+
+  const { success } = await ratelimit.limit(`booking:create:${userId}`);
+
+  if (!success) {
+    return {
+      success: false,
+      error: 'Ratelimit reached',
+    };
+  }
 
   const getStartHour = String(formData.get('startHour'));
   const getEndHour = Number(formData.get('endHour'));

@@ -7,10 +7,22 @@ import {
   updateUser as UpdateUserDb,
   DeleteUser as DeleteUserFromDB,
 } from '../db/users';
+import { ratelimit } from '../ratelimiter';
 
 export async function CreateUser(formData: FormData) {
   const session = await auth();
+
+  if (!session) throw new Error('Du er ikke logget ind');
+
   const googleId = session?.user?.googleId as string;
+
+  const userId = Number(session?.user.id);
+
+  const { success } = await ratelimit.limit(`user:create:${userId}`);
+
+  if (!success) {
+    return { success: false, error: 'Ratelimit reached' };
+  }
 
   await createUser({
     googleId: googleId,
@@ -28,6 +40,8 @@ export async function CreateUser(formData: FormData) {
 
 export async function DeleteUser(userId: number) {
   const session = await auth();
+
+  if (!session) throw new Error('Du er ikke logget ind');
 
   if (session?.user.role !== 'admin' && Number(session?.user.id) !== userId) return;
 
