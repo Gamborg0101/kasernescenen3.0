@@ -10,19 +10,6 @@ export async function getBookings() {
   });
 }
 
-export async function deleteOldBooking() {
-  const oneYearAgo = new Date();
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
-  return await prisma.booking.deleteMany({
-    where: {
-      startTime: {
-        lt: oneYearAgo,
-      },
-    },
-  });
-}
-
 export async function findBooking({ roomId, startTime, endTime }: { roomId: number; startTime: Date; endTime: Date }) {
   return await prisma.booking.findFirst({
     where: {
@@ -67,4 +54,15 @@ export async function deleteBooking(bookingId: number, userId: number, role: str
   });
 }
 
-function deleteOldBookings() {}
+export async function cleanDbFromOldBookings() {
+  const oneYearAgo = new Date();
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+  return await prisma.booking.deleteMany({
+    where: {
+      startTime: {
+        lt: oneYearAgo,
+      },
+    },
+  });
+}

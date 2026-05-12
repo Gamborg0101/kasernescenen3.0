@@ -3,7 +3,7 @@
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
 import { createBooking, deleteBooking } from '../db/bookings';
-import { deleteOldBooking } from '../db/bookings';
+import { cleanDbFromOldBookings } from '../db/bookings';
 import { ratelimit } from '../ratelimiter';
 import bookingConflicts from '../utils/bookingConflicts';
 import { sessionError, ratelimitError, failedToCreateBooking } from '../errorMessages';
@@ -67,7 +67,7 @@ export async function deleteABooking(bookingId: number) {
   return { success: true, error: null };
 }
 
-export async function deleteOldBookings() {
+export async function cleanDbFromOldBookingsAction() {
   const session = await auth();
   if (!session) return sessionError;
 
@@ -75,6 +75,9 @@ export async function deleteOldBookings() {
 
   const { success } = await ratelimit.limit(`booking:delete:${userId}`);
   if (!success) return ratelimitError;
-
-  return deleteOldBooking();
+  try {
+    return cleanDbFromOldBookings();
+  } catch (e) {
+    console.error(e);
+  }
 }
