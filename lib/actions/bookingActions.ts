@@ -14,7 +14,7 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 
   const userId = Number(session.user.id);
 
-  const { success } = await ratelimit.limit(`booking:create:${userId}`);
+  const success = ratelimit.limit(`booking:create:${userId}`);
 
   if (!success) {
     return {
@@ -87,13 +87,14 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 }
 
 export async function deleteABooking(bookingId: number) {
+  //Zod input validation = auth check -> validate input -> rate limit -> then delete
   const session = await auth();
 
   if (!session) throw new Error('Du er ikke logget ind');
 
   const userId = Number(session?.user.id);
 
-  const { success } = await ratelimit.limit(`booking:delete:${userId}`);
+  const success = ratelimit.limit(`booking:delete:${userId}`);
 
   if (!success) {
     return {
@@ -113,7 +114,7 @@ export async function deleteOldBookings() {
 
   const userId = Number(session?.user.id);
 
-  const { success } = await ratelimit.limit(`booking:delete:${userId}`);
+  const success = ratelimit.limit(`booking:delete:${userId}`);
 
   if (!success) {
     return {

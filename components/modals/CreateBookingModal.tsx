@@ -13,13 +13,16 @@ type Props = {
 };
 
 export default function CreateBookingModal({ onClose, roomNumber, startHour, userInfoSession }: Props) {
-  const [data, action] = useActionState(makeBooking, null);
+  const [state, formAction, pending] = useActionState(makeBooking, null);
+  console.log('state', state);
+  console.log('action', formAction);
+  console.log('pending', pending);
 
   useEffect(() => {
-    if (data?.success) {
+    if (state?.success) {
       onClose();
     }
-  }, [data, onClose]);
+  }, [state, onClose]);
 
   const inputClass =
     'w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500';
@@ -44,7 +47,7 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
         </div>
         <h2 className="text-2xl font-semibold mb-2 text-center">Book et lokale</h2>
 
-        <form action={action}>
+        <form action={formAction}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
           <input
             type="hidden"
@@ -144,7 +147,7 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
             id="reason"
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          {data?.error && <p className="text-red-500 text-sm mt-1">{data.error}</p>}
+          {state?.error && <p className="text-red-500 text-sm mt-1">{state.error}</p>}
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2"

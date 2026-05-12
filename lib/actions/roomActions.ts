@@ -2,9 +2,7 @@
 import { Room } from '@/generated/prisma';
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
-
-import { DeleteRoomBookings, deleteRoomFromDb, createRoomDB } from '../db/rooms';
-import { updateRoom } from '../db/rooms';
+import { DeleteRoomBookings, deleteRoomFromDb, createRoomDB, updateRoom } from '../db/rooms';
 import { ratelimit } from '../ratelimiter';
 
 export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
@@ -14,7 +12,7 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
 
   const userId = Number(session?.user.id);
 
-  const { success } = await ratelimit.limit(`room:update:${userId}`);
+  const success = ratelimit.limit(`room:update:${userId}`);
 
   if (!success) {
     return {
@@ -34,7 +32,7 @@ export async function deleteRoom(roomId: number) {
 
   const userId = Number(session?.user.id);
 
-  const { success } = await ratelimit.limit(`room:delete:${userId}`);
+  const success = ratelimit.limit(`room:delete:${userId}`);
 
   if (!success) {
     return {
@@ -54,7 +52,7 @@ export async function createRoom(room: Omit<Room, 'id'> | null) {
 
   const userId = Number(session?.user.id);
 
-  const { success } = await ratelimit.limit(`room:create:${userId}`);
+  const success = ratelimit.limit(`room:create:${userId}`);
 
   if (!success) {
     return {

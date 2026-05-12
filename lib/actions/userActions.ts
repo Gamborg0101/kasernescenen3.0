@@ -10,14 +10,13 @@ import {
 import { ratelimit } from '../ratelimiter';
 
 export async function CreateUser(formData: FormData) {
+  //Maybe should use useActionsState
   const session = await auth();
 
   if (!session) throw new Error('Du er ikke logget ind');
 
   const googleId = session?.user?.googleId as string;
-
   const userId = Number(session?.user.id);
-
   const success = await ratelimit.limit(`user:create:${userId}`);
 
   if (!success) {
