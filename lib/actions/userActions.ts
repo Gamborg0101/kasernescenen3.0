@@ -8,55 +8,64 @@ import {
   DeleteUser as DeleteUserFromDB,
 } from '../db/users';
 import { ratelimit } from '../ratelimiter';
+import {
+  sessionError,
+  ratelimitError,
+  failedToCreateUser,
+  failedToDeleteUser,
+  userIsNotAdmin,
+  failedToUpdateUser,
+} from '../errorMessages';
 
 export async function CreateUser(formData: FormData) {
-  //Maybe should use useActionsState
   const session = await auth();
 
-  if (!session) throw new Error('Du er ikke logget ind');
+  if (!session) return sessionError;
 
-  const googleId = session?.user?.googleId as string;
+  const googleId = session.user.googleId as string;
   const userId = Number(session?.user.id);
   const { success } = await ratelimit.limit(`user:create:${userId}`);
 
-  if (!success) {
-    throw new Error('Ratelimit reached');
-  }
+  if (!success) return ratelimitError;
 
-  await createUser({
-    googleId: googleId,
-    firstName: formData.get('firstName') as string,
-    lastName: formData.get('lastName') as string,
-    role: 'student',
-    phone: Number(formData.get('phone')),
-    email: formData.get('email') as string,
-    studentNumber: Number(formData.get('studentNumber')),
-    cardNumber: Number(formData.get('cardNumber')),
-    study: formData.get('studie') as string,
-  });
+  try {
+    await createUser({
+      googleId: googleId,
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      role: 'student',
+      phone: Number(formData.get('phone')),
+      email: formData.get('email') as string,
+      studentNumber: Number(formData.get('studentNumber')),
+      cardNumber: Number(formData.get('cardNumber')),
+      study: formData.get('studie') as string,
+    });
+  } catch (e) {
+    console.error(e);
+    return failedToCreateUser;
+  }
   redirect('/booking');
 }
 
 export async function DeleteUser(userId: number) {
   const session = await auth();
+  if (!session) return sessionError;
 
-  if (!session) throw new Error('Du er ikke logget ind');
-
-  const currentUserId = Number(session?.user.id);
-
+  const currentUserId = Number(session.user.id);
   const { success } = await ratelimit.limit(`user:delete:${currentUserId}`);
 
-  if (!success) {
-    return {
-      success: false,
-      error: 'Ratelimit reached',
-    };
+  if (!success) return ratelimitError;
+
+  if (session.user.role !== 'admin' && Number(session.user.id) !== userId) return failedToDeleteUser;
+
+  try {
+    await DeleteUserBookingDB(userId);
+    await DeleteUserFromDB(userId);
+    return success;
+  } catch (e) {
+    console.error(e);
+    return failedToDeleteUser;
   }
-
-  if (session?.user.role !== 'admin' && Number(session?.user.id) !== userId) return;
-
-  await DeleteUserBookingDB(userId);
-  await DeleteUserFromDB(userId);
 }
 
 export async function UpdateUser(
@@ -73,20 +82,21 @@ export async function UpdateUser(
   },
 ) {
   const session = await auth();
+  if (!session) return sessionError;
 
-  if (!session) throw new Error('Du er ikke logget ind');
-
-  const currentUserId = Number(session?.user.id);
+  const currentUserId = Number(session.user.id);
 
   const { success } = await ratelimit.limit(`user:update:${currentUserId}`);
 
-  if (!success) {
-    return {
-      success: false,
-      error: 'Ratelimit reached',
-    };
-  }
-  if (session?.user.role !== 'admin') return;
+  if (!success) return ratelimitError;
 
-  await UpdateUserDb(userId, data);
+  if (session.user.role !== 'admin') return userIsNotAdmin;
+
+  try {
+    await UpdateUserDb(userId, data);
+    return success;
+  } catch (e) {
+    console.error(e);
+    return failedToUpdateUser;
+  }
 }

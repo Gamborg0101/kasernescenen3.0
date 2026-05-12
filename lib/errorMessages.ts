@@ -37,6 +37,26 @@ export const failedToCreateRoom = {
   error: 'Noget gik galt imens du forsøgte at lave et rum',
 };
 
+export const failedToCreateUser = {
+  success: false,
+  error: 'Noget gik galt imens du forsøgte at oprette en bruger',
+};
+
+export const failedToDeleteUser = {
+  success: false,
+  error: 'Noget gik galt imens du forsøgte at slette en bruger',
+};
+
+export const failedToUpdateUser = {
+  success: false,
+  error: 'Noget gik galt imens du forsøgte at opdatere en bruger',
+};
+
+export const userIsNotAdmin = {
+  success: false,
+  error: 'Noget gik galt imens du forsøgte at slette en bruger',
+};
+
 export const unauthorizedAccess = { success: false, error: 'Unauthorized' };
 
 export const failedToFindRoom = { success: false, error: 'Noget gik galt med at finde rummet' };
