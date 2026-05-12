@@ -6,21 +6,17 @@ import { createBooking, deleteBooking } from '../db/bookings';
 import { deleteOldBooking } from '../db/bookings';
 import { ratelimit } from '../ratelimiter';
 import bookingConflicts from '../utils/bookingConflicts';
-import { validateHeaderName } from 'node:http';
+import { sessionError, ratelimitError, failedToCreateBooking } from '../errorMessages';
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
-  if (!session) throw new Error('Du er ikke logget ind');
+  if (!session) return sessionError;
 
   const userId = Number(session.user.id);
-
-  const success = ratelimit.limit(`booking:create:${userId}`);
+  const { success } = await ratelimit.limit(`booking:create:${userId}`);
 
   if (!success) {
-    return {
-      success: false,
-      error: 'Ratelimit reached',
-    };
+    return ratelimitError;
   }
 
   const getStartHour = String(formData.get('startHour'));
@@ -39,52 +35,46 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     info: getInfo,
   };
 
-  const validBooking = await bookingConflicts(bookingInfo);
-
-  if ('error' in validBooking) {
-    return { success: false, error: validBooking.error };
+  try {
+    const validBooking = await bookingConflicts(bookingInfo);
+    if ('error' in validBooking) {
+      return { success: false, error: validBooking.error };
+    }
+    await createBooking(validBooking);
+    revalidatePath('/booking');
+    return { success: true, error: null };
+  } catch (e) {
+    console.error(e);
+    return failedToCreateBooking;
   }
-
-  await createBooking(validBooking);
-
-  revalidatePath('/booking');
-  return { success: true, error: null };
 }
 
 export async function deleteABooking(bookingId: number) {
   const session = await auth();
+  if (!session) {
+    return sessionError;
+  }
 
-  if (!session) throw new Error('Du er ikke logget ind');
-
-  const userId = Number(session?.user.id);
-
-  const success = ratelimit.limit(`booking:delete:${userId}`);
+  const userId = Number(session.user.id);
+  const { success } = await ratelimit.limit(`booking:delete:${userId}`);
 
   if (!success) {
-    return {
-      success: false,
-      error: 'Ratelimit reached',
-    };
+    return ratelimitError;
   }
 
   await deleteBooking(bookingId, Number(session.user.id), session.user.role);
   revalidatePath('/userpage');
+  return { success: true, error: null };
 }
 
 export async function deleteOldBookings() {
   const session = await auth();
-
-  if (!session) throw new Error('Du er ikke logget ind');
+  if (!session) return sessionError;
 
   const userId = Number(session?.user.id);
 
-  const success = ratelimit.limit(`booking:delete:${userId}`);
+  const { success } = await ratelimit.limit(`booking:delete:${userId}`);
+  if (!success) return ratelimitError;
 
-  if (!success) {
-    return {
-      success: false,
-      error: 'Ratelimit reached',
-    };
-  }
   return deleteOldBooking();
 }
