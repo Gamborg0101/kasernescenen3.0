@@ -13,10 +13,7 @@ type Props = {
 };
 
 export default function CreateBookingModal({ onClose, roomNumber, startHour, userInfoSession }: Props) {
-  const [state, formAction, pending] = useActionState(makeBooking, null);
-  console.log('state', state);
-  console.log('action', formAction);
-  console.log('pending', pending);
+  const [state, formAction, isPending] = useActionState(makeBooking, null);
 
   useEffect(() => {
     if (state?.success) {
@@ -152,7 +149,7 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
             type="submit"
             className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2"
           >
-            Book
+            {isPending ? 'Booker' : 'Book'}
           </button>
         </form>
       </div>
