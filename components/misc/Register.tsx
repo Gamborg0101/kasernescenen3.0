@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { CreateUser } from '@/lib/actions/userActions';
 import { User } from '@/generated/prisma';
+import { useActionState } from 'react';
 
 export default function Register({ users }: { users: User[] }) {
   const [formdata, setFormData] = useState({
@@ -15,6 +16,7 @@ export default function Register({ users }: { users: User[] }) {
     cardNumber: '',
   });
   const [error, setError] = useState('');
+  const [state, formAction] = useActionState(CreateUser, null);
 
   function validateStudentNumber(value: string) {
     if (!value) return '';
@@ -80,7 +82,7 @@ export default function Register({ users }: { users: User[] }) {
               </h1>
               <form
                 className="space-y-4 md:space-y-6"
-                action={CreateUser}
+                action={formAction}
                 onSubmit={(e) => {
                   const result =
                     validateStudentNumber(formdata.studentNumber) && validateCardNumber(formdata.cardNumber);
@@ -226,8 +228,7 @@ export default function Register({ users }: { users: User[] }) {
                     />
                   </div>
                 </div>
-                {error && <div className="text-red-600">{error}</div>}
-
+                {state?.error && <div className="text-red-600">{state.error}</div>}
                 <button
                   type="submit"
                   className="w-full bg-indigo-600 text-white rounded-md py-2 hover:bg-indigo-700 transition mt-2"

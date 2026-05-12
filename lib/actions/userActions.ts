@@ -17,7 +17,7 @@ import {
   failedToUpdateUser,
 } from '../errorMessages';
 
-export async function CreateUser(formData: FormData) {
+export async function CreateUser(prevState: any, formData: FormData) {
   const session = await auth();
 
   if (!session) return sessionError;
