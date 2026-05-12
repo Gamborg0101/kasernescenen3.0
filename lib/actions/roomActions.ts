@@ -4,64 +4,79 @@ import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
 import { DeleteRoomBookings, deleteRoomFromDb, createRoomDB, updateRoom } from '../db/rooms';
 import { ratelimit } from '../ratelimiter';
+import {
+  failedToCreateRoom,
+  failedToDeleteRoom,
+  failedToFindRoom,
+  failedToUpdateRoom,
+  ratelimitError,
+  sessionError,
+  unauthorizedAccess,
+} from '../errorMessages';
 
 export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
   const session = await auth();
+  if (!session) return sessionError;
 
-  if (!session) throw new Error('Du er ikke logget ind');
-
-  const userId = Number(session?.user.id);
-
+  const userId = Number(session.user.id);
   const { success } = await ratelimit.limit(`room:update:${userId}`);
 
   if (!success) {
-    return {
-      success: false,
-      error: 'Ratelimit reached',
-    };
+    return ratelimitError;
   }
 
-  if (session?.user.role !== 'admin') return;
-  await updateRoom(roomId, data);
+  if (session.user.role !== 'admin') return unauthorizedAccess;
+  try {
+    await updateRoom(roomId, data);
+    return success;
+  } catch (e) {
+    console.error(e);
+    return failedToUpdateRoom;
+  }
 }
 
 export async function deleteRoom(roomId: number) {
   const session = await auth();
+  if (!session) return sessionError;
 
-  if (!session) throw new Error('Du er ikke logget ind');
-
-  const userId = Number(session?.user.id);
+  const userId = Number(session.user.id);
 
   const { success } = await ratelimit.limit(`room:delete:${userId}`);
-
   if (!success) {
-    return {
-      success: false,
-      error: 'Ratelimit reached',
-    };
+    return ratelimitError;
   }
-  if (session?.user.role !== 'admin') return;
-  await DeleteRoomBookings(roomId);
-  return deleteRoomFromDb(roomId);
+  if (session.user.role !== 'admin') return unauthorizedAccess;
+  try {
+    await DeleteRoomBookings(roomId);
+    await deleteRoomFromDb(roomId);
+    return success;
+  } catch (e) {
+    console.error(e);
+    return failedToDeleteRoom;
+  }
 }
 
 export async function createRoom(room: Omit<Room, 'id'> | null) {
   const session = await auth();
+  if (!session) return sessionError;
 
-  if (session?.user.role !== 'admin') return;
-
-  const userId = Number(session?.user.id);
+  const userId = Number(session.user.id);
 
   const { success } = await ratelimit.limit(`room:create:${userId}`);
 
   if (!success) {
-    return {
-      success: false,
-      error: 'Ratelimit reached',
-    };
+    return ratelimitError;
   }
 
-  if (!room) return null;
-  await createRoomDB(room);
-  revalidatePath('/adminpanel/managerooms');
+  if (session.user.role !== 'admin') return unauthorizedAccess;
+  if (!room) return failedToFindRoom;
+
+  try {
+    await createRoomDB(room);
+    revalidatePath('/adminpanel/managerooms');
+    return success;
+  } catch (e) {
+    console.error(e);
+    return failedToCreateRoom;
+  }
 }
