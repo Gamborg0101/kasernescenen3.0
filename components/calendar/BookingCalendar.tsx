@@ -69,9 +69,7 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
           userInfoSession={userInfoSession}
         />
       )}
-      {bookingInfoOpen && hoveredBooking && (
-        <CreateBookingInfoModal booking={hoveredBooking} initialPos={tooltipPos} />
-      )}
+      {bookingInfoOpen && hoveredBooking && <CreateBookingInfoModal booking={hoveredBooking} initialPos={tooltipPos} />}
       <div className="grid grid-cols-3 p-5 bg-gray-200/70">
         <div>
           <RoomSelector roomNumber={roomNumber} setRoomNumber={setRoomNumber} allRooms={allRooms} />

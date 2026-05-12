@@ -6,7 +6,13 @@ import { createBooking, deleteBooking } from '../db/bookings';
 import { cleanDbFromOldBookings } from '../db/bookings';
 import { ratelimit } from '../ratelimiter';
 import bookingConflicts from '../utils/bookingConflicts';
-import { sessionError, ratelimitError, failedToCreateBooking } from '../errorMessages';
+import {
+  sessionError,
+  ratelimitError,
+  failedToCreateBooking,
+  failedToDeleteBooking,
+  failedToCleanupDb,
+} from '../errorMessages';
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
@@ -50,10 +56,14 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 }
 
 export async function deleteABooking(bookingId: number) {
-  const session = await auth();
-  if (!session) {
+  let session;
+  try {
+    session = await auth();
+  } catch (e) {
+    console.error(e);
     return sessionError;
   }
+  if (!session) return sessionError;
 
   const userId = Number(session.user.id);
   const { success } = await ratelimit.limit(`booking:delete:${userId}`);
@@ -61,23 +71,29 @@ export async function deleteABooking(bookingId: number) {
   if (!success) {
     return ratelimitError;
   }
-
-  await deleteBooking(bookingId, Number(session.user.id), session.user.role);
-  revalidatePath('/userpage');
-  return { success: true, error: null };
+  try {
+    await deleteBooking(bookingId, Number(session.user.id), session.user.role);
+    revalidatePath('/userpage');
+    return { success: true, error: null };
+  } catch (e) {
+    console.error(e);
+    return failedToDeleteBooking;
+  }
 }
 
 export async function cleanDbFromOldBookingsAction() {
   const session = await auth();
   if (!session) return sessionError;
 
-  const userId = Number(session?.user.id);
+  const userId = Number(session.user.id);
 
   const { success } = await ratelimit.limit(`booking:delete:${userId}`);
   if (!success) return ratelimitError;
   try {
-    return cleanDbFromOldBookings();
+    await cleanDbFromOldBookings();
+    return { success: true, error: null };
   } catch (e) {
     console.error(e);
+    return failedToCleanupDb;
   }
 }
