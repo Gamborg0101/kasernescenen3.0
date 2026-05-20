@@ -44,7 +44,7 @@ export default function AdminPanelGrid() {
           body="Importer bookinger fra en CSV fil"
           btnText="Importer bookinger"
           url=""
-          onClick={importCsv()}
+          onClick={importCsv}
         />
       </div>
     </div>
