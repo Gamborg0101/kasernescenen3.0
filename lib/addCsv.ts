@@ -1,6 +1,8 @@
-'use client';
-
-import { P } from '@upstash/redis/error-8y4qG0W2';
+'use server';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as csv from 'fast-csv';
+import * as csvFormat from '@fast-csv/format';
 
 type uvaekaBooking = {
   beskrivelse: string;
@@ -23,18 +25,44 @@ type uvaekaBooking = {
   draft: boolean;
   videokonference: boolean;
 };
-export default async function importCsv() {
-  const res = await fetch('/timetable.csv');
-  const text = await res.text();
+export default async function importCsv(): Promise<uvaekaBooking[]> {
+  return new Promise((resolve, reject) => {
+    const rows: uvaekaBooking[] = [];
 
-  const splittedValues = text.split(',');
-  const categories = splittedValues.slice(0, 19);
-  const values = splittedValues.slice(20);
-
-  const table = categories.map((item, index) => ({
-    item,
-    value: values[index],
-  }));
-
-  console.log(table);
+    fs.createReadStream(path.resolve(__dirname, '../public', 'timetable.csv'))
+      .pipe(csv.parse({ headers: true }))
+      .on('error', (error) => reject(error))
+      .on('data', (row: uvaekaBooking) => rows.push(row))
+      .on('end', (rowCount: number) => {
+        console.log(`Parsed ${rowCount} rows`);
+        resolve(rows);
+      });
+  });
 }
+
+async function createBookingFromCsv() {
+  const data = await importCsv();
+  csvFormat.format();
+  data.map((item, index) => {
+    item;
+  });
+
+  console.log(data);
+}
+/*
+DATA FORMAT:
+export async function createBooking({ roomId, startTime, endTime, userId, reason }: CreateBooking) {
+  await prisma.booking.create({
+    data: {
+      roomId: roomId,
+      startTime: startTime,
+      endTime: endTime,
+      userId: userId,
+      reason: reason,
+    },
+  });
+}
+
+*/
+
+createBookingFromCsv();
