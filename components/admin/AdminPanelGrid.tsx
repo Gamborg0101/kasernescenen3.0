@@ -1,6 +1,7 @@
 'use client';
 import PanelElement from '@/components/admin/PanelElement';
 import { cleanDbFromOldBookingsAction } from '@/lib/actions/bookingActions';
+import importCsv from '@/lib/addCsv';
 
 export default function AdminPanelGrid() {
   function handleMessage() {
@@ -37,6 +38,13 @@ export default function AdminPanelGrid() {
           btnText="Slet ældre bookinger"
           url="/"
           onClick={cleanDbFromOldBookingsAction}
+        />
+        <PanelElement
+          title="Importer bookinger"
+          body="Importer bookinger fra en CSV fil"
+          btnText="Importer bookinger"
+          url=""
+          onClick={importCsv()}
         />
       </div>
     </div>
