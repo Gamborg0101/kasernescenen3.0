@@ -3,6 +3,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as csv from 'fast-csv';
 import * as csvFormat from '@fast-csv/format';
+import { error } from 'console';
+import { resolve } from 'dns';
+import { rejects } from 'assert';
 
 type uvaekaBooking = {
   beskrivelse: string;
@@ -25,30 +28,23 @@ type uvaekaBooking = {
   draft: boolean;
   videokonference: boolean;
 };
-export default async function importCsv(): Promise<uvaekaBooking[]> {
-  return new Promise((resolve, reject) => {
-    const rows: uvaekaBooking[] = [];
+//Promise<uvaekaBooking[]>
 
-    fs.createReadStream(path.resolve(__dirname, '../public', 'timetable.csv'))
-      .pipe(csv.parse({ headers: true }))
-      .on('error', (error) => reject(error))
-      .on('data', (row: uvaekaBooking) => rows.push(row))
-      .on('end', (rowCount: number) => {
-        console.log(`Parsed ${rowCount} rows`);
-        resolve(rows);
-      });
-  });
-}
+// function getValues(): Promise<uvaekaBooking[]> {
+//   // const UVAEKAInfo: uvaekaBooking[] = [];
+//   // const myPromise = new Promise((resolve, reject) => {
+//   //   fs.createReadStream(path.resolve(__dirname, '../public', 'timetable.csv'))
+//   //     .pipe(csv.parse({ headers: true }))
+//   //     .on('error', (error) => reject('Something went wrong'))
+//   //     .on('data', (row) => UVAEKAInfo.push(row))
+//   //     .on('end', () => resolve(UVAEKAInfo));
+//   // });
 
-async function createBookingFromCsv() {
-  const data = await importCsv();
-  csvFormat.format();
-  data.map((item, index) => {
-    item;
-  });
+//   // return myPromise;
+// }
+// console.log(getValues());
 
-  console.log(data);
-}
+async function createBookingFromCsv() {}
 /*
 DATA FORMAT:
 export async function createBooking({ roomId, startTime, endTime, userId, reason }: CreateBooking) {
