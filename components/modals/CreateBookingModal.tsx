@@ -46,15 +46,7 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
 
         <form action={formAction}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
-          <input
-            type="hidden"
-            name="startHour"
-            id="startHour"
-            value={startHour.toLocaleTimeString('dk', {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          />
+          <input type="hidden" name="startHour" value={startHour.toISOString()} />
           <input type="hidden" name="getDate" value={startHour.toISOString().split('T')[0]} />{' '}
           <label htmlFor="roomNumber" className="text-xs font-bold text-gray-500">
             Rum:

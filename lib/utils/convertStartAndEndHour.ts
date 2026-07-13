@@ -4,9 +4,17 @@ export function convertStartAndEndHour(
   endHourMins: string,
   getDate: string,
 ): { start: Date; end: Date } {
-  const start = new Date(`${getDate}T${startHour}:00`);
+  const start = new Date(startHour);
 
-  const end = new Date(`${getDate}T${String(endHour).padStart(2, '0')}:${endHourMins}:00`);
+  const end = new Date(start);
+  end.setHours(endHour, Number(endHourMins), 0, 0);
+
+  console.log({
+    getDate,
+    startHour,
+    start,
+    end,
+  });
 
   return {
     start,
