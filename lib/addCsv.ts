@@ -79,15 +79,15 @@ export default async function importCsv(): Promise<uvaekaBooking[]> {
 //   });
 
 /**
- * TO DO 
- * Convert the other usage of convertStartAdnEndHour into a date object, so the function will only accept start and End as date objects. 
- * 
- * 
- * 
- * 
+ * TO DO
+ * Convert the other usage of convertStartAdnEndHour into a date object, so the function will only accept start and End as date objects.
+ *
+ *
+ *
+ *
  */
 
-  /**
+/**
      * 
      * startHour: string,
   endHour: number,
@@ -95,10 +95,10 @@ export default async function importCsv(): Promise<uvaekaBooking[]> {
   getDate: string,
      */
 
-  // data.forEach((element) => {
-  //   console.log(element.startUgeISO);
-  // });
-}
+// data.forEach((element) => {
+//   console.log(element.startUgeISO);
+// });
+//}
 
 /*
 DATA FORMAT:
@@ -116,4 +116,4 @@ export async function createBooking({ roomId, startTime, endTime, userId, reason
 
 */
 
-createBookingFromCsv();
+//createBookingFromCsv();

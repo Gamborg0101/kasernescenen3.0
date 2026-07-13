@@ -1,8 +1,19 @@
-'use server';
-
-import { expect, test } from 'bun:test';
+import { expect, test, afterEach } from 'bun:test';
 import { convertStartAndEndHour } from './lib/utils/convertStartAndEndHour';
-import { signIn } from './auth/authSetup';
+import { prisma } from './db';
+import { createBooking } from './lib/db/bookings';
+import { getRoomByNum } from './lib/db/rooms';
+
+afterEach(async () => {
+  await prisma.booking.deleteMany({
+    where: {
+      reason: 'testbookings',
+    },
+  });
+});
+
+const room = await getRoomByNum(126);
+if (!room) throw 'Der var ikke noget rum id på dette rumnummer';
 
 test('convertStartAndEndHour returns correct format', () => {
   const result = convertStartAndEndHour('08.00', 10, '30', '2026-06-16');
@@ -10,24 +21,37 @@ test('convertStartAndEndHour returns correct format', () => {
   expect(result.end).toEqual(new Date('2026-06-16 10:30'));
 });
 
-test('Redirect user to /', async () => {
-  const res = await fetch('http://localhost:3000/booking');
-  expect(res.url).toBe('http://localhost:3000/');
+test('Two users can not make the same booking', async () => {
+  const startTime = new Date('August 19, 2026, 12:00:00');
+
+  const endTime = new Date('August 19, 2026, 13:30:00');
+
+  const booking1 = createBooking({
+    roomId: room.id,
+    startTime: startTime,
+    endTime: endTime,
+    userId: 1,
+    reason: 'testbookings',
+  });
+
+  const booking2 = createBooking({
+    roomId: room.id,
+    startTime: startTime,
+    endTime: endTime,
+    userId: 1,
+    reason: 'testbookings',
+  });
+
+  const results = await Promise.allSettled([booking1, booking2]);
+
+  const bookings = await prisma.booking.findMany({
+    where: {
+      roomId: room.id,
+      AND: [{ startTime: { lt: endTime } }, { endTime: { gt: startTime } }],
+    },
+  });
+
+  const fulfilled = results.filter((r) => r.status === 'fulfilled');
+  expect(fulfilled.length).toBe(1);
+  expect(bookings.length).toBe(1);
 });
-
-test('Redirect to booking page if not logged in', async () => {
-  signIn('google');
-  const res = await fetch('http://localhost:3000/booking');
-  expect(res.url).toBe('http://localhost:3000/booking');
-});
-
-/* 
-Tests
-  Logget-ind men ikke-registreret bruger bliver sendt til /register
-  Ikke-admin der forsøger at tilgå /users bliver sendt til /
-  En admin må godt se /users
-  start er før end for normalt input
-  Deleteuser logik må ikke køre, hvis brugerem ikke er admin eller ejer af kontoen (samme med booking)
-  UpdateUser må ikke køre hvis brugeren ikke er admin
-
-*/
