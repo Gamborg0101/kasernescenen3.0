@@ -11,21 +11,27 @@ export default function AdminPanelGrid() {
           title="Adminstrer rooms"
           body="Se, tilføj eller slet rum"
           btnText="Se rum"
-          onClick={handleMessage}
+          onClick={() => {
+            return 'functions to come';
+          }}
           url="adminpanel/managerooms"
         />
         <PanelElement
           title="Adminstrer brugere"
           body="Se, rediger eller slet brugere"
           btnText="Se brugere"
-          onClick={handleMessage}
+          onClick={() => {
+            return 'functions to come';
+          }}
           url="users"
         />
         <PanelElement
           title="Adminstrer bookings"
           body="Se, slet eller opret bookinger"
           btnText="Se bookinger"
-          onClick={handleMessage}
+          onClick={() => {
+            console.log('Hi');
+          }}
           url="/booking"
         />
         <PanelElement
