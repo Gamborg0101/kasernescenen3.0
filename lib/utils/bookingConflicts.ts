@@ -27,7 +27,14 @@ export default async function bookingConflicts({
     return { success: false, error: 'Alle felter er påkrævet' };
   }
 
-  const startAndEnd = convertStartAndEndHour(startHour, endHour, endMins, date);
+  const startAndEnd = convertStartAndEndHour(startHour, endHour, endMins);
+  console.log({
+    startHour,
+    endHour,
+    endMins,
+    date,
+    startAndEnd,
+  });
 
   const room = await getRoomByNum(roomNumber);
 
