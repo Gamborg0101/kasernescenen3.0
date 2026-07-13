@@ -55,7 +55,7 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
               minute: '2-digit',
             })}
           />
-          <input type="hidden" name="getDate" id="getDate" value={startHour.toDateString()} />
+          <input type="hidden" name="getDate" value={startHour.toISOString().split('T')[0]} />{' '}
           <label htmlFor="roomNumber" className="text-xs font-bold text-gray-500">
             Rum:
           </label>
@@ -78,7 +78,6 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
           <label htmlFor="startHour" className="text-xs font-bold text-gray-500">
             Start:
           </label>
-
           <input
             id="startHourShow"
             type="text"
@@ -92,7 +91,6 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
           <label htmlFor="endHour" className="text-xs font-bold text-gray-500">
             Slut:
           </label>
-
           <div className="flex">
             <input
               type="text"
@@ -114,7 +112,6 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
               <option value="45">45</option>
             </select>
           </div>
-
           <label htmlFor="name" className="text-xs font-bold text-gray-500">
             Navn:
           </label>

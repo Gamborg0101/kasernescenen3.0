@@ -29,7 +29,6 @@ export default function WeekAndHours({
     return allBookings?.find((booking) => {
       const start = booking.startTime;
       const end = booking.endTime;
-
       return booking.roomId === currentRoom?.id && hour >= start && hour < end;
     });
   }
