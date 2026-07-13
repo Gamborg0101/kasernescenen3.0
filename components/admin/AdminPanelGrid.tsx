@@ -4,10 +4,6 @@ import { cleanDbFromOldBookingsAction } from '@/lib/actions/bookingActions';
 import importCsv from '@/lib/addCsv';
 
 export default function AdminPanelGrid() {
-  function handleMessage() {
-    console.log('DB function');
-  }
-
   return (
     <div className="flex items-center justify-center ">
       <div className="grid grid-cols-2 gap-4">

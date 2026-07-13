@@ -11,7 +11,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google({
       profile(profile) {
-        console.log(profile);
         return { role: profile.role ?? 'user', ...profile };
       },
     }),

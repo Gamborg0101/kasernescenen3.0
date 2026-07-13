@@ -16,13 +16,6 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
   function getDivStartPosition(booking: BookingWithUser) {
     const divStartPosition = (booking.startTime.getHours() - 7) * 60 + booking.startTime.getMinutes();
 
-    console.log({
-      start: booking.startTime.toString(),
-      hours: booking.startTime.getHours(),
-      minutes: booking.startTime.getMinutes(),
-      position: (divStartPosition / 15) * 20,
-    });
-
     return (divStartPosition / 15) * 20;
   }
 
