@@ -2,8 +2,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as csv from 'fast-csv';
-import { convertStartAndEndHour } from './utils/convertStartAndEndHour';
-import { da } from '@faker-js/faker/.';
 
 type uvaekaBooking = {
   beskrivelse: string;
