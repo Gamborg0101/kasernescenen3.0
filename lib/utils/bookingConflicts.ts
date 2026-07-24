@@ -28,13 +28,6 @@ export default async function bookingConflicts({
   }
 
   const startAndEnd = convertStartAndEndHour(startHour, endHour, endMins);
-  console.log({
-    startHour,
-    endHour,
-    endMins,
-    date,
-    startAndEnd,
-  });
 
   const room = await getRoomByNum(roomNumber);
 

@@ -41,6 +41,9 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     info: getInfo,
   };
 
+  console.log(getStartHour);
+  console.log(getEndHour);
+
   try {
     const validBooking = await bookingConflicts(bookingInfo);
     if ('error' in validBooking) {
