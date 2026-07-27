@@ -1,7 +1,6 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { prisma } from '@/db';
-import { getProviders } from 'next-auth/react';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {

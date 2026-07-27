@@ -1,42 +1,31 @@
 'use server';
-import { convertStartAndEndHour } from './convertStartAndEndHour';
 import { getRoomByNum } from '../db/rooms';
 import { findBooking } from '../db/bookings';
 import { auth } from '@/auth/authSetup';
 
 export default async function bookingConflicts({
   startHour,
-  endHour,
-  endMins,
+  endTime,
   roomNumber,
-  date,
   info,
 }: {
-  startHour: string;
-  endHour: number;
-  endMins: string;
+  startHour: Date;
+  endTime: Date;
   roomNumber: number;
-  date: string;
   info: string;
 }) {
   const session = await auth();
   if (!session) {
     return { success: false, error: 'Not authenticated' };
   }
-  if (!date || !startHour || !endHour || !info || !endMins) {
+  if (!startHour || !endTime || !info) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
-
-  const startAndEnd = convertStartAndEndHour(startHour, endHour, endMins);
 
   const room = await getRoomByNum(roomNumber);
 
   if (!room) {
     return { success: false, error: 'Lokalet findes ikke' };
-  }
-
-  if (typeof endHour !== 'number') {
-    return { success: false, error: 'Sluttiden skal være et tal' };
   }
 
   if (info.length >= 35) {
@@ -46,18 +35,18 @@ export default async function bookingConflicts({
     };
   }
 
-  if (startAndEnd.start > startAndEnd.end) {
+  if (startHour > endTime) {
     return { success: false, error: 'Starttiden må ikke være efter sluttid' };
   }
 
-  if (startAndEnd.start < new Date()) {
+  if (startHour < new Date()) {
     return { success: false, error: 'Du kan ikke booke i fortiden' };
   }
 
   const conflictBooking = await findBooking({
     roomId: room.id,
-    startTime: startAndEnd.start,
-    endTime: startAndEnd.end,
+    startTime: startHour,
+    endTime: endTime,
   });
 
   if (conflictBooking) {
@@ -68,8 +57,8 @@ export default async function bookingConflicts({
   }
   return {
     roomId: room.id,
-    startTime: startAndEnd.start,
-    endTime: startAndEnd.end,
+    startTime: startHour,
+    endTime: endTime,
     userId: Number(session.user.id),
     reason: info,
   };

@@ -1,8 +1,6 @@
 import { signIn, auth } from '@/auth/authSetup';
-import { request } from 'https';
 import Image from 'next/image';
 import Link from 'next/link';
-import { NextResponse } from 'next/server';
 
 export default async function Home() {
   const session = await auth();

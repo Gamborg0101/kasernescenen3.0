@@ -1,9 +1,9 @@
 'use client';
 
 import { makeBooking } from '@/lib/actions/bookingActions';
-import { useActionState, useEffect } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { SessionUser } from '@/lib/types';
-import { addHours } from 'date-fns';
+import { addHours, setMinutes, setHours } from 'date-fns';
 
 type Props = {
   onClose: () => void;
@@ -13,7 +13,10 @@ type Props = {
 };
 
 export default function CreateBookingModal({ onClose, roomNumber, startHour, userInfoSession }: Props) {
-  const [state, formAction, isPending] = useActionState(makeBooking, null);
+const [state, formAction, isPending] = useActionState(makeBooking, null);
+const [endHour, setEndHour] = useState(addHours(startHour, 1).toLocaleTimeString('da-DK', { hour: '2-digit' }));
+const [endMins, setEndMins] = useState("00");
+const endHourFormatted = setMinutes(setHours(startHour, Number(endHour)), Number(endMins));
 
   useEffect(() => {
     if (state?.success) {
@@ -47,7 +50,8 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
         <form action={formAction}>
           <input type="hidden" name="roomNumber" value={roomNumber} />
           <input type="hidden" name="startHour" value={startHour.toISOString()} />
-          <input type="hidden" name="getDate" value={startHour.toISOString().split('T')[0]} />{' '}
+          <input type="hidden" name="endTime" value={endHourFormatted.toISOString()} />
+
           <label htmlFor="roomNumber" className="text-xs font-bold text-gray-500">
             Rum:
           </label>
@@ -88,15 +92,15 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
               type="text"
               minLength={1}
               maxLength={2}
-              name="endHour"
               className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              defaultValue={addHours(startHour, 1).toLocaleTimeString('da-DK', { hour: '2-digit' })}
+              value={endHour}
+              onChange={(e) => setEndHour(e.target.value)}
             />
             <select
-              name="endHourMins"
               id="endHourMins"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              defaultValue={'00'}
+              value={endMins}
+              onChange={(e) => (setEndMins(e.target.value))}
             >
               <option value="00">00</option>
               <option value="15">15</option>

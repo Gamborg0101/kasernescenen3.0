@@ -25,21 +25,22 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     return ratelimitError;
   }
 
-  const getStartHour = String(formData.get('startHour'));
-  const getEndHour = Number(formData.get('endHour'));
-  const getEndHourMins = String(formData.get('endHourMins'));
+  const getStartHour = new Date(String(formData.get('startHour')));
+  const getEndHour = new Date(String(formData.get('endTime')));
   const getRoomNumber = Number(formData.get('roomNumber'));
-  const getDate = String(formData.get('getDate'));
   const getInfo = String(formData.get('reason') || '');
+
 
   const bookingInfo = {
     startHour: getStartHour,
-    endHour: getEndHour,
-    endMins: getEndHourMins,
+    endTime: getEndHour,
     roomNumber: getRoomNumber,
-    date: getDate,
     info: getInfo,
   };
+
+  if (isNaN(getStartHour.getTime()) || isNaN(getEndHour.getTime())) {
+  return failedToCreateBooking;
+}
 
   try {
     const validBooking = await bookingConflicts(bookingInfo);
