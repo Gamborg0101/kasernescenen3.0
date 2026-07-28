@@ -84,12 +84,11 @@ export default function Register({ users }: { users: User[] }) {
                 className="space-y-4 md:space-y-6"
                 action={formAction}
                 onSubmit={(e) => {
-                  const result =
-                    validateStudentNumber(formdata.studentNumber) && validateCardNumber(formdata.cardNumber);
-
-                  if (result) {
+                  const studentError = validateStudentNumber(formdata.studentNumber);
+                  const cardError = validateCardNumber(formdata.cardNumber);
+                  if (studentError || cardError) {
                     e.preventDefault();
-                    setError(result);
+                    setError(studentError || cardError);
                   }
                 }}
               >
@@ -228,6 +227,7 @@ export default function Register({ users }: { users: User[] }) {
                     />
                   </div>
                 </div>
+                {error && <div className="text-red-600">{error}</div>}
                 {state?.error && <div className="text-red-600">{state.error}</div>}
                 <button
                   type="submit"

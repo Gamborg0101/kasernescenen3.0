@@ -1,5 +1,4 @@
 'use client';
-
 import { makeBooking } from '@/lib/actions/bookingActions';
 import { useActionState, useEffect, useState } from 'react';
 import { SessionUser } from '@/lib/types';
@@ -13,10 +12,10 @@ type Props = {
 };
 
 export default function CreateBookingModal({ onClose, roomNumber, startHour, userInfoSession }: Props) {
-const [state, formAction, isPending] = useActionState(makeBooking, null);
-const [endHour, setEndHour] = useState(addHours(startHour, 1).toLocaleTimeString('da-DK', { hour: '2-digit' }));
-const [endMins, setEndMins] = useState("00");
-const endHourFormatted = setMinutes(setHours(startHour, Number(endHour)), Number(endMins));
+  const [state, formAction, isPending] = useActionState(makeBooking, null);
+  const [endHour, setEndHour] = useState(addHours(startHour, 1).toLocaleTimeString('da-DK', { hour: '2-digit' }));
+  const [endMins, setEndMins] = useState('00');
+  const endHourFormatted = setMinutes(setHours(startHour, Number(endHour)), Number(endMins));
 
   useEffect(() => {
     if (state?.success) {
@@ -100,7 +99,7 @@ const endHourFormatted = setMinutes(setHours(startHour, Number(endHour)), Number
               id="endHourMins"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={endMins}
-              onChange={(e) => (setEndMins(e.target.value))}
+              onChange={(e) => setEndMins(e.target.value)}
             >
               <option value="00">00</option>
               <option value="15">15</option>
