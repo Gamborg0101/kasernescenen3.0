@@ -122,6 +122,11 @@ function bookingData() {
 }
 
 async function main() {
+  //Delete all existing bookings, users and rooms.
+  await prisma.booking.deleteMany({});
+  await prisma.user.deleteMany({});
+  await prisma.room.deleteMany({});
+
   const createdRooms = [];
   for (const room of rooms) {
     const createdRoom = await prisma.room.upsert({

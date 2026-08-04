@@ -13,6 +13,7 @@ import {
   failedToDeleteBooking,
   failedToCleanupDb,
 } from '../errorMessages';
+import { uvaekaBooking } from '../addCsv';
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
@@ -30,7 +31,6 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
   const getRoomNumber = Number(formData.get('roomNumber'));
   const getInfo = String(formData.get('reason') || '');
 
-
   const bookingInfo = {
     startHour: getStartHour,
     endTime: getEndHour,
@@ -39,8 +39,8 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
   };
 
   if (isNaN(getStartHour.getTime()) || isNaN(getEndHour.getTime())) {
-  return failedToCreateBooking;
-}
+    return failedToCreateBooking;
+  }
 
   try {
     const validBooking = await bookingConflicts(bookingInfo);
@@ -98,3 +98,29 @@ export async function cleanDbFromOldBookingsAction() {
     return failedToCleanupDb;
   }
 }
+
+function makeBookingFromCSV(bookings: uvaekaBooking[]) {
+  bookings.map((item) => item.beskrivelse);
+}
+
+/*
+Lave en bruger i seed, som er "uvaeka".
+
+flow: 
+  1) auth (uvaeka)
+  2) slet gamle uvaeka bookinger
+  3) indsæt nye bookinger
+
+model Booking {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  roomId    Int
+  startTime DateTime
+  endTime   DateTime
+  reason    String
+  room      Room     @relation(fields: [roomId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+
+*/

@@ -19,15 +19,20 @@ export async function findBooking({ roomId, startTime, endTime }: { roomId: numb
   });
 }
 export async function createBooking({ roomId, startTime, endTime, userId, reason }: CreateBooking) {
-  await prisma.booking.create({
-    data: {
-      roomId: roomId,
-      startTime: startTime,
-      endTime: endTime,
-      userId: userId,
-      reason: reason,
-    },
-  });
+  try {
+    await prisma.booking.create({
+      data: {
+        roomId: roomId,
+        startTime: startTime,
+        endTime: endTime,
+        userId: userId,
+        reason: reason,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    return 'Lokalet er allerede booket';
+  }
 }
 
 export async function getThreeBookings(id: number) {
