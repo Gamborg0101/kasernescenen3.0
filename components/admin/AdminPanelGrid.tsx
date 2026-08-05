@@ -1,7 +1,7 @@
 'use client';
 import PanelElement from '@/components/admin/PanelElement';
 import { cleanDbFromOldBookingsAction } from '@/lib/actions/bookingActions';
-import importCsv from '@/lib/addCsv';
+import importICAL from '@/lib/addCsv';
 
 export default function AdminPanelGrid() {
   return (
@@ -46,7 +46,7 @@ export default function AdminPanelGrid() {
           body="Importer bookinger fra en CSV fil"
           btnText="Importer bookinger"
           url=""
-          onClick={importCsv}
+          onClick={importICAL}
         />
       </div>
     </div>

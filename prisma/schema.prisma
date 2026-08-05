@@ -23,12 +23,12 @@ model User {
 }
 
 model Room {
-  id       Int       @id @default(autoincrement())
-  name     String
-  roomNum  Int       @unique
-  capacity Int
-  location String
-  bookings Booking[]
+  id         Int       @id @default(autoincrement())
+  name       String
+  roomNumber String    @unique
+  capacity   Int
+  location   String
+  bookings   Booking[]
 }
 
 model Booking {
