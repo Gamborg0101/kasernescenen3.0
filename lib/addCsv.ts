@@ -1,7 +1,21 @@
 'use server';
 import ical from 'ical';
-import { prisma } from '@/db';
-import { ro } from '@faker-js/faker';
+import { loadEnvConfig } from '@next/env';
+loadEnvConfig(process.cwd(), true);
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@/generated/prisma';
+
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) throw new Error('DATABASE_URL missing at adapter construction');
+function createPrismaClient(): PrismaClient {
+  const adapter = new PrismaPg({ connectionString });
+  return new PrismaClient({ adapter });
+}
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
+
+export const prisma: PrismaClient = globalForPrisma.prisma ?? createPrismaClient();
 
 export type uvaekaBooking = {
   beskrivelse: string;
@@ -33,12 +47,12 @@ export default async function importICAL() {
   const ICALText = await ICALData.text();
   const data = ical.parseICS(ICALText);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const rooms = await prisma.booking.findMany();
+  const rooms = await prisma.booking.findMany({});
 
   console.log('hi');
   console.log(rooms);
 }
-
+console.log(process.env);
 importICAL();
 
 //   for (const k in data) {
