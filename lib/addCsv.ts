@@ -1,4 +1,3 @@
-'use server';
 import ical from 'ical';
 import { loadEnvConfig } from '@next/env';
 loadEnvConfig(process.cwd(), true);
@@ -33,34 +32,47 @@ export default async function importICAL() {
 
   const ICALText = await ICALData.text();
   const data = ical.parseICS(ICALText);
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const rooms = await prisma.booking.findMany({});
+  await prisma.booking.deleteMany({ where: { userId: 1 } });
 
-  console.log('hi');
-  console.log(rooms);
+  for (const k in data) {
+    if (data.hasOwnProperty(k)) {
+      const ev = data[k];
+      if (data[k].type == 'VEVENT') {
+        //console.log(JSON.stringify(ev.location?.split(' ')[0].split('-')[1]));
+        const roomNumber = ev.location?.split(' ')[0].split('-')[1];
+        const room = await prisma.room.findFirst({
+          where: {
+            roomNumber: String(roomNumber),
+          },
+        });
+
+        console.log(ev.summary);
+
+        if (!room || !ev.start || !ev.end) continue;
+
+        await prisma.booking.create({
+          data: {
+            userId: 1,
+            roomId: room.id,
+            startTime: ev.start,
+            endTime: ev.end,
+            reason: ev.summary!,
+          },
+        });
+        console.log('Booking: ', ev.summary, 'was created');
+      }
+    }
+  }
 }
-console.log(process.env);
 importICAL();
 
-//   for (const k in data) {
-//     if (data.hasOwnProperty(k)) {
-//       const ev = data[k];
-//       if (data[k].type == 'VEVENT') {
-//         console.log(JSON.stringify(ev.location));
-//         const roomNum = Number(ev.location?.split(' ')[0].split('-')[1]);
-//         const room = await prisma.room.findFirst({
-//           where: {
-//             roomNum: roomNum,
-//           },
-//         });
-
-//         // console.log({
-//         //   user: 'uvaeka',
-//         //   roomId: ev.location?.split(' ')[0].split('-')[1],
-//         //   startTime: ev.start,
-//         //   endTime: ev.end,
-//         //   reason: ev.summary,
-//         // });
+// console.log({
+//   user: 'uvaeka',
+//   roomId: ev.location?.split(' ')[0].split('-')[1],
+//   startTime: ev.start,
+//   endTime: ev.end,
+//   reason: ev.summary,
+// });
 
 //         //     const createdBookings = await prisma.booking.upsert({
 //         //       where: { roomId: ev.location },

@@ -1,6 +1,7 @@
 import { PrismaClient } from '../generated/prisma';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { faker } from '@faker-js/faker';
+import { AllClassroomsList } from './roomlist';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -9,101 +10,6 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({
   adapter,
 });
-
-const rooms = [
-  {
-    roomNumber: 126,
-    name: 'Auditorium A',
-    capacity: 50,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 134,
-    name: 'Musikrum (audiolab)',
-    capacity: 20,
-    location: 'Bygning 1584',
-  },
-  { roomNumber: 140, name: 'Musikrum', capacity: 20, location: 'Bygning 1584' },
-  { roomNumber: 145, name: 'Musikrum', capacity: 20, location: 'Bygning 1584' },
-  {
-    roomNumber: 212,
-    name: 'Undervisning',
-    capacity: 30,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 226,
-    name: 'Auditorium B',
-    capacity: 50,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 231,
-    name: 'Undervisning',
-    capacity: 30,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 233,
-    name: 'Undervisning',
-    capacity: 30,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 234,
-    name: 'Undervisning',
-    capacity: 30,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 236,
-    name: 'Undervisning',
-    capacity: 30,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 237,
-    name: 'Undervisning',
-    capacity: 30,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 238,
-    name: 'Undervisning',
-    capacity: 30,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 239,
-    name: 'Undervisning',
-    capacity: 30,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 246,
-    name: 'Undervisning MUSIKLOKALE',
-    capacity: 25,
-    location: 'Bygning 1584',
-  },
-  {
-    roomNumber: 111,
-    name: 'Teaterfoyer (studieområde)',
-    capacity: 40,
-    location: 'Bygning 1585',
-  },
-  {
-    roomNumber: 115,
-    name: 'Teatersal (Store Sal)',
-    capacity: 100,
-    location: 'Bygning 1585',
-  },
-  {
-    roomNumber: 119,
-    name: 'Teatersal (Lille Sal)',
-    capacity: 50,
-    location: 'Bygning 1585',
-  },
-];
 
 function bookingData() {
   const now = new Date();
@@ -128,7 +34,7 @@ async function main() {
   await prisma.room.deleteMany({});
 
   const createdRooms = [];
-  for (const room of rooms) {
+  for (const room of AllClassroomsList) {
     const createdRoom = await prisma.room.upsert({
       where: { roomNumber: room.roomNumber.toString() },
       update: {},
