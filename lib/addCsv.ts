@@ -2,6 +2,7 @@ import ical from 'ical';
 import { loadEnvConfig } from '@next/env';
 loadEnvConfig(process.cwd(), true);
 import { prisma } from '@/db';
+import bookingConflicts from './utils/bookingConflicts';
 
 export type uvaekaBooking = {
   beskrivelse: string;
@@ -45,66 +46,43 @@ export default async function importICAL() {
             roomNumber: String(roomNumber),
           },
         });
-
-        console.log(ev.summary);
+        //console.log(room.id);
 
         if (!room || !ev.start || !ev.end) continue;
 
-        await prisma.booking.create({
-          data: {
-            userId: 1,
-            roomId: room.id,
-            startTime: ev.start,
+        console.log({ room: roomNumber, start: ev.start, end: ev.end, id: ev.uid });
+
+        try {
+          const validBooking = await bookingConflicts({
+            startHour: ev.start,
             endTime: ev.end,
-            reason: ev.summary!,
-          },
-        });
-        console.log('Booking: ', ev.summary, 'was created');
+            roomNumber: String(roomNumber),
+            info: String(ev.summary),
+          });
+
+          if (!validBooking?.userId || !validBooking?.roomNumber) {
+            console.log('Skipping booking without valid user/room assignment:', ev.summary);
+            continue;
+          }
+
+          await prisma.booking.create({
+            data: {
+              userId: 1,
+              roomId: Number(validBooking.roomNumber),
+              startTime: validBooking.startTime || new Date(),
+              endTime: validBooking.endTime || new Date(),
+              reason: validBooking.reason || '',
+            },
+          });
+          console.log('Booking: ', ev.summary, 'was created');
+        } catch (e) {
+          console.log('There was something wrong with: \n', ev.uid, e);
+        }
       }
     }
   }
 }
 importICAL();
-
-// console.log({
-//   user: 'uvaeka',
-//   roomId: ev.location?.split(' ')[0].split('-')[1],
-//   startTime: ev.start,
-//   endTime: ev.end,
-//   reason: ev.summary,
-// });
-
-//         //     const createdBookings = await prisma.booking.upsert({
-//         //       where: { roomId: ev.location },
-//         //       update: {},
-//         //       create: {
-//         //         userId: 'uvaeka',
-//         //         roomId: ev.location,
-//         //         startTime: ev.start,
-//         //         endTime: ev.end,
-//         //         reason: ev.summary,
-//         //       },
-//         //     });
-//       }
-//     }
-//   }
-
-//   /**
-//    *
-//    * const createdRoom = await prisma.room.upsert({
-//       where: { roomNum: room.roomNum },
-//       update: {},
-//       create: {
-//         roomNum: room.roomNum,
-//         name: room.name,
-//         capacity: room.capacity,
-//         location: room.location,
-//       },
-//     });
-//    *
-//    */
-
-//   // prisma do the update and add bookings to my bookings table
 
 //   /**
 //    * hent alle rum fra db, og lav rooms færdig med dette.
@@ -116,24 +94,3 @@ importICAL();
 //    *http headers - særligt content types:
 // 	Hvad er content type, og hvordan relatere det sig til broweseren?
 // https://laravel.com/docs/13.x/responses#file-downloads - “method may be sued to generate a response that forces”
-
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Disposition
-//    */
-
-//   //console.log(iCalendarData);
-// }
-
-// importICAL();
-// /**
-//  *
-//  * model Booking {
-//   id        Int      @id @default(autoincrement())
-//   userId    Int
-//   roomId    Int
-//   startTime DateTime
-//   endTime   DateTime
-//   reason    String
-//   room      Room     @relation(fields: [roomId], references: [id])
-//   user      User     @relation(fields: [userId], references: [id])
-// }
-//  */

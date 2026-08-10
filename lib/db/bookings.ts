@@ -18,11 +18,11 @@ export async function findBooking({ roomId, startTime, endTime }: { roomId: numb
     },
   });
 }
-export async function createBooking({ roomId, startTime, endTime, userId, reason }: CreateBooking) {
+export async function createBooking({ roomNumber, startTime, endTime, userId, reason }: CreateBooking) {
   try {
     await prisma.booking.create({
       data: {
-        roomId: roomId,
+        roomId: Number(roomNumber),
         startTime: startTime,
         endTime: endTime,
         userId: userId,

@@ -13,7 +13,6 @@ import {
   failedToDeleteBooking,
   failedToCleanupDb,
 } from '../errorMessages';
-import { uvaekaBooking } from '../addCsv';
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
@@ -28,8 +27,8 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 
   const getStartHour = new Date(String(formData.get('startHour')));
   const getEndHour = new Date(String(formData.get('endTime')));
-  const getRoomNumber = Number(formData.get('roomNumber'));
-  const getInfo = String(formData.get('reason') || '');
+  const getRoomNumber = String(formData.get('roomNumber'));
+  const getInfo = String(formData.get('reason'));
 
   const bookingInfo = {
     startHour: getStartHour,
@@ -47,6 +46,13 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     if ('error' in validBooking) {
       return { success: false, error: validBooking.error };
     }
+
+    const bookingToCreate = {
+      roomNumber: validBooking.roomNumber, 
+      startTime: ,  
+      endTime:,
+    }
+
     await createBooking(validBooking);
     revalidatePath('/booking');
     return { success: true, error: null };
@@ -97,10 +103,6 @@ export async function cleanDbFromOldBookingsAction() {
     console.error(e);
     return failedToCleanupDb;
   }
-}
-
-function makeBookingFromCSV(bookings: uvaekaBooking[]) {
-  bookings.map((item) => item.beskrivelse);
 }
 
 /*

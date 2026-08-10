@@ -15,9 +15,9 @@ export async function getRoomsFromDB() {
   });
 }
 
-export async function getRoomByNum(roomNumber: number) {
+export async function getRoomByNum(roomNumber: string) {
   return await prisma.room.findUnique({
-    where: { roomNum: roomNumber },
+    where: { roomNumber: roomNumber },
   });
 }
 

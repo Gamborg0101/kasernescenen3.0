@@ -62,19 +62,19 @@ async function main() {
         study: faker.helpers.arrayElement(['dramaturgi', 'musikvidenskab', 'æstetik og kultur', 'retorik']),
       },
     });
-    for (let n = 0; n < 100; n++) {
-      const roomForBooking = faker.helpers.arrayElement(createdRooms);
-      const { startTime, endTime } = bookingData();
-      await prisma.booking.create({
-        data: {
-          userId: user.id,
-          roomId: roomForBooking.id,
-          startTime: startTime,
-          endTime: endTime,
-          reason: faker.lorem.lines(1),
-        },
-      });
-    }
+    // for (let n = 0; n < 100; n++) {
+    //   const roomForBooking = faker.helpers.arrayElement(createdRooms);
+    //   const { startTime, endTime } = bookingData();
+    //   await prisma.booking.create({
+    //     data: {
+    //       userId: user.id,
+    //       roomId: roomForBooking.id,
+    //       startTime: startTime,
+    //       endTime: endTime,
+    //       reason: faker.lorem.lines(1),
+    //     },
+    //   });
+    // }
   }
 }
 

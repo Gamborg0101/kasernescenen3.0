@@ -42,7 +42,7 @@ export type Booking = {
   userId: number;
   startTime: Date;
   endTime: Date;
-  roomId: number;
+  roomNumber: number;
   reason: string;
 };
 
@@ -61,7 +61,7 @@ export type CreateBooking = {
   userId: number;
   startTime: Date;
   endTime: Date;
-  roomId: number;
+  roomNumber: string;
   reason: string;
 };
 

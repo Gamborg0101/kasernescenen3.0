@@ -3,7 +3,7 @@ import { getRoomByNum } from '../db/rooms';
 import { findBooking } from '../db/bookings';
 import { auth } from '@/auth/authSetup';
 
-export default async function bookingConflicts({
+export async function validateBookingSlot({
   startHour,
   endTime,
   roomNumber,
@@ -11,13 +11,9 @@ export default async function bookingConflicts({
 }: {
   startHour: Date;
   endTime: Date;
-  roomNumber: number;
+  roomNumber: string;
   info: string;
 }) {
-  const session = await auth();
-  if (!session) {
-    return { success: false, error: 'Not authenticated' };
-  }
   if (!startHour || !endTime || !info) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
@@ -55,11 +51,41 @@ export default async function bookingConflicts({
       error: 'Lokalet er allerede booket i det valgte tidsrum.',
     };
   }
-  return {
-    roomId: room.id,
-    startTime: startHour,
+  return { startHour: startHour, endTime: endTime, roomNumber: roomNumber, info: info };
+}
+
+export default async function bookingConflicts({
+  startHour,
+  endTime,
+  roomNumber,
+  info,
+}: {
+  startHour: Date;
+  endTime: Date;
+  roomNumber: string;
+  info: string;
+}) {
+  const validbooking = await validateBookingSlot({
+    startHour: startHour,
     endTime: endTime,
+    roomNumber: roomNumber,
+    info: info,
+  });
+
+  if ('error' in validateBookingSlot) {
+    return validbooking;
+  }
+
+  const session = await auth();
+  if (!session) {
+    return { success: false, error: 'Not authenticated' };
+  }
+
+  return {
+    roomNumber: validbooking.roomNumber,
+    startTime: validbooking.startHour,
+    endTime: validbooking.endTime,
     userId: Number(session.user.id),
-    reason: info,
+    reason: validbooking.info,
   };
 }
