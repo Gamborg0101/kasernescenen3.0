@@ -2,7 +2,7 @@ import ical from 'ical';
 import { loadEnvConfig } from '@next/env';
 loadEnvConfig(process.cwd(), true);
 import { prisma } from '@/db';
-import bookingConflicts, { validateBookingSlot } from './utils/bookingConflicts';
+import { validateBookingSlot } from './utils/bookingConflicts';
 
 export type uvaekaBooking = {
   beskrivelse: string;
@@ -48,8 +48,6 @@ export default async function importICAL() {
 
         if (!room || !ev.start || !ev.end) continue;
 
-        //console.log({ room: roomNumber, start: ev.start, end: ev.end, id: ev.uid });
-
         try {
           const validBooking = await validateBookingSlot({
             startHour: ev.start,
@@ -68,7 +66,6 @@ export default async function importICAL() {
             continue;
           }
           console.log(validBooking, room);
-
           await prisma.booking.create({
             data: {
               userId: 1,

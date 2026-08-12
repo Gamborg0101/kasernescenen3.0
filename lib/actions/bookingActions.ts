@@ -43,12 +43,14 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 
   try {
     const validBooking = await bookingConflicts(bookingInfo);
+
     if (!validBooking.success) {
       return { success: false, error: validBooking.error };
     }
 
     await createBooking(validBooking);
     revalidatePath('/booking');
+
     return { success: true, error: null };
   } catch (e) {
     console.error(e);

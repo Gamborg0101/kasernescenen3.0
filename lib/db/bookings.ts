@@ -19,10 +19,16 @@ export async function findBooking({ roomId, startTime, endTime }: { roomId: numb
   });
 }
 export async function createBooking({ roomNumber, startTime, endTime, userId, reason }: CreateBooking) {
+  const roomIdFromRoomNumber = await prisma.room.findUnique({
+    where: { roomNumber: roomNumber },
+  });
+
+  if (!roomIdFromRoomNumber) return 'Missing room ID';
+
   try {
     await prisma.booking.create({
       data: {
-        roomId: Number(roomNumber),
+        roomId: roomIdFromRoomNumber.id,
         startTime: startTime,
         endTime: endTime,
         userId: userId,

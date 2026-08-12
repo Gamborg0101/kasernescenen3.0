@@ -63,7 +63,7 @@ async function main() {
     },
   });
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 9; i++) {
     await prisma.user.create({
       data: {
         firstName: faker.person.firstName(),
@@ -78,7 +78,8 @@ async function main() {
         study: faker.helpers.arrayElement(['dramaturgi', 'musikvidenskab', 'æstetik og kultur', 'retorik']),
       },
     });
-    // for (let n = 0; n < 100; n++) {
+    //USE FOR SEENDING ROOMS
+    //for (let n = 0; n < 100; n++) {
     //   const roomForBooking = faker.helpers.arrayElement(createdRooms);
     //   const { startTime, endTime } = bookingData();
     //   await prisma.booking.create({
