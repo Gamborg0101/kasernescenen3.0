@@ -8,7 +8,7 @@ export async function getRoomsFromDB() {
     select: {
       id: true,
       name: true,
-      roomNum: true,
+      roomNumber: true,
       capacity: true,
       location: true,
     },

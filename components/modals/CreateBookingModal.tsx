@@ -6,7 +6,7 @@ import { addHours, setMinutes, setHours } from 'date-fns';
 
 type Props = {
   onClose: () => void;
-  roomNumber: number;
+  roomNumber: string;
   startHour: Date;
   userInfoSession: SessionUser;
 };

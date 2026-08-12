@@ -19,7 +19,7 @@ type Props = {
 
 export default function BookingCalendar({ userInfoSession, bookings, allRooms, userInfoDb }: Props) {
   const [weekCounter, setWeekCounter] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
-  const [roomNumber, setRoomNumber] = useState(126);
+  const [roomNumber, setRoomNumber] = useState('126');
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState(new Date());
   const [bookingInfoOpen, setBookingInfoOpen] = useState(false);

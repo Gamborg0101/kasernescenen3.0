@@ -1,5 +1,4 @@
-import { getUserInfoFromSession } from '../../lib/db/users';
-import { getUserFromDb } from '../../lib/db/users';
+import { getUserInfoFromSession, getUserFromDb } from '../../lib/db/users';
 import { getRoomsFromDB } from '../../lib/db/rooms';
 import { getBookings } from '../../lib/db/bookings';
 import BookingCalendar from '../../components/calendar/BookingCalendar';

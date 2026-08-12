@@ -42,8 +42,8 @@ export type Booking = {
   userId: number;
   startTime: Date;
   endTime: Date;
-  roomNumber: number;
   reason: string;
+  roomId: number;
 };
 
 export type BookingWithUser = Booking & {
@@ -83,7 +83,7 @@ export type BookingInfoProps = {
   endTime: Date;
   reason: string;
   room: {
-    roomNum: number;
+    roomNumber: number;
     name: string;
   };
 };

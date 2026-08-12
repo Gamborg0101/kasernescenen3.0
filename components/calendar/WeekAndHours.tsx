@@ -6,7 +6,7 @@ import { eachDayOfInterval, startOfWeek, endOfWeek, eachMinuteOfInterval, isSame
 
 type Props = {
   selectedWeek: Date;
-  roomNumber: number;
+  roomNumber: string;
   allBookings: BookingWithUser[];
   handleHourClick: (hour: Date, disable: boolean) => void;
   handleHover: (disable: boolean, booking?: BookingWithUser, pos?: { x: number; y: number }) => void;
@@ -23,7 +23,7 @@ export default function WeekAndHours({
   handleHover,
   userInfoDb,
 }: Props) {
-  const currentRoom = allRooms?.find((room) => room.roomNum === roomNumber);
+  const currentRoom = allRooms?.find((room) => room.roomNumber === roomNumber);
 
   function getBookingForHour(hour: Date): BookingWithUser | undefined {
     return allBookings?.find((booking) => {
