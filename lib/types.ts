@@ -83,7 +83,7 @@ export type BookingInfoProps = {
   endTime: Date;
   reason: string;
   room: {
-    roomNumber: number;
+    roomNumber: string;
     name: string;
   };
 };

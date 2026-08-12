@@ -21,7 +21,7 @@ export default function CreateRoomModal({ onClose }: Props) {
     e.preventDefault();
     await createRoom({
       name: roomName,
-      roomNum: Number(roomNumber),
+      roomNumber: roomNumber,
       location: roomLocation,
       capacity: Number(roomCapacity),
     });
