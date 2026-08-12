@@ -1,7 +1,7 @@
 import { expect, test, afterEach } from 'bun:test';
-import { prisma } from './db';
-import { createBooking } from './lib/db/bookings';
-import { getRoomByNum } from './lib/db/rooms';
+import { prisma } from '@/db';
+import { createBooking } from './bookings';
+import { getRoomByNum } from './rooms';
 
 afterEach(async () => {
   await prisma.booking.deleteMany({
@@ -11,7 +11,7 @@ afterEach(async () => {
   });
 });
 
-const room = await getRoomByNum(126);
+const room = await getRoomByNum('126');
 if (!room) throw 'Der var ikke noget rum id på dette rumnummer';
 
 test('Two users can not make the same booking', async () => {
@@ -19,7 +19,7 @@ test('Two users can not make the same booking', async () => {
   const endTime = new Date('August 19, 2026, 13:30:00');
 
   const booking1 = createBooking({
-    roomId: room.id,
+    roomNumber: room.roomNumber,
     startTime: startTime,
     endTime: endTime,
     userId: 1,
@@ -27,7 +27,7 @@ test('Two users can not make the same booking', async () => {
   });
 
   const booking2 = createBooking({
-    roomId: room.id,
+    roomNumber: room.roomNumber,
     startTime: startTime,
     endTime: endTime,
     userId: 1,

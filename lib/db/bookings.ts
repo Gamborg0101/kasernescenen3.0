@@ -35,6 +35,7 @@ export async function createBooking({ roomNumber, startTime, endTime, userId, re
         reason: reason,
       },
     });
+    return { success: true, error: '' };
   } catch (e) {
     console.log(e);
     return { success: false, error: 'Rummet er allerede booket' };
