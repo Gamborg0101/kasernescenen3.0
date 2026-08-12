@@ -23,7 +23,7 @@ export async function createBooking({ roomNumber, startTime, endTime, userId, re
     where: { roomNumber: roomNumber },
   });
 
-  if (!roomIdFromRoomNumber) return 'Missing room ID';
+  if (!roomIdFromRoomNumber) return { success: false, error: 'Mangler room ID' };
 
   try {
     await prisma.booking.create({
@@ -37,7 +37,7 @@ export async function createBooking({ roomNumber, startTime, endTime, userId, re
     });
   } catch (e) {
     console.log(e);
-    return 'Lokalet er allerede booket';
+    return { success: false, error: 'Rummet er allerede booket' };
   }
 }
 
