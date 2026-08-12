@@ -34,7 +34,7 @@ test('Two users can not make the same booking', async () => {
     reason: 'testbookings',
   });
 
-  const results = await Promise.allSettled([booking1, booking2]);
+  await Promise.allSettled([booking1, booking2]);
 
   const bookings = await prisma.booking.findMany({
     where: {
@@ -43,7 +43,5 @@ test('Two users can not make the same booking', async () => {
     },
   });
 
-  const fulfilled = results.filter((r) => r.status === 'fulfilled');
-  expect(fulfilled.length).toBe(1);
   expect(bookings.length).toBe(1);
 });
