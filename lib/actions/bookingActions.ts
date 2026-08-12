@@ -43,14 +43,8 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 
   try {
     const validBooking = await bookingConflicts(bookingInfo);
-    if ('error' in validBooking) {
+    if (!validBooking.success) {
       return { success: false, error: validBooking.error };
-    }
-
-    const bookingToCreate = {
-      roomNumber: validBooking.roomNumber, 
-      startTime: ,  
-      endTime:,
     }
 
     await createBooking(validBooking);

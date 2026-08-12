@@ -47,8 +47,24 @@ async function main() {
     });
     createdRooms.push(createdRoom);
   }
+
+  await prisma.user.create({
+    data: {
+      firstName: 'UVAEKA',
+      lastName: '',
+      role: 'admin',
+      googleId: faker.string.uuid(),
+      phone: 12345678,
+      studentNumber: 12345678,
+      cardNumber: 123456,
+      email: 'cg@cc.au.dk',
+      note: '',
+      study: 'musikvidenskab',
+    },
+  });
+
   for (let i = 0; i < 10; i++) {
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),

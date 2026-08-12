@@ -24,7 +24,7 @@ export async function CreateUser(prevState: unknown, formData: FormData) {
 
   const googleId = session.user.googleId as string;
   const userId = Number(session?.user.id);
-  const { success } = await ratelimit.limit(`user:create:${userId}`);
+  const { success } = await ratelimit.limit(`user:create:${userId}`, { rate: 10 });
 
   if (!success) return ratelimitError;
 

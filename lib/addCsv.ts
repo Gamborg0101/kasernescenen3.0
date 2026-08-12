@@ -2,7 +2,7 @@ import ical from 'ical';
 import { loadEnvConfig } from '@next/env';
 loadEnvConfig(process.cwd(), true);
 import { prisma } from '@/db';
-import bookingConflicts from './utils/bookingConflicts';
+import bookingConflicts, { validateBookingSlot } from './utils/bookingConflicts';
 
 export type uvaekaBooking = {
   beskrivelse: string;
@@ -39,44 +39,49 @@ export default async function importICAL() {
     if (data.hasOwnProperty(k)) {
       const ev = data[k];
       if (data[k].type == 'VEVENT') {
-        //console.log(JSON.stringify(ev.location?.split(' ')[0].split('-')[1]));
         const roomNumber = ev.location?.split(' ')[0].split('-')[1];
         const room = await prisma.room.findFirst({
           where: {
             roomNumber: String(roomNumber),
           },
         });
-        //console.log(room.id);
 
         if (!room || !ev.start || !ev.end) continue;
 
-        console.log({ room: roomNumber, start: ev.start, end: ev.end, id: ev.uid });
+        //console.log({ room: roomNumber, start: ev.start, end: ev.end, id: ev.uid });
 
         try {
-          const validBooking = await bookingConflicts({
+          const validBooking = await validateBookingSlot({
             startHour: ev.start,
             endTime: ev.end,
             roomNumber: String(roomNumber),
             info: String(ev.summary),
           });
 
-          if (!validBooking?.userId || !validBooking?.roomNumber) {
-            console.log('Skipping booking without valid user/room assignment:', ev.summary);
+          if (!validBooking || validBooking.success === false) {
+            console.log('Skipping booking without valid user/room assignment:', ev.summary, ev);
             continue;
           }
+
+          if (!validBooking.success) {
+            console.log('Skipping booking:', ev.summary);
+            continue;
+          }
+          console.log(validBooking, room);
 
           await prisma.booking.create({
             data: {
               userId: 1,
-              roomId: Number(validBooking.roomNumber),
-              startTime: validBooking.startTime || new Date(),
-              endTime: validBooking.endTime || new Date(),
-              reason: validBooking.reason || '',
+              roomId: room.id,
+              startTime: validBooking.startHour,
+              endTime: validBooking.endTime,
+              reason: validBooking.info,
             },
           });
           console.log('Booking: ', ev.summary, 'was created');
         } catch (e) {
-          console.log('There was something wrong with: \n', ev.uid, e);
+          console.log('There was something wrong with: \n', ev, e);
+          break;
         }
       }
     }

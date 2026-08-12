@@ -2,6 +2,11 @@
 import { getRoomByNum } from '../db/rooms';
 import { findBooking } from '../db/bookings';
 import { auth } from '@/auth/authSetup';
+import { BookingResult } from '../types';
+
+type SlotResult =
+  | { success: true; startHour: Date; endTime: Date; roomNumber: string; info: string }
+  | { success: false; error: string };
 
 export async function validateBookingSlot({
   startHour,
@@ -13,7 +18,7 @@ export async function validateBookingSlot({
   endTime: Date;
   roomNumber: string;
   info: string;
-}) {
+}): Promise<SlotResult> {
   if (!startHour || !endTime || !info) {
     return { success: false, error: 'Alle felter er påkrævet' };
   }
@@ -51,7 +56,7 @@ export async function validateBookingSlot({
       error: 'Lokalet er allerede booket i det valgte tidsrum.',
     };
   }
-  return { startHour: startHour, endTime: endTime, roomNumber: roomNumber, info: info };
+  return { success: true, startHour: startHour, endTime: endTime, roomNumber: roomNumber, info: info };
 }
 
 export default async function bookingConflicts({
@@ -64,7 +69,7 @@ export default async function bookingConflicts({
   endTime: Date;
   roomNumber: string;
   info: string;
-}) {
+}): Promise<BookingResult> {
   const validbooking = await validateBookingSlot({
     startHour: startHour,
     endTime: endTime,
@@ -72,8 +77,8 @@ export default async function bookingConflicts({
     info: info,
   });
 
-  if ('error' in validateBookingSlot) {
-    return validbooking;
+  if (!validbooking.success) {
+    return { success: false, error: validbooking.error };
   }
 
   const session = await auth();
@@ -82,6 +87,7 @@ export default async function bookingConflicts({
   }
 
   return {
+    success: true,
     roomNumber: validbooking.roomNumber,
     startTime: validbooking.startHour,
     endTime: validbooking.endTime,

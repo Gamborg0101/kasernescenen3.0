@@ -65,6 +65,8 @@ export type CreateBooking = {
   reason: string;
 };
 
+export type BookingResult = ({ success: true } & CreateBooking) | { success: false; error: string };
+
 export type WeekProps = {
   selectedWeek: Date;
   roomNumber: number;
