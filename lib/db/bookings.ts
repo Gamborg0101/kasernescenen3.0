@@ -5,7 +5,9 @@ export async function getBookings() {
   return await prisma.booking.findMany({
     include: {
       room: true,
-      user: true,
+      user: {
+        select: { firstName: true, lastName: true, study: true },
+      },
     },
   });
 }

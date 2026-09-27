@@ -16,6 +16,7 @@ import {
   userIsNotAdmin,
   failedToUpdateUser,
 } from '../errorMessages';
+import { prisma } from '@/db';
 
 export async function CreateUser(prevState: unknown, formData: FormData) {
   const session = await auth();
@@ -24,16 +25,32 @@ export async function CreateUser(prevState: unknown, formData: FormData) {
 
   const googleId = session.user.googleId as string;
 
+  const phone = Number(formData.get('phone'));
+  const studentNumber = Number(formData.get('studentNumber'));
+  const cardNumber = Number(formData.get('cardNumber'));
+
+  const existing = await prisma.user.findFirst({
+    where: { OR: [{ phone }, { studentNumber }, { cardNumber }] },
+    select: { phone: true, studentNumber: true, cardNumber: true },
+  });
+
+  if (existing) {
+    if (existing.phone === phone) return { success: false, error: 'Dette telefonnummer er allerede brugt' };
+    if (existing.studentNumber === studentNumber)
+      return { success: false, error: 'Dette studienummer er allerede brugt' };
+    return { success: false, error: 'Dette kortnummer er allerede brugt' };
+  }
+
   try {
     await createUser({
       googleId: googleId,
       firstName: formData.get('firstName') as string,
       lastName: formData.get('lastName') as string,
       role: 'student',
-      phone: Number(formData.get('phone')),
+      phone: phone,
       email: formData.get('email') as string,
-      studentNumber: Number(formData.get('studentNumber')),
-      cardNumber: Number(formData.get('cardNumber')),
+      studentNumber: studentNumber,
+      cardNumber: cardNumber,
       study: formData.get('studie') as string,
     });
   } catch (e) {
