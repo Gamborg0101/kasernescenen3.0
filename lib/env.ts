@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-z.string().parse('');
-
 const envSchema = z.object({
   DATABASE_URL: z.string().min(1),
   UPSTASH_REDIS_REST_URL: z.url(),
