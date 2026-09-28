@@ -11,32 +11,46 @@ import { ratelimit } from '../ratelimiter';
 import {
   sessionError,
   ratelimitError,
-  failedToCreateUser,
   failedToDeleteUser,
   userIsNotAdmin,
   failedToUpdateUser,
+  failedToCreateUser,
 } from '../errorMessages';
 import { prisma } from '@/db';
+import * as z from 'zod';
 
 export async function CreateUser(prevState: unknown, formData: FormData) {
   const session = await auth();
 
   if (!session) return sessionError;
 
+  const formValidation = z.object({
+    firstName: z.string().min(1).max(30),
+    lastName: z.string().min(1).max(30),
+    phone: z.coerce.number().int().min(10000000).max(99999999),
+    email: z.email(),
+    studentNumber: z.coerce.number().int().min(100000000).max(999999999),
+    cardNumber: z.coerce.number().int().min(100000).max(999999),
+    studie: z.string().min(6).max(30),
+  });
+
+  const result = formValidation.safeParse(Object.fromEntries(formData));
+  if (!result.success) {
+    return { success: false, error: 'Ugyldige oplysninger' };
+  }
+
+  const data = result.data;
+
   const googleId = session.user.googleId as string;
 
-  const phone = Number(formData.get('phone'));
-  const studentNumber = Number(formData.get('studentNumber'));
-  const cardNumber = Number(formData.get('cardNumber'));
-
   const existing = await prisma.user.findFirst({
-    where: { OR: [{ phone }, { studentNumber }, { cardNumber }] },
+    where: { OR: [{ phone: data.phone }, { studentNumber: data.studentNumber }, { cardNumber: data.cardNumber }] },
     select: { phone: true, studentNumber: true, cardNumber: true },
   });
 
   if (existing) {
-    if (existing.phone === phone) return { success: false, error: 'Dette telefonnummer er allerede brugt' };
-    if (existing.studentNumber === studentNumber)
+    if (existing.phone === data.phone) return { success: false, error: 'Dette telefonnummer er allerede brugt' };
+    if (existing.studentNumber === data.studentNumber)
       return { success: false, error: 'Dette studienummer er allerede brugt' };
     return { success: false, error: 'Dette kortnummer er allerede brugt' };
   }
@@ -44,14 +58,14 @@ export async function CreateUser(prevState: unknown, formData: FormData) {
   try {
     await createUser({
       googleId: googleId,
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
+      firstName: data.firstName,
+      lastName: data.lastName,
       role: 'student',
-      phone: phone,
-      email: formData.get('email') as string,
-      studentNumber: studentNumber,
-      cardNumber: cardNumber,
-      study: formData.get('studie') as string,
+      phone: data.phone,
+      email: data.email,
+      studentNumber: data.studentNumber,
+      cardNumber: data.cardNumber,
+      study: data.studie,
     });
   } catch (e) {
     console.error(e);
