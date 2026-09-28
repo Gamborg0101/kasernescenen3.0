@@ -11,7 +11,7 @@ export default function PanelElement({
   body: string;
   btnText: string;
   url: string;
-  onClick: () => void;
+  //onClick: () => void;
 }) {
   return (
     <div className="flex items-center flex-col justify-between h-60 w-60 bg-white border border-gray-300 shadow-sm rounded-2xl mt-20">

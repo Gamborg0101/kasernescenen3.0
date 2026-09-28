@@ -28,3 +28,5 @@ jobs:
 
       - name: Build project
         run: bun run build
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci

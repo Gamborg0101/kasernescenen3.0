@@ -41,8 +41,9 @@ export default function CreateBookingInfoModal({ booking, initialPos }: Props) {
       style={{ top: pos.y, left: pos.x }}
     >
       <div className="p-2">
-        <p>{booking.user.firstName} {booking.user.lastName}</p>
-        <p>{booking.user.email}</p>
+        <p>
+          {booking.user.firstName} {booking.user.lastName}
+        </p>
         <p>
           {`
           ${new Date(booking.startTime).toLocaleTimeString('da-DK', {

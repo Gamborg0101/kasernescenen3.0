@@ -50,7 +50,7 @@ export default function RoomsList({ rooms }: { rooms: Room[] }) {
             <tr key={room.id} className="hover:bg-stone-50 transition-colors duration-100">
               <td className="px-5 py-3 text-sm text-stone-300 font-mono">{room.id}</td>
               <td className="px-5 py-3 text-sm text-stone-800 font-medium">{room.name}</td>
-              <td className="px-5 py-3 text-sm text-stone-600">{room.roomNum}</td>
+              <td className="px-5 py-3 text-sm text-stone-600">{room.roomNumber}</td>
               <td className="px-5 py-3 text-sm text-stone-600">{room.location}</td>
               <td className="px-5 py-3 text-sm text-stone-600">{room.capacity}</td>
               <td className="px-5 py-3">

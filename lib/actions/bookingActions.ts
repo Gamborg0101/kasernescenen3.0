@@ -12,6 +12,7 @@ import {
   failedToCreateBooking,
   failedToDeleteBooking,
   failedToCleanupDb,
+  unauthorizedAccess,
 } from '../errorMessages';
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
@@ -92,6 +93,8 @@ export async function cleanDbFromOldBookingsAction() {
 
   const { success } = await ratelimit.limit(`booking:delete:${userId}`);
   if (!success) return ratelimitError;
+
+  if (session.user.role !== 'admin') return unauthorizedAccess;
   try {
     await cleanDbFromOldBookings();
     return { success: true, error: null };
@@ -100,25 +103,3 @@ export async function cleanDbFromOldBookingsAction() {
     return failedToCleanupDb;
   }
 }
-
-/*
-Lave en bruger i seed, som er "uvaeka".
-
-flow: 
-  1) auth (uvaeka)
-  2) slet gamle uvaeka bookinger
-  3) indsæt nye bookinger
-
-model Booking {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  roomId    Int
-  startTime DateTime
-  endTime   DateTime
-  reason    String
-  room      Room     @relation(fields: [roomId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-}
-
-
-*/

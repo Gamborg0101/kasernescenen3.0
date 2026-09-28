@@ -5,7 +5,9 @@ export async function getBookings() {
   return await prisma.booking.findMany({
     include: {
       room: true,
-      user: true,
+      user: {
+        select: { firstName: true, lastName: true, study: true },
+      },
     },
   });
 }
@@ -35,6 +37,7 @@ export async function createBooking({ roomNumber, startTime, endTime, userId, re
         reason: reason,
       },
     });
+    return { success: true, error: '' };
   } catch (e) {
     console.log(e);
     return { success: false, error: 'Rummet er allerede booket' };

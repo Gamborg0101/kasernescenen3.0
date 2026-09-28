@@ -3,7 +3,6 @@ import { prisma } from '@/db';
 
 export default async function Opret({ searchParams }: { searchParams: Promise<{ message?: string }> }) {
   const { message } = await searchParams;
-  const users = await prisma.user.findMany();
 
   return (
     <div>
@@ -12,7 +11,7 @@ export default async function Opret({ searchParams }: { searchParams: Promise<{ 
           {message}
         </div>
       )}
-      <Register users={users} />
+      <Register />
     </div>
   );
 }

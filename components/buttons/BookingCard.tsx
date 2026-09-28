@@ -22,13 +22,12 @@ export default function BookingCard({ booking }: { booking: BookingInfoProps }) 
   return (
     <div className="h-full bg-white border border-stone-100 shadow-sm rounded-2xl flex flex-col overflow-hidden">
       {/* Gradient top-stribe — matcher profilkortets banner */}
-
       <div className="flex flex-col flex-1 p-4 gap-3">
         {/* Rum */}
         <div>
           <p className="text-xs text-stone-400 uppercase tracking-wider mb-0.5">Lokale</p>
           <p className="font-semibold text-stone-800 text-sm leading-tight">
-            {booking.room.roomNum} — {booking.room.name}
+            {booking.room.roomNumber} — {booking.room.name}
           </p>
         </div>
 
