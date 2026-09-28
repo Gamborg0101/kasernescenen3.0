@@ -94,11 +94,13 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
 
 ## 📁 Environment Variables
 
-| Variable             | Description                     |
-| -------------------- | ------------------------------- |
-| `AUTH_SECRET`        | Secret key for Auth.js sessions |
-| `AUTH_GOOGLE_ID`     | Google OAuth client ID          |
-| `AUTH_GOOGLE_SECRET` | Google OAuth client secret      |
-| `DATABASE_URL`       | PostgreSQL connection string    |
+| Variable                   | Description                                       |
+| -------------------------- | ------------------------------------------------- |
+| `AUTH_SECRET`              | Secret key for Auth.js sessions                   |
+| `AUTH_GOOGLE_ID`           | Google OAuth client ID                            |
+| `AUTH_GOOGLE_SECRET`       | Google OAuth client secret                        |
+| `DATABASE_URL`             | PostgreSQL connection string                      |
+| `UPSTASH_REDIS_REST_URL`   | Upstash Redis REST URL (used for rate limiting)   |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST token (used for rate limiting) |
 
 > See `.env.example` for a full template.
