@@ -9,7 +9,7 @@
 ## ✨ Features
 
 - 📅 **Weekly calendar view** with 15-minute timeslots
-- 🔐 **Role-based access control** — User and Admin roles
+- 🔐 **Role-based access control** — Student and Admin roles
 - 🏠 **Multi-room support** — switch between rooms seamlessly
 - ⚡ **Real-time booking conflict detection**
 - 🚪 **Auto-registration flow** — unregistered users are prompted to sign up on first login
@@ -67,7 +67,14 @@ Generate the following credentials in the [Google Cloud Console](https://console
 
 Add them to your `.env`. New to Google OAuth? Follow [this tutorial](https://www.youtube.com/watch?v=0Big9K5We-U).
 
-### 5. Run the Database
+### 5. Set Up Upstash Redis (Rate Limiting)
+
+Booking, room, and user actions are rate-limited and will fail wituout a working Redit connection. Create a free database at [Upstash](https://upstash.com/) and add the following to your `.env`:
+
+- `UPSTASH_REDIS_REST_URL`
+- `UPSTASH_REDIS_REST_TOKEN`
+
+### 6. Run the Database
 
 ```bash
 docker compose up -d
@@ -75,7 +82,7 @@ bun prisma migrate dev
 bun prisma db seed
 ```
 
-### 6. Start Development Server
+### 7. Start Development Server
 
 ```bash
 bun dev
