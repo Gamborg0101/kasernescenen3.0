@@ -11,7 +11,7 @@ type Props = {
 
 export default function ChangeRoomModal({ onClose, room }: Props) {
   const [name, setRoomName] = useState(room.name);
-  const [roomNumber, setRoomNumber] = useState(room.roomNum);
+  const [roomNumber, setRoomNumber] = useState(room.roomNumber);
   const [location, setLocation] = useState(room.location);
   const [capacity, setCapacity] = useState(room.capacity);
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function ChangeRoomModal({ onClose, room }: Props) {
     e.preventDefault();
     await updateRoomAction(room.id, {
       name: name ?? undefined,
-      roomNum: roomNumber ?? undefined,
+      roomNumber: roomNumber ?? undefined,
       location: location ?? undefined,
       capacity: capacity ?? undefined,
     });
@@ -81,9 +81,9 @@ export default function ChangeRoomModal({ onClose, room }: Props) {
                   type="text"
                   name="lastName"
                   className={getClassName}
-                  defaultValue={room.roomNum}
+                  defaultValue={room.roomNumber}
                   onChange={(e) => {
-                    setRoomNumber(Number(e.target.value));
+                    setRoomNumber(e.target.value);
                   }}
                 />
                 <label htmlFor="roomLocation">Lokation</label>
