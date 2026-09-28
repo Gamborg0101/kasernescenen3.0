@@ -1,7 +1,8 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@/generated/prisma';
+import env from './lib/env';
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = env.DATABASE_URL;
 if (!connectionString) throw new Error('DATABASE_URL missing at adapter construction');
 
 function createPrismaClient(): PrismaClient {
