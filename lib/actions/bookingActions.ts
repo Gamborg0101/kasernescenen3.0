@@ -6,6 +6,7 @@ import { createBooking, deleteBooking } from '../db/bookings';
 import { cleanDbFromOldBookings } from '../db/bookings';
 import { ratelimit } from '../ratelimiter';
 import bookingConflicts from '../utils/bookingConflicts';
+import * as z from 'zod';
 import {
   sessionError,
   ratelimitError,
@@ -26,21 +27,41 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     return ratelimitError;
   }
 
-  const getStartHour = new Date(String(formData.get('startHour')));
-  const getEndHour = new Date(String(formData.get('endTime')));
-  const getRoomNumber = String(formData.get('roomNumber'));
-  const getInfo = String(formData.get('reason'));
+  const getStartHour = formData.get('startHour');
+  const getEndHour = formData.get('endTime');
+  const getRoomNumber = formData.get('roomNumber');
+  const getInfo = formData.get('reason');
 
-  const bookingInfo = {
+  const rawBooking = {
     startHour: getStartHour,
     endTime: getEndHour,
     roomNumber: getRoomNumber,
     info: getInfo,
   };
 
-  if (isNaN(getStartHour.getTime()) || isNaN(getEndHour.getTime())) {
+  const bookingSchema = z.object({
+    startHour: z.iso.datetime(),
+    endTime: z.iso.datetime(),
+    roomNumber: z.string().nonempty(),
+    info: z.string().min(1).max(100),
+  });
+
+  const data = bookingSchema.safeParse(rawBooking);
+
+  if (!data.success) {
+    console.log(data.error);
     return failedToCreateBooking;
   }
+
+  const startHourDate = new Date(data.data.startHour);
+  const endTimeDate = new Date(data.data.endTime);
+
+  const bookingInfo = {
+    startHour: startHourDate,
+    endTime: endTimeDate,
+    roomNumber: data.data.roomNumber,
+    info: data.data.info,
+  };
 
   try {
     const validBooking = await bookingConflicts(bookingInfo);

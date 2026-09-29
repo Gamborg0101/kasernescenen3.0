@@ -10,6 +10,22 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({
   adapter,
 });
+/* Used for seeding room */
+function bookingData() {
+  const now = new Date();
+  const days = faker.number.int({ min: 0, max: 30 });
+  const startHour = faker.number.int({ min: 8, max: 18 });
+  const duration = faker.number.int({ min: 1, max: 3 });
+
+  const startTime = new Date(now);
+  startTime.setDate(startTime.getDate() + days);
+  startTime.setHours(startHour, 0, 0, 0);
+
+  const endTime = new Date(startTime);
+  endTime.setHours(startTime.getHours() + duration);
+
+  return { startTime, endTime };
+}
 
 async function main() {
   //Delete all existing bookings, users and rooms.
