@@ -137,13 +137,13 @@ export async function UpdateUser(
   if (!result.success) return failedToUpdateUser;
 
   const parsedId = verifyUserId(userId);
-  if (!parsedId.success) return failedToDeleteUser;
+  if (!parsedId.success) return failedToUpdateUser;
 
-  const { success } = await ratelimit.limit(`user:update:${parsedId.data}`);
+  const { success } = await ratelimit.limit(`user:update:${session.user.id}`);
   if (!success) return ratelimitError;
 
   try {
-    await UpdateUserDb(userId, result.data);
+    await UpdateUserDb(parsedId.data, result.data);
     return success;
   } catch (e) {
     console.error(e);
