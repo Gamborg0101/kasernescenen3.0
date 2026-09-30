@@ -18,6 +18,7 @@ import {
 } from '../errorMessages';
 import { prisma } from '@/db';
 import * as z from 'zod';
+import { parse } from 'node:path';
 
 export async function CreateUser(prevState: unknown, formData: FormData) {
   const session = await auth();
@@ -27,10 +28,10 @@ export async function CreateUser(prevState: unknown, formData: FormData) {
   const formValidation = z.object({
     firstName: z.string().min(1).max(30),
     lastName: z.string().min(1).max(30),
-    phone: z.coerce.number().int().min(10000000).max(99999999),
+    phone: z.coerce.number().min(10000000).max(99999999),
     email: z.email(),
-    studentNumber: z.coerce.number().int().min(100000000).max(999999999),
-    cardNumber: z.coerce.number().int().min(100000).max(999999),
+    studentNumber: z.coerce.number().min(100000000).max(999999999),
+    cardNumber: z.coerce.number().min(100000).max(999999),
     studie: z.string().min(6).max(30),
   });
 
@@ -78,21 +79,30 @@ export async function DeleteUser(userId: number) {
   const session = await auth();
   if (!session) return sessionError;
 
-  const currentUserId = Number(session.user.id);
-  const { success } = await ratelimit.limit(`user:delete:${currentUserId}`);
+  const parsedId = verifyUserId(userId);
 
+  if (!parsedId.success) return failedToDeleteUser;
+  const targetId = parsedId.data;
+  const currentUserId = Number(session.user.id);
+
+  const { success } = await ratelimit.limit(`user:delete:${currentUserId}`);
   if (!success) return ratelimitError;
 
-  if (session.user.role !== 'admin' && Number(session.user.id) !== userId) return failedToDeleteUser;
+  if (session.user.role !== 'admin' && currentUserId !== targetId) return failedToDeleteUser;
 
   try {
-    await DeleteUserBookingDB(userId);
-    await DeleteUserFromDB(userId);
+    await DeleteUserBookingDB(targetId);
+    await DeleteUserFromDB(targetId);
     return success;
   } catch (e) {
     console.error(e);
     return failedToDeleteUser;
   }
+}
+
+function verifyUserId(userId: number) {
+  const parsedId = z.number().positive().safeParse(userId);
+  return parsedId;
 }
 
 export async function UpdateUser(
@@ -105,22 +115,35 @@ export async function UpdateUser(
     studentNumber?: number;
     cardNumber?: number;
     study?: string;
-    role: string;
+    role?: string;
   },
 ) {
   const session = await auth();
   if (!session) return sessionError;
-
-  const currentUserId = Number(session.user.id);
-
-  const { success } = await ratelimit.limit(`user:update:${currentUserId}`);
-
-  if (!success) return ratelimitError;
-
   if (session.user.role !== 'admin') return userIsNotAdmin;
 
+  const formValidation = z.object({
+    firstName: z.string().min(1).max(30).optional(),
+    lastName: z.string().min(1).max(30).optional(),
+    phone: z.number().min(10000000).max(99999999).optional(),
+    email: z.email().optional(),
+    studentNumber: z.number().min(100000000).max(999999999).optional(),
+    cardNumber: z.number().min(100000).max(999999).optional(),
+    study: z.string().min(6).max(30).optional(),
+    role: z.enum(['admin', 'student']).optional(),
+  });
+
+  const result = formValidation.safeParse(data);
+  if (!result.success) return failedToUpdateUser;
+
+  const parsedId = verifyUserId(userId);
+  if (!parsedId.success) return failedToDeleteUser;
+
+  const { success } = await ratelimit.limit(`user:update:${parsedId.data}`);
+  if (!success) return ratelimitError;
+
   try {
-    await UpdateUserDb(userId, data);
+    await UpdateUserDb(userId, result.data);
     return success;
   } catch (e) {
     console.error(e);
