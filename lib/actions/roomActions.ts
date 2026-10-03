@@ -13,10 +13,36 @@ import {
   sessionError,
   unauthorizedAccess,
 } from '../errorMessages';
+import * as z from 'zod';
 
 export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
   const session = await auth();
   if (!session) return sessionError;
+
+  const roomIdSchema = z.object({
+    roomId: z.number().min(100).max(299),
+  });
+
+  const roomIdValid = roomIdSchema.safeParse(roomId);
+  if (!roomIdValid.success) return failedToUpdateRoom;
+
+  const updateRoomSchema = z.object({
+    name: z.string().min(5).max(30),
+    roomNumber: z.string().min(100).max(299),
+    capacity: z.number().min(5).max(200),
+    location: z.string().min(5).max(40),
+  });
+
+  const rawRoomInfo = {
+    name: data.name,
+    roomNumber: data.roomNumber,
+    capacity: data.capacity,
+    location: data.location,
+  };
+
+  const updateRoomData = updateRoomSchema.safeParse(rawRoomInfo);
+
+  if (!updateRoomData.success) return failedToUpdateRoom;
 
   const userId = Number(session.user.id);
   const { success } = await ratelimit.limit(`room:update:${userId}`);
@@ -27,7 +53,7 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
 
   if (session.user.role !== 'admin') return unauthorizedAccess;
   try {
-    await updateRoom(roomId, data);
+    await updateRoom(roomIdValid.data.roomId, updateRoomData.data);
     return success;
   } catch (e) {
     console.error(e);
