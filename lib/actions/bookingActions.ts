@@ -81,23 +81,25 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
 }
 
 export async function deleteABooking(bookingId: number) {
-  let session;
-  try {
-    session = await auth();
-  } catch (e) {
-    console.error(e);
-    return sessionError;
-  }
+  const session = await auth();
   if (!session) return sessionError;
 
-  const userId = Number(session.user.id);
+  const deleteSchemaValidId = z.object({
+    bookingId: z.number().min(1).max(999),
+  });
+  const validBookingId = deleteSchemaValidId.safeParse(bookingId);
+
+  if (!validBookingId.success) return failedToDeleteBooking;
+
+  const userId = session.user.id;
+
   const { success } = await ratelimit.limit(`booking:delete:${userId}`);
 
   if (!success) {
     return ratelimitError;
   }
   try {
-    await deleteBooking(bookingId, Number(session.user.id), session.user.role);
+    await deleteBooking(validBookingId.data.bookingId, Number(session.user.id), session.user.role);
     revalidatePath('/userpage');
     return { success: true, error: null };
   } catch (e) {

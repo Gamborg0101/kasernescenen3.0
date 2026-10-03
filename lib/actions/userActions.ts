@@ -18,7 +18,6 @@ import {
 } from '../errorMessages';
 import { prisma } from '@/db';
 import * as z from 'zod';
-import { parse } from 'node:path';
 
 export async function CreateUser(prevState: unknown, formData: FormData) {
   const session = await auth();
