@@ -1,5 +1,3 @@
-'use server';
-
 import { auth } from '@/auth/authSetup';
 import { getUser } from '../../lib/db/users';
 import { getThreeBookings } from '../../lib/db/bookings';

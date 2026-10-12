@@ -1,5 +1,4 @@
 import Register from '@/components/misc/Register';
-import { prisma } from '@/db';
 
 export default async function Opret({ searchParams }: { searchParams: Promise<{ message?: string }> }) {
   const { message } = await searchParams;

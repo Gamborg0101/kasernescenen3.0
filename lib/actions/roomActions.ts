@@ -19,9 +19,7 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
   const session = await auth();
   if (!session) return sessionError;
 
-  const roomIdSchema = z.object({
-    roomId: z.number().min(100).max(299),
-  });
+  const roomIdSchema = z.number().min(100).max(299);
 
   const roomIdValid = roomIdSchema.safeParse(roomId);
   if (!roomIdValid.success) return failedToUpdateRoom;
@@ -53,7 +51,7 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
 
   if (session.user.role !== 'admin') return unauthorizedAccess;
   try {
-    await updateRoom(roomIdValid.data.roomId, updateRoomData.data);
+    await updateRoom(roomIdValid.data, updateRoomData.data);
     return success;
   } catch (e) {
     console.error(e);

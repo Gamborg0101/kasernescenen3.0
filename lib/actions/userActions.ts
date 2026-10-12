@@ -17,6 +17,7 @@ import {
   failedToCreateUser,
 } from '../errorMessages';
 import { prisma } from '@/db';
+import { successDeleteUser, successUpdateUser } from '../successMessages';
 import * as z from 'zod';
 
 export async function CreateUser(prevState: unknown, formData: FormData) {
@@ -84,15 +85,15 @@ export async function DeleteUser(userId: number) {
   const targetId = parsedId.data;
   const currentUserId = Number(session.user.id);
 
-  const { success } = await ratelimit.limit(`user:delete:${currentUserId}`);
-  if (!success) return ratelimitError;
+  const rateLimited = await ratelimit.limit(`user:delete:${currentUserId}`);
+  if (!rateLimited.success) return ratelimitError;
 
   if (session.user.role !== 'admin' && currentUserId !== targetId) return failedToDeleteUser;
 
   try {
     await DeleteUserBookingDB(targetId);
     await DeleteUserFromDB(targetId);
-    return success;
+    return successDeleteUser;
   } catch (e) {
     console.error(e);
     return failedToDeleteUser;
@@ -138,12 +139,12 @@ export async function UpdateUser(
   const parsedId = verifyUserId(userId);
   if (!parsedId.success) return failedToUpdateUser;
 
-  const { success } = await ratelimit.limit(`user:update:${session.user.id}`);
-  if (!success) return ratelimitError;
+  const rateLimited = await ratelimit.limit(`user:update:${session.user.id}`);
+  if (!rateLimited.success) return ratelimitError;
 
   try {
     await UpdateUserDb(parsedId.data, result.data);
-    return success;
+    return successUpdateUser;
   } catch (e) {
     console.error(e);
     return failedToUpdateUser;

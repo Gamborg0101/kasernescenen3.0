@@ -1,5 +1,4 @@
 'use server';
-
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
 import { createBooking, deleteBooking } from '../db/bookings';
@@ -84,10 +83,9 @@ export async function deleteABooking(bookingId: number) {
   const session = await auth();
   if (!session) return sessionError;
 
-  const deleteSchemaValidId = z.object({
-    bookingId: z.number().min(1).max(999),
-  });
-  const validBookingId = deleteSchemaValidId.safeParse(bookingId);
+  const bookingIdSchema = z.number().positive();
+
+  const validBookingId = bookingIdSchema.safeParse(bookingId);
 
   if (!validBookingId.success) return failedToDeleteBooking;
 
@@ -99,7 +97,7 @@ export async function deleteABooking(bookingId: number) {
     return ratelimitError;
   }
   try {
-    await deleteBooking(validBookingId.data.bookingId, Number(session.user.id), session.user.role);
+    await deleteBooking(validBookingId.data, Number(session.user.id), session.user.role);
     revalidatePath('/userpage');
     return { success: true, error: null };
   } catch (e) {

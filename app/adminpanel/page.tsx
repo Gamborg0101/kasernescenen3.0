@@ -1,4 +1,3 @@
-'use server';
 import AdminPanelGrid from '@/components/admin/AdminPanelGrid';
 
 export default async function AdminPanel() {
