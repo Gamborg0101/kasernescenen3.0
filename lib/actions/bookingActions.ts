@@ -20,9 +20,9 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
   if (!session) return sessionError;
 
   const userId = Number(session.user.id);
-  const { success } = await ratelimit.limit(`booking:create:${userId}`);
+  const rateLimited = await ratelimit.limit(`booking:create:${userId}`);
 
-  if (!success) {
+  if (!rateLimited.success) {
     return ratelimitError;
   }
 
@@ -91,9 +91,9 @@ export async function deleteABooking(bookingId: number) {
 
   const userId = session.user.id;
 
-  const { success } = await ratelimit.limit(`booking:delete:${userId}`);
+  const rateLimited = await ratelimit.limit(`booking:delete:${userId}`);
 
-  if (!success) {
+  if (!rateLimited.success) {
     return ratelimitError;
   }
   try {
@@ -112,8 +112,8 @@ export async function cleanDbFromOldBookingsAction() {
 
   const userId = Number(session.user.id);
 
-  const { success } = await ratelimit.limit(`booking:delete:${userId}`);
-  if (!success) return ratelimitError;
+  const rateLimited = await ratelimit.limit(`booking:delete:${userId}`);
+  if (!rateLimited.success) return ratelimitError;
 
   if (session.user.role !== 'admin') return unauthorizedAccess;
   try {

@@ -11,3 +11,18 @@ export const successUpdateUser: Message = {
   success: true,
   error: null,
 };
+
+export const successUpdateRoom: Message = {
+  success: true,
+  error: null,
+};
+
+export const successDeleteRoom: Message = {
+  success: true,
+  error: null,
+};
+
+export const successCreateRoom: Message = {
+  success: true,
+  error: null,
+};
