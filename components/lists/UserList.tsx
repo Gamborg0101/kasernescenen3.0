@@ -8,7 +8,6 @@ export default function UserList({ users }: { users: User[] }) {
   const [localUsers, setLocalUsers] = React.useState(users);
   const [toggleModal, setToggleModal] = React.useState(false);
   const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
-
   const handleDelete = async (userId: number) => {
     await DeleteUser(userId);
     setLocalUsers(localUsers.filter((user) => user.id !== userId));

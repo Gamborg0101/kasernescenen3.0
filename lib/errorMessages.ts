@@ -62,6 +62,11 @@ export const userIsNotAdmin: Message = {
   error: 'Noget gik galt imens du forsøgte at slette en bruger',
 };
 
+export const adminRoleRequired: Message = {
+  success: false,
+  error: 'Du skal have rollen Admin for at kunne se denne side',
+};
+
 export const unauthorizedAccess: Message = { success: false, error: 'Unauthorized' };
 
 export const failedToFindRoom: Message = { success: false, error: 'Noget gik galt med at finde rummet' };

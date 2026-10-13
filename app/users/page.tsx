@@ -1,14 +1,25 @@
 import UserList from '@/components/lists/UserList';
 import { getUsers } from '@/lib/db/users';
+import { auth } from '@/auth/authSetup';
+import { sessionError, adminRoleRequired } from '@/lib/errorMessages';
+import { redirect } from 'next/navigation';
 
 export default async function Users() {
-  const users = await getUsers();
+  const session = await auth();
 
-  //Need logic for only admin-access to this page
+  if (!session) {
+    console.error(sessionError);
+    redirect('/');
+  }
+  if (session.user.role !== 'admin') {
+    console.error(adminRoleRequired);
+    redirect('/');
+  }
+
+  const users = await getUsers();
 
   return (
     <div>
-      
       <UserList users={users} />
     </div>
   );

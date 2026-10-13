@@ -1,4 +1,3 @@
-'use server';
 import { getRoomByNum } from '../db/rooms';
 import { findBooking } from '../db/bookings';
 import { auth } from '@/auth/authSetup';
