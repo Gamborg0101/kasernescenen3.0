@@ -1,3 +1,4 @@
+import 'server-only';
 import { prisma } from '@/db';
 import { User } from '@/generated/prisma';
 import { auth } from '@/auth/authSetup';

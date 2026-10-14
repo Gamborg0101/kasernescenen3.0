@@ -1,3 +1,4 @@
+import 'server-only';
 import { prisma } from '@/db';
 import { CreateBooking } from '@/lib/types';
 

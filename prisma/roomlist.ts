@@ -1,3 +1,4 @@
+import 'server-only';
 export type Room = {
   roomNumber: number | string;
   name: string;

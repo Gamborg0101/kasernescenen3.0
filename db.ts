@@ -1,6 +1,7 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@/generated/prisma';
 import env from './lib/env';
+import 'server-only';
 
 const connectionString = env.DATABASE_URL;
 
