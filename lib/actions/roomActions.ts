@@ -2,7 +2,7 @@
 import { Room } from '@/generated/prisma';
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
-import { DeleteRoomBookings, deleteRoomFromDb, createRoomDB, updateRoom } from '../db/rooms';
+import { deleteRoomBookings, deleteRoomFromDb, createRoomDB, updateRoom } from '../db/rooms';
 import { ratelimit } from '../ratelimiter';
 import {
   failedToCreateRoom,
@@ -78,7 +78,7 @@ export async function deleteRoom(roomId: number) {
 
   if (session.user.role !== 'admin') return unauthorizedAccess;
   try {
-    await DeleteRoomBookings(validRoomId.data);
+    await deleteRoomBookings(validRoomId.data);
     await deleteRoomFromDb(validRoomId.data);
     return successDeleteRoom;
   } catch (e) {
