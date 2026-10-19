@@ -44,9 +44,11 @@ test('Two users can not make the same booking', async () => {
   expect(bookings.length).toBe(1);
 });
 
-test('A student cannot delete another user booking ', async () => {
+async function testCreateTempBooking() {
   const startTime = new Date('August 19, 2026, 12:00:00');
   const endTime = new Date('August 19, 2026, 13:30:00');
+  if (!room) throw 'Der var ikke noget rum id på dette rumnummer';
+
   const booking = await createBooking({
     roomNumber: room.roomNumber,
     startTime: startTime,
@@ -63,11 +65,18 @@ test('A student cannot delete another user booking ', async () => {
       reason: 'testbookings',
     },
   });
-  expect(deleteBooking(findBooking.id, 2, 'student')).rejects.toThrow();
+
+  return findBooking.id;
+}
+
+test('A student cannot delete another user booking ', async () => {
+  const bookingId = await testCreateTempBooking();
+
+  expect(deleteBooking(bookingId, 2, 'student')).rejects.toThrow();
 
   const findBookingAfterAttempt = await prisma.booking.findUnique({
     where: {
-      id: findBooking.id,
+      id: bookingId,
     },
   });
 
@@ -75,58 +84,26 @@ test('A student cannot delete another user booking ', async () => {
 });
 
 test('An admin can delete another user booking', async () => {
-  const startTime = new Date('August 19, 2026, 12:00:00');
-  const endTime = new Date('August 19, 2026, 13:30:00');
-  const booking = await createBooking({
-    roomNumber: room.roomNumber,
-    startTime: startTime,
-    endTime: endTime,
-    userId: 1,
-    reason: 'testbookings',
-  });
+  const bookingId = await testCreateTempBooking();
 
-  expect(booking.success).toBe(true);
-
-  const findBooking = await prisma.booking.findFirstOrThrow({
-    where: {
-      userId: 1,
-      reason: 'testbookings',
-    },
-  });
-  await deleteBooking(findBooking.id, 2, 'admin');
+  await deleteBooking(bookingId, 2, 'admin');
 
   const findBookingAfterAttempt = await prisma.booking.findUnique({
     where: {
-      id: findBooking.id,
+      id: bookingId,
     },
   });
   expect(findBookingAfterAttempt).toBeNull();
 });
 
 test('A student can delete their own booking', async () => {
-  const startTime = new Date('August 19, 2026, 12:00:00');
-  const endTime = new Date('August 19, 2026, 13:30:00');
-  const booking = await createBooking({
-    roomNumber: room.roomNumber,
-    startTime: startTime,
-    endTime: endTime,
-    userId: 1,
-    reason: 'testbookings',
-  });
+  const bookingId = await testCreateTempBooking();
 
-  expect(booking.success).toBe(true);
-
-  const findBooking = await prisma.booking.findFirstOrThrow({
-    where: {
-      userId: 1,
-      reason: 'testbookings',
-    },
-  });
-  await deleteBooking(findBooking.id, 1, 'student');
+  await deleteBooking(bookingId, 1, 'student');
 
   const findBookingAfterAttempt = await prisma.booking.findUnique({
     where: {
-      id: findBooking.id,
+      id: bookingId,
     },
   });
   expect(findBookingAfterAttempt).toBeNull();
