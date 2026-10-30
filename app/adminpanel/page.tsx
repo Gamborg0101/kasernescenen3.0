@@ -1,6 +1,19 @@
+import { auth } from '@/auth/authSetup';
 import AdminPanelGrid from '@/components/admin/AdminPanelGrid';
+import { adminRoleRequired, sessionError } from '@/lib/errorMessages';
+import { redirect } from 'next/navigation';
 
 export default async function AdminPanel() {
+  const session = await auth();
+  if (!session) {
+    console.error(sessionError);
+    redirect('/');
+  }
+  if (session.user.role !== 'admin') {
+    console.error(adminRoleRequired);
+    redirect('/');
+  }
+
   return (
     <div>
       <AdminPanelGrid />
