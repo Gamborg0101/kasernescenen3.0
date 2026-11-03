@@ -2,6 +2,7 @@ import { auth } from '@/auth/authSetup';
 import LogoutBtn from './../buttons/LogoutBtn';
 import Logo from './Logo';
 import Link from 'next/link';
+import { roles } from "@/lib/enums"
 
 export async function Navbar() {
   const session = await auth();
@@ -17,7 +18,7 @@ export async function Navbar() {
             {!session.user.isRegistered && <NavItem text="Registrer" href="/register" />}
             <NavItem text="Booking" href="/booking" />
             <NavItem text="Info" href="/" />
-            {session?.user?.role === 'admin' && <NavItem text="Adminpanel" href="/adminpanel" />}
+            {session?.user?.role === roles.admin && <NavItem text="Adminpanel" href="/adminpanel" />}
 
             {/* Skillelinje før logout */}
             <li className="list-none w-px h-4 bg-stone-200 mx-2" />

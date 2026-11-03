@@ -1,7 +1,7 @@
 import 'server-only';
 import { prisma } from '@/db';
 import { CreateBooking } from '@/lib/types';
-
+import { roles } from "@/lib/enums"
 export async function getBookings() {
   return await prisma.booking.findMany({
     include: {
@@ -59,7 +59,7 @@ export async function getThreeBookings(id: number) {
 }
 
 export async function deleteBooking(bookingId: number, userId: number, role: string) {
-  if (role === 'admin') {
+  if (role === roles.admin) {
     return await prisma.booking.delete({
       where: { id: bookingId },
     });

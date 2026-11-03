@@ -6,6 +6,7 @@ import { BookingWithUser } from '@/lib/types';
 import { bookingColors } from '@/lib/colors';
 import { getBookingColor } from '@/lib/colors';
 import { deleteABooking } from '@/lib/actions/bookingActions';
+import { roles } from "@/lib/enums"
 
 type BookingOverlayProps = {
   bookings: BookingWithUser[];
@@ -28,7 +29,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
   }
 
   function bookingBelongsToUser(booking: BookingWithUser) {
-    return booking.userId === userInfoDb.id || userInfoDb.role === 'admin';
+    return booking.userId === userInfoDb.id || userInfoDb.role === roles.admin;
   }
 
   return (

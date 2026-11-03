@@ -3,6 +3,7 @@ import { getUsers } from '@/lib/db/users';
 import { auth } from '@/auth/authSetup';
 import { sessionError, adminRoleRequired } from '@/lib/errorMessages';
 import { redirect } from 'next/navigation';
+import { roles } from "@/lib/enums"
 
 export default async function Users() {
   const session = await auth();
@@ -11,7 +12,7 @@ export default async function Users() {
     console.error(sessionError);
     redirect('/');
   }
-  if (session.user.role !== 'admin') {
+  if (session.user.role !== roles.admin) {
     console.error(adminRoleRequired);
     redirect('/');
   }

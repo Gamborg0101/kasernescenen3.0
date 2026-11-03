@@ -15,6 +15,7 @@ import {
 } from '../errorMessages';
 import { successUpdateRoom, successDeleteRoom, successCreateRoom } from '../successMessages';
 import * as z from 'zod';
+import { roles } from '@/lib/enums';
 
 const roomSchema = z.object({
   name: z.string().min(5).max(30),
@@ -50,7 +51,7 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
     return ratelimitError;
   }
 
-  if (session.user.role !== 'admin') return unauthorizedAccess;
+  if (session.user.role !== roles.admin) return unauthorizedAccess;
   try {
     await updateRoom(roomIdValid.data, updateRoomData.data);
     return successUpdateRoom;
@@ -76,7 +77,7 @@ export async function deleteRoom(roomId: number) {
     return ratelimitError;
   }
 
-  if (session.user.role !== 'admin') return unauthorizedAccess;
+  if (session.user.role !== roles.admin) return unauthorizedAccess;
   try {
     await deleteRoomBookings(validRoomId.data);
     await deleteRoomFromDb(validRoomId.data);
@@ -91,7 +92,7 @@ export async function createRoom(room: Omit<Room, 'id'> | null) {
   const session = await auth();
   if (!session) return sessionError;
 
-  if (session.user.role !== 'admin') return unauthorizedAccess;
+  if (session.user.role !== roles.admin) return unauthorizedAccess;
   if (!room) return failedToFindRoom;
 
   const userId = Number(session.user.id);

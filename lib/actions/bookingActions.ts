@@ -14,6 +14,7 @@ import {
   failedToCleanupDb,
   unauthorizedAccess,
 } from '../errorMessages';
+import { roles } from "@/lib/enums";
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
@@ -115,7 +116,7 @@ export async function cleanDbFromOldBookingsAction() {
   const rateLimited = await ratelimit.limit(`booking:delete:${userId}`);
   if (!rateLimited.success) return ratelimitError;
 
-  if (session.user.role !== 'admin') return unauthorizedAccess;
+  if (session.user.role !== roles.admin) return unauthorizedAccess;
   try {
     await cleanDbFromOldBookings();
     return { success: true, error: null };
