@@ -1,9 +1,8 @@
-import 'server-only';
 import { PrismaClient } from '../generated/prisma';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { faker } from '@faker-js/faker';
 import { AllClassroomsList } from './roomlist';
-import { roles } from '@/lib/enums';
+import { roles } from "@/lib/enums";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
