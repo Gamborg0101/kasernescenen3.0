@@ -8,3 +8,9 @@ services:
       POSTGRES_DB: kasernescenen
     ports:
       - 5432:5432
+    healthcheck: 
+      test: ["CMD", "-U", "pg_isready", "postgres"]
+      interval: 5s
+      retries: 5
+      
+    

@@ -9,6 +9,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:secret@localhost:5432/kasernescenen
+      UPSTASH_REDIS_REST_URL: https://example.upstash.io
+      UPSTASH_REDIS_REST_TOKEN: ci-dummy
+      AUTH_SECRET: ci-dummy
+      AUTH_GOOGLE_ID: ci-dummy
+      AUTH_GOOGLE_SECRET: ci-dummy
 
     steps:
       - name: Checkout code
@@ -20,18 +27,24 @@ jobs:
       - name: install dependencies
         run: bun install
 
+      - name: Start database
+        run: docker compose -f docker-compose.yml up --wait
+
       - name: Generate Prisma Client
         run: bunx prisma generate
+
+      - name: Migrate schemas to database
+        run: bunx prisma migrate deploy
+
+      - name: Seed database
+        run: bunx prisma db seed
 
       - name: Lint
         run: bun run lint
 
+      - name: Run tests
+        run: bun test
+
       - name: Build project
         run: bun run build
-        env:
-          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
-          UPSTASH_REDIS_REST_URL: https://example.upstash.io
-          UPSTASH_REDIS_REST_TOKEN: ci-dummy
-          AUTH_SECRET: ci-dummy
-          AUTH_GOOGLE_ID: ci-dummy
-          AUTH_GOOGLE_SECRET: ci-dummy
+
