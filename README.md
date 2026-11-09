@@ -47,6 +47,12 @@ bookings. Rate limiting slows down abuse, and admins can delete bookings
 and users. If abuse becomes a real problem, the next step is a cap on
 future bookings per user or admin approval of new users.
 
+
+### Ratelimiter fails open
+The rate limiter fails open: if Redis is unavailable,
+requests are allowed and the failure is logged, 
+because a booking system that stays usable matters more than spam protection during a short outage.
+
 ---
 
 ## 🚀 Getting Started

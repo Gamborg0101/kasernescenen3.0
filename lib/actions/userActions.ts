@@ -7,7 +7,6 @@ import {
   updateUser as UpdateUserDb,
   DeleteUser as DeleteUserFromDB,
 } from '../db/users';
-import { ratelimit } from '../ratelimiter';
 import {
   sessionError,
   ratelimitError,
@@ -20,6 +19,7 @@ import { prisma } from '@/db';
 import { successDeleteUser, successUpdateUser } from '../successMessages';
 import * as z from 'zod';
 import { roles } from '@/lib/enums';
+import ratelimitCheck from '../ratelimiter';
 
 export async function CreateUser(prevState: unknown, formData: FormData) {
   const session = await auth();
@@ -86,8 +86,8 @@ export async function DeleteUser(userId: number) {
   const targetId = parsedId.data;
   const currentUserId = Number(session.user.id);
 
-  const rateLimited = await ratelimit.limit(`user:delete:${currentUserId}`);
-  if (!rateLimited.success) return ratelimitError;
+  const rateLimited = await ratelimitCheck(`user:delete:${currentUserId}`);
+  if (!rateLimited) return ratelimitError;
 
   if (session.user.role !== roles.admin && currentUserId !== targetId) return failedToDeleteUser;
 
@@ -140,8 +140,8 @@ export async function UpdateUser(
   const parsedId = verifyUserId(userId);
   if (!parsedId.success) return failedToUpdateUser;
 
-  const rateLimited = await ratelimit.limit(`user:update:${session.user.id}`);
-  if (!rateLimited.success) return ratelimitError;
+  const rateLimited = await ratelimitCheck(`user:update:${session.user.id}`);
+  if (!rateLimited) return ratelimitError;
 
   try {
     await UpdateUserDb(parsedId.data, result.data);

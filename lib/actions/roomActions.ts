@@ -3,7 +3,6 @@ import { Room } from '@/generated/prisma';
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
 import { deleteRoomBookings, deleteRoomFromDb, createRoomDB, updateRoom } from '../db/rooms';
-import { ratelimit } from '../ratelimiter';
 import {
   failedToCreateRoom,
   failedToDeleteRoom,
@@ -16,6 +15,7 @@ import {
 import { successUpdateRoom, successDeleteRoom, successCreateRoom } from '../successMessages';
 import * as z from 'zod';
 import { roles } from '@/lib/enums';
+import ratelimitCheck from '../ratelimiter';
 
 const roomSchema = z.object({
   name: z.string().min(5).max(30),
@@ -45,9 +45,9 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
   if (!updateRoomData.success) return failedToUpdateRoom;
 
   const userId = Number(session.user.id);
-  const rateLimited = await ratelimit.limit(`room:update:${userId}`);
+  const rateLimited = await ratelimitCheck(`room:update:${userId}`);
 
-  if (!rateLimited.success) {
+  if (!rateLimited) {
     return ratelimitError;
   }
 
@@ -72,8 +72,8 @@ export async function deleteRoom(roomId: number) {
     return failedToDeleteRoom;
   }
 
-  const rateLimited = await ratelimit.limit(`room:delete:${userId}`);
-  if (!rateLimited.success) {
+  const rateLimited = await ratelimitCheck(`room:delete:${userId}`);
+  if (!rateLimited) {
     return ratelimitError;
   }
 
@@ -99,8 +99,8 @@ export async function createRoom(room: Omit<Room, 'id'> | null) {
 
   const createRoomData = roomSchema.safeParse(room);
 
-  const rateLimited = await ratelimit.limit(`room:create:${userId}`);
-  if (!rateLimited.success) {
+  const rateLimited = await ratelimitCheck(`room:create:${userId}`);
+  if (!rateLimited) {
     return ratelimitError;
   }
 

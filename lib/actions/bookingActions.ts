@@ -3,7 +3,6 @@ import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
 import { createBooking, deleteBooking } from '../db/bookings';
 import { cleanDbFromOldBookings } from '../db/bookings';
-import { ratelimit } from '../ratelimiter';
 import bookingConflicts from '../utils/bookingConflicts';
 import * as z from 'zod';
 import {
@@ -15,15 +14,15 @@ import {
   unauthorizedAccess,
 } from '../errorMessages';
 import { roles } from "@/lib/enums";
+import ratelimitCheck from "@/lib/ratelimiter";
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
   if (!session) return sessionError;
 
   const userId = Number(session.user.id);
-  const rateLimited = await ratelimit.limit(`booking:create:${userId}`);
-
-  if (!rateLimited.success) {
+  const rateLimited = await ratelimitCheck(`booking:create:${userId}`)
+  if (!rateLimited) {
     return ratelimitError;
   }
 
@@ -91,10 +90,9 @@ export async function deleteABooking(bookingId: number) {
   if (!validBookingId.success) return failedToDeleteBooking;
 
   const userId = session.user.id;
+  const rateLimited = await ratelimitCheck(`booking:delete:${userId}`)
 
-  const rateLimited = await ratelimit.limit(`booking:delete:${userId}`);
-
-  if (!rateLimited.success) {
+  if (!rateLimited) {
     return ratelimitError;
   }
   try {
@@ -112,9 +110,8 @@ export async function cleanDbFromOldBookingsAction() {
   if (!session) return sessionError;
 
   const userId = Number(session.user.id);
-
-  const rateLimited = await ratelimit.limit(`booking:delete:${userId}`);
-  if (!rateLimited.success) return ratelimitError;
+  const rateLimited = await ratelimitCheck(`booking:delete:${userId}`)
+  if (!rateLimited) return ratelimitError;
 
   if (session.user.role !== roles.admin) return unauthorizedAccess;
   try {
