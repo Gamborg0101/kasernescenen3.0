@@ -33,6 +33,21 @@ https://kasernescenen3.vercel.app/
 | Ratelimit | Upstash      |
 
 ---
+## 🧠 Decisions
+
+### Google login instead of AU accounts
+Users sign in with their own Google account instead of their AU account.
+This keeps password handling out of the application entirely: Google
+stores and protects the credentials, and the app never sees a password.
+
+**Trade-off:** anyone with a Google account can register and enter an
+unverified student number. This risk is accepted because every rehearsal
+room has a physical lock, so a fake user can at most create annoying
+bookings. Rate limiting slows down abuse, and admins can delete bookings
+and users. If abuse becomes a real problem, the next step is a cap on
+future bookings per user or admin approval of new users.
+
+---
 
 ## 🚀 Getting Started
 
