@@ -16,6 +16,7 @@ jobs:
       AUTH_SECRET: ci-dummy
       AUTH_GOOGLE_ID: ci-dummy
       AUTH_GOOGLE_SECRET: ci-dummy
+      TIMETABLE_KEY: https://example.timetable.ui
 
     steps:
       - name: Checkout code

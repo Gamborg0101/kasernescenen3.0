@@ -102,5 +102,7 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
 | `DATABASE_URL`             | PostgreSQL connection string                      |
 | `UPSTASH_REDIS_REST_URL`   | Upstash Redis REST URL (used for rate limiting)   |
 | `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis REST token (used for rate limiting) |
+| `TIMETABLE_KEY`            | Key for fetching bookings from timetable          |
+
 
 > See `.env.example` for a full template.

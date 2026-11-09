@@ -3,6 +3,7 @@ import { loadEnvConfig } from '@next/env';
 loadEnvConfig(process.cwd(), true);
 import { prisma } from '@/db';
 import { validateBookingSlot } from './utils/bookingConflicts';
+import env from './env';
 
 export type uvaekaBooking = {
   beskrivelse: string;
@@ -27,10 +28,7 @@ export type uvaekaBooking = {
 };
 
 export default async function importICAL() {
-  const ICALData = await fetch(
-    'https://timetable.au.dk/ical?6a68bd80&group=false&eu=NTMyMDY0&h=rWEflVuL72v3M_PSOrRflBUADizSye1UUeIJwpYLtrY=&zoneFeed=true',
-  );
-
+  const ICALData = await fetch(env.TIMETABLE_KEY);
   const ICALText = await ICALData.text();
   const data = ical.parseICS(ICALText);
   await prisma.booking.deleteMany({ where: { userId: 1 } });

@@ -8,8 +8,10 @@ const envSchema = z.object({
   AUTH_SECRET: z.string().min(1),
   AUTH_GOOGLE_ID: z.string().min(1),
   AUTH_GOOGLE_SECRET: z.string().min(1),
+  TIMETABLE_KEY: z.url()
 });
 
 const env = envSchema.parse(process.env);
 
 export default env;
+
