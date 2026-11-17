@@ -31,22 +31,22 @@ export async function updateRoom(roomId: number, data: Partial<Omit<Room, 'id'>>
   });
 }
 
-export async function deleteRoomBookings(roomId: number) {
-  return await prisma.booking.deleteMany({
-    where: {
-      roomId: roomId,
-    },
-  });
-}
-
-export async function deleteRoomFromDb(roomId: number) {
-  return await prisma.room.delete({
-    where: {
-      id: roomId,
-    },
-  });
-}
 
 export async function createRoomDB(room: Omit<Room, 'id'>) {
   return await prisma.room.create({ data: room });
+}
+
+export async function deleteRoomWithBookings(roomId: number) {
+  return await prisma.$transaction([
+    prisma.booking.deleteMany({
+      where: {
+        roomId: roomId
+      }
+    }),
+    prisma.room.delete({
+      where: {
+        id: roomId
+      }
+    })
+  ])
 }

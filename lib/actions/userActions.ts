@@ -1,12 +1,8 @@
 'use server';
 import { auth } from '@/auth/authSetup';
-import { createUser } from '../db/users';
+import { createUser, deleteUserWithBookings } from '../db/users';
 import { redirect } from 'next/navigation';
-import {
-  DeleteUserBookings as DeleteUserBookingDB,
-  updateUser as UpdateUserDb,
-  DeleteUser as DeleteUserFromDB,
-} from '../db/users';
+import { updateUser as UpdateUserDb } from '../db/users';
 import {
   sessionError,
   ratelimitError,
@@ -98,8 +94,7 @@ export async function DeleteUser(userId: number) {
 
 
   try {
-    await DeleteUserBookingDB(targetId);
-    await DeleteUserFromDB(targetId);
+    await deleteUserWithBookings(targetId)
     return successDeleteUser;
   } catch (e) {
     console.error(e);

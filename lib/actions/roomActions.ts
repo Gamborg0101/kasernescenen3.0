@@ -2,7 +2,7 @@
 import { Room } from '@/generated/prisma';
 import { auth } from '@/auth/authSetup';
 import { revalidatePath } from 'next/cache';
-import { deleteRoomBookings, deleteRoomFromDb, createRoomDB, updateRoom } from '../db/rooms';
+import { createRoomDB, updateRoom, deleteRoomWithBookings } from '../db/rooms';
 import {
   failedToCreateRoom,
   failedToDeleteRoom,
@@ -80,8 +80,7 @@ export async function deleteRoom(roomId: number) {
   }
 
   try {
-    await deleteRoomBookings(validRoomId.data);
-    await deleteRoomFromDb(validRoomId.data);
+    await deleteRoomWithBookings(validRoomId.data)
     return successDeleteRoom;
   } catch (e) {
     console.error(e);

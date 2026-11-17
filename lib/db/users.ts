@@ -29,22 +29,6 @@ export async function getUsers() {
   return await prisma.user.findMany();
 }
 
-export async function DeleteUserBookings(userId: number) {
-  return await prisma.booking.deleteMany({
-    where: {
-      userId: userId,
-    },
-  });
-}
-
-export async function DeleteUser(userId: number) {
-  return await prisma.user.delete({
-    where: {
-      id: userId,
-    },
-  });
-}
-
 export async function updateUser(userId: number, data: Partial<User>) {
   return await prisma.user.update({
     where: {
@@ -67,6 +51,21 @@ export async function getUserFromDb() {
     throw new Error('Bruger ikke fundet');
   }
   return user;
+}
+
+export async function deleteUserWithBookings(userId: number) {
+  return await prisma.$transaction([
+    prisma.booking.deleteMany({
+      where: {
+        userId: userId
+      }
+    }),
+    prisma.user.delete({
+      where: {
+        id: userId
+      }
+    })
+  ])
 }
 
 export async function getUserInfoFromSession() {
