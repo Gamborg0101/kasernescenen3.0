@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { BookingWithUser } from '@/lib/types';
+import { BookingData } from '../calendar/BookingCalendar';
 
 type Props = {
-  booking: BookingWithUser;
+  booking: BookingData;
   initialPos: { x: number; y: number };
 };
 
@@ -42,7 +42,7 @@ export default function CreateBookingInfoModal({ booking, initialPos }: Props) {
     >
       <div className="p-2">
         <p>
-          {booking.user.firstName} {booking.user.lastName}
+          {booking.bookedBy.firstName} {booking.bookedBy.lastName}
         </p>
         <p>
           {`

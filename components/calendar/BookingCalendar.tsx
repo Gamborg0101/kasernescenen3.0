@@ -7,23 +7,52 @@ import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
 import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
-import { SessionUser, BookingWithUser } from '@/lib/types';
-import { User, Room as RoomType } from '@/generated/prisma';
+import { Booking } from '@/lib/types';
+import { roles } from '@/lib/enums';
+
+
+export interface UserData {
+  id: number,
+  role: roles,
+  googleId: string,
+  phone: number,
+  cardNumber: number,
+  bookings: Booking[]
+  name: string,
+  email: string,
+}
+export interface RoomData {
+  number: string,
+  name: string
+}
+
+export interface BookingData {
+  id: number,
+  startTime: Date,
+  endTime: Date,
+  roomNumber: string,
+  reason: string,
+  bookedBy: {
+    id: number,
+    firstName: string,
+    lastName: string,
+    study: string
+  }
+}
 
 type Props = {
-  userInfoSession: SessionUser;
-  allRooms: RoomType[];
-  bookings: BookingWithUser[];
-  userInfoDb: User;
+  userData: UserData
+  roomData: RoomData[],
+  bookingData: BookingData[]
 };
 
-export default function BookingCalendar({ userInfoSession, bookings, allRooms, userInfoDb }: Props) {
+export default function BookingCalendar({ userData, roomData, bookingData }: Props) {
   const [weekCounter, setWeekCounter] = useState(startOfWeek(new Date(), { weekStartsOn: 1 }));
   const [roomNumber, setRoomNumber] = useState('126');
   const [showModal, setShowModal] = useState(false);
   const [startHour, setStartHour] = useState(new Date());
   const [bookingInfoOpen, setBookingInfoOpen] = useState(false);
-  const [hoveredBooking, setHoveredBooking] = useState<BookingWithUser | null>(null);
+  const [hoveredBooking, setHoveredBooking] = useState<BookingData | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
   function weekCounterNext() {
@@ -44,7 +73,7 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
     setWeekCounter(startOfWeek(new Date(), { weekStartsOn: 1 }));
   }
 
-  function handleHover(isOpen: boolean, booking?: BookingWithUser, pos?: { x: number; y: number }) {
+  function handleHover(isOpen: boolean, booking?: BookingData, pos?: { x: number; y: number }) {
     setBookingInfoOpen(isOpen);
     setHoveredBooking(booking || null);
     if (pos) setTooltipPos(pos);
@@ -66,13 +95,14 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
           onClose={() => setShowModal(false)}
           roomNumber={roomNumber}
           startHour={startHour}
-          userInfoSession={userInfoSession}
+          name={userData.name}
+          email={userData.email}
         />
       )}
       {bookingInfoOpen && hoveredBooking && <CreateBookingInfoModal booking={hoveredBooking} initialPos={tooltipPos} />}
       <div className="grid grid-cols-3 p-5 bg-gray-200/70">
         <div>
-          <RoomSelector roomNumber={roomNumber} setRoomNumber={setRoomNumber} allRooms={allRooms} />
+          <RoomSelector currentRoom={roomNumber} setRoomNumber={setRoomNumber} rooms={roomData} />
         </div>
         <div className="flex items-center justify-center">
           <WeekSelector
@@ -85,12 +115,13 @@ export default function BookingCalendar({ userInfoSession, bookings, allRooms, u
       </div>
       <WeekAndHours
         selectedWeek={weekCounter}
-        allRooms={allRooms}
-        allBookings={bookings}
+        roomNumbers={roomData.map(room => room.number)}
+        bookingData={bookingData}
         handleHourClick={handleHourClick}
         handleHover={handleHover}
         roomNumber={roomNumber}
-        userInfoDb={userInfoDb}
+        user={userData}
+        currentRoom={roomNumber}
       />
     </div>
   );

@@ -1,35 +1,35 @@
 'use client';
-import { BookingWithUser } from '@/lib/types';
-import { User, Room as RoomType } from '@/generated/prisma';
 import BookingOverlay from './BookingOverlay';
 import { eachDayOfInterval, startOfWeek, endOfWeek, eachMinuteOfInterval, isSameDay } from 'date-fns';
+import type { BookingData, UserData } from './BookingCalendar';
 
 type Props = {
   selectedWeek: Date;
   roomNumber: string;
-  allBookings: BookingWithUser[];
+  bookingData: BookingData[];
   handleHourClick: (hour: Date, disable: boolean) => void;
-  handleHover: (disable: boolean, booking?: BookingWithUser, pos?: { x: number; y: number }) => void;
-  allRooms: RoomType[];
-  userInfoDb: User;
+  handleHover: (disable: boolean, booking?: BookingData, pos?: { x: number; y: number }) => void;
+  roomNumbers: string[];
+  currentRoom: string;
+  user: UserData;
 };
 
 export default function WeekAndHours({
   selectedWeek,
-  allRooms,
+  roomNumbers,
   roomNumber,
-  allBookings,
+  bookingData,
   handleHourClick,
   handleHover,
-  userInfoDb,
+  user,
 }: Props) {
-  const currentRoom = allRooms?.find((room) => room.roomNumber === roomNumber);
+  const currentRoom = roomNumbers?.find((number) => number === roomNumber);
 
-  function getBookingForHour(hour: Date): BookingWithUser | undefined {
-    return allBookings?.find((booking) => {
+  function getBookingForHour(hour: Date): BookingData | undefined {
+    return bookingData?.find((booking) => {
       const start = booking.startTime;
       const end = booking.endTime;
-      return booking.roomId === currentRoom?.id && hour >= start && hour < end;
+      return booking.roomNumber === currentRoom && hour >= start && hour < end;
     });
   }
 
@@ -55,7 +55,7 @@ export default function WeekAndHours({
 
   function getBookingsForDay(day: Date) {
     if (!currentRoom) return [];
-    return allBookings?.filter((booking) => booking.roomId === currentRoom.id && isSameDay(booking.startTime, day));
+    return bookingData.filter((booking) => booking.roomNumber === currentRoom && isSameDay(booking.startTime, day));
   }
 
   function hoursInDay() {
@@ -72,9 +72,9 @@ export default function WeekAndHours({
           >
             {index % 4 == 0
               ? hour.toLocaleTimeString('da-DK', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })
+                hour: '2-digit',
+                minute: '2-digit',
+              })
               : ''}
           </div>
         ))}
@@ -94,7 +94,7 @@ export default function WeekAndHours({
               <p className="flex center-items justify-center h-11 items-center border-l border-gray-200 shadow select-none">
                 {week.day.toLocaleDateString('da-DK')}
               </p>
-              <BookingOverlay bookings={getBookingsForDay(week.day)} userInfoDb={userInfoDb} />
+              <BookingOverlay bookings={getBookingsForDay(week.day)} user={user} />
               {week.hours.map((hour, index) => (
                 <div
                   onMouseEnter={(e) => {

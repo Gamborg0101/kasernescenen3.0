@@ -1,26 +1,25 @@
 'use client';
 
 import { differenceInMinutes } from 'date-fns';
-import { User } from '@/generated/prisma';
-import { BookingWithUser } from '@/lib/types';
 import { bookingColors } from '@/lib/colors';
 import { getBookingColor } from '@/lib/colors';
 import { deleteABooking } from '@/lib/actions/bookingActions';
 import { roles } from "@/lib/enums"
+import { BookingData, UserData } from './BookingCalendar';
 
-type BookingOverlayProps = {
-  bookings: BookingWithUser[];
-  userInfoDb: User;
+type Props = {
+  bookings: BookingData[];
+  user: UserData;
 };
 
-export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayProps) {
-  function getDivStartPosition(booking: BookingWithUser) {
+export default function BookingOverlay({ bookings, user }: Props) {
+  function getDivStartPosition(booking: BookingData) {
     const divStartPosition = (booking.startTime.getHours() - 7) * 60 + booking.startTime.getMinutes();
 
     return (divStartPosition / 15) * 20;
   }
 
-  function getDivHeight(booking: BookingWithUser) {
+  function getDivHeight(booking: BookingData) {
     return (differenceInMinutes(booking.endTime, booking.startTime) / 15) * 20;
   }
 
@@ -28,8 +27,8 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
     return time.toLocaleTimeString('da-DK', { hour: 'numeric', minute: 'numeric' });
   }
 
-  function bookingBelongsToUser(booking: BookingWithUser) {
-    return booking.userId === userInfoDb.id || userInfoDb.role === roles.admin;
+  function bookingBelongsToUser(booking: BookingData) {
+    return booking.bookedBy.id === user.id || user.role === roles.admin;
   }
 
   return (
@@ -42,7 +41,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
               height: `${getDivHeight(booking)}px`,
               top: `${getDivStartPosition(booking)}px`,
             }}
-            className={`absolute w-full pointer-events-none overflow-hidden rounded-sm ${getBookingColor(booking.user.study) ?? bookingColors.unknown1}`}
+            className={`absolute w-full pointer-events-none overflow-hidden rounded-sm ${getBookingColor(booking.bookedBy.study) ?? bookingColors.unknown1}`}
           >
             <div className="flex justify-between pointer-events-auto ">
               <div className="flex items-center gap-1 text-sm overflow-hidden ">
@@ -50,7 +49,7 @@ export default function BookingOverlay({ bookings, userInfoDb }: BookingOverlayP
                   {`${convertToHHMM(booking.startTime)} - ${convertToHHMM(booking.endTime)}`}
                 </p>
                 <span className="select-none shrink-0">-</span>
-                <p className="font-bold select-none truncate">{`${booking.user.firstName} ${booking.user.lastName}`}</p>
+                <p className="font-bold select-none truncate">{`${booking.bookedBy.firstName} ${booking.bookedBy.lastName}`}</p>
               </div>
               <div className="flex items-center pr-2 shrink-0">
                 {bookingBelongsToUser(booking) && (

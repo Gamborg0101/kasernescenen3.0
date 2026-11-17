@@ -1,17 +1,17 @@
 'use client';
 import { makeBooking } from '@/lib/actions/bookingActions';
 import { useActionState, useEffect, useState } from 'react';
-import { SessionUser } from '@/lib/types';
 import { addHours, setMinutes, setHours } from 'date-fns';
 
 type Props = {
   onClose: () => void;
   roomNumber: string;
   startHour: Date;
-  userInfoSession: SessionUser;
+  email: string,
+  name: string
 };
 
-export default function CreateBookingModal({ onClose, roomNumber, startHour, userInfoSession }: Props) {
+export default function CreateBookingModal({ onClose, roomNumber, startHour, name, email }: Props) {
   const [state, formAction, isPending] = useActionState(makeBooking, null);
   const [endHour, setEndHour] = useState(addHours(startHour, 1).toLocaleTimeString('da-DK', { hour: '2-digit' }));
   const [endMins, setEndMins] = useState('00');
@@ -114,7 +114,7 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
             id="name"
             type="text"
             className={inputClass + ' bg-gray-300 pointer-events-none'}
-            value={userInfoSession.name}
+            value={name}
             readOnly
           />
           <label htmlFor="email" className="text-xs font-bold text-gray-500">
@@ -124,7 +124,7 @@ export default function CreateBookingModal({ onClose, roomNumber, startHour, use
             id="email"
             type="text"
             className={inputClass + ' bg-gray-300 pointer-events-none'}
-            value={userInfoSession.email}
+            value={email}
             readOnly
           />
           <label htmlFor="reason" className="text-xs font-bold text-gray-500">
