@@ -45,6 +45,11 @@ export async function CreateUser(prevState: unknown, formData: FormData) {
 
   const googleId = session.user.googleId as string;
 
+  const rateLimited = await ratelimitCheck(`user:create:${googleId}`);
+  if (!rateLimited) {
+    return ratelimitError;
+  }
+
   const existing = await prisma.user.findFirst({
     where: { OR: [{ phone: data.phone }, { studentNumber: data.studentNumber }, { cardNumber: data.cardNumber }] },
     select: { phone: true, studentNumber: true, cardNumber: true },
@@ -86,10 +91,11 @@ export async function DeleteUser(userId: number) {
   const targetId = parsedId.data;
   const currentUserId = Number(session.user.id);
 
+  if (session.user.role !== roles.admin && currentUserId !== targetId) return failedToDeleteUser;
+
   const rateLimited = await ratelimitCheck(`user:delete:${currentUserId}`);
   if (!rateLimited) return ratelimitError;
 
-  if (session.user.role !== roles.admin && currentUserId !== targetId) return failedToDeleteUser;
 
   try {
     await DeleteUserBookingDB(targetId);

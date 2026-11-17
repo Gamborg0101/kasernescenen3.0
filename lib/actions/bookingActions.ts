@@ -20,12 +20,6 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
   const session = await auth();
   if (!session) return sessionError;
 
-  const userId = Number(session.user.id);
-  const rateLimited = await ratelimitCheck(`booking:create:${userId}`)
-  if (!rateLimited) {
-    return ratelimitError;
-  }
-
   const getStartHour = formData.get('startHour');
   const getEndHour = formData.get('endTime');
   const getRoomNumber = formData.get('roomNumber');
@@ -61,6 +55,13 @@ export async function makeBooking(prevState: unknown, formData: FormData) {
     roomNumber: data.data.roomNumber,
     info: data.data.info,
   };
+
+  const userId = Number(session.user.id);
+
+  const rateLimited = await ratelimitCheck(`booking:create:${userId}`)
+  if (!rateLimited) {
+    return ratelimitError;
+  }
 
   try {
     const validBooking = await bookingConflicts(bookingInfo);
@@ -109,11 +110,11 @@ export async function cleanDbFromOldBookingsAction() {
   const session = await auth();
   if (!session) return sessionError;
 
+  if (session.user.role !== roles.admin) return unauthorizedAccess;
+
   const userId = Number(session.user.id);
   const rateLimited = await ratelimitCheck(`booking:delete:${userId}`)
   if (!rateLimited) return ratelimitError;
-
-  if (session.user.role !== roles.admin) return unauthorizedAccess;
   try {
     await cleanDbFromOldBookings();
     return { success: true, error: null };

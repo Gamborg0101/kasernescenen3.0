@@ -30,6 +30,8 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
   const session = await auth();
   if (!session) return sessionError;
 
+  if (session.user.role !== roles.admin) return unauthorizedAccess;
+
   const roomIdValid = roomIdSchema.safeParse(roomId);
   if (!roomIdValid.success) return failedToUpdateRoom;
 
@@ -51,7 +53,6 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
     return ratelimitError;
   }
 
-  if (session.user.role !== roles.admin) return unauthorizedAccess;
   try {
     await updateRoom(roomIdValid.data, updateRoomData.data);
     return successUpdateRoom;
@@ -65,6 +66,7 @@ export async function deleteRoom(roomId: number) {
   const session = await auth();
   if (!session) return sessionError;
 
+  if (session.user.role !== roles.admin) return unauthorizedAccess;
   const userId = Number(session.user.id);
 
   const validRoomId = roomIdSchema.safeParse(roomId);
@@ -77,7 +79,6 @@ export async function deleteRoom(roomId: number) {
     return ratelimitError;
   }
 
-  if (session.user.role !== roles.admin) return unauthorizedAccess;
   try {
     await deleteRoomBookings(validRoomId.data);
     await deleteRoomFromDb(validRoomId.data);
@@ -93,19 +94,20 @@ export async function createRoom(room: Omit<Room, 'id'> | null) {
   if (!session) return sessionError;
 
   if (session.user.role !== roles.admin) return unauthorizedAccess;
+
   if (!room) return failedToFindRoom;
 
   const userId = Number(session.user.id);
 
   const createRoomData = roomSchema.safeParse(room);
 
+  if (!createRoomData.success) {
+    return failedToCreateRoom;
+  }
+
   const rateLimited = await ratelimitCheck(`room:create:${userId}`);
   if (!rateLimited) {
     return ratelimitError;
-  }
-
-  if (!createRoomData.success) {
-    return failedToCreateRoom;
   }
 
   try {
