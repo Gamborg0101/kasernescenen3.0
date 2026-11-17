@@ -125,7 +125,7 @@ export default async function Home() {
                   Log ind
                 </h2>
                 <p className="text-sm text-stone-500 mb-8 leading-relaxed">
-                  Brug din AU-Google-konto for at få adgang til reservationssystemet.
+                  Brug din Google-konto for at få adgang til reservationssystemet.
                 </p>
 
                 <form

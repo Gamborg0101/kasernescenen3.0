@@ -32,8 +32,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       const dbUser = token.googleId
         ? await prisma.user.findUnique({
-            where: { googleId: token.googleId as string },
-          })
+          where: { googleId: token.googleId as string },
+        })
         : null;
 
       if (!dbUser) {
@@ -50,6 +50,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   pages: {
-    signIn: '/login',
+    signIn: '/',
   },
 });
