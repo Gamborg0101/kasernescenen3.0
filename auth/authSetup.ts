@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { prisma } from '@/db';
-import { roles } from "@/lib/enums"
+import { Role } from '@/generated/prisma';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -42,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       session.user.id = dbUser.id.toString();
-      session.user.role = dbUser.role ?? roles.student;
+      session.user.role = dbUser.role ?? Role.student;
       session.user.isRegistered = true;
       session.user.image = token.picture;
 

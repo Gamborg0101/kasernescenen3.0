@@ -14,7 +14,7 @@ import {
 } from '../errorMessages';
 import { successUpdateRoom, successDeleteRoom, successCreateRoom } from '../successMessages';
 import * as z from 'zod';
-import { roles } from '@/lib/enums';
+import { Role } from '@/generated/prisma';
 import ratelimitCheck from '../ratelimiter';
 
 const roomSchema = z.object({
@@ -30,7 +30,7 @@ export async function updateRoomAction(roomId: number, data: Omit<Room, 'id'>) {
   const session = await auth();
   if (!session) return sessionError;
 
-  if (session.user.role !== roles.admin) return unauthorizedAccess;
+  if (session.user.role !== Role.admin) return unauthorizedAccess;
 
   const roomIdValid = roomIdSchema.safeParse(roomId);
   if (!roomIdValid.success) return failedToUpdateRoom;
@@ -66,7 +66,7 @@ export async function deleteRoom(roomId: number) {
   const session = await auth();
   if (!session) return sessionError;
 
-  if (session.user.role !== roles.admin) return unauthorizedAccess;
+  if (session.user.role !== Role.admin) return unauthorizedAccess;
   const userId = Number(session.user.id);
 
   const validRoomId = roomIdSchema.safeParse(roomId);
@@ -92,7 +92,7 @@ export async function createRoom(room: Omit<Room, 'id'> | null) {
   const session = await auth();
   if (!session) return sessionError;
 
-  if (session.user.role !== roles.admin) return unauthorizedAccess;
+  if (session.user.role !== Role.admin) return unauthorizedAccess;
 
   if (!room) return failedToFindRoom;
 

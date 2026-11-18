@@ -14,7 +14,7 @@ import {
 import { prisma } from '@/db';
 import { successDeleteUser, successUpdateUser } from '../successMessages';
 import * as z from 'zod';
-import { roles } from '@/lib/enums';
+import { Role } from '@/generated/prisma';
 import ratelimitCheck from '../ratelimiter';
 
 export async function CreateUser(prevState: unknown, formData: FormData) {
@@ -63,7 +63,7 @@ export async function CreateUser(prevState: unknown, formData: FormData) {
       googleId: googleId,
       firstName: data.firstName,
       lastName: data.lastName,
-      role: roles.student,
+      role: Role.student,
       phone: data.phone,
       email: data.email,
       studentNumber: data.studentNumber,
@@ -87,7 +87,7 @@ export async function DeleteUser(userId: number) {
   const targetId = parsedId.data;
   const currentUserId = Number(session.user.id);
 
-  if (session.user.role !== roles.admin && currentUserId !== targetId) return failedToDeleteUser;
+  if (session.user.role !== Role.admin && currentUserId !== targetId) return failedToDeleteUser;
 
   const rateLimited = await ratelimitCheck(`user:delete:${currentUserId}`);
   if (!rateLimited) return ratelimitError;
@@ -122,7 +122,7 @@ export async function UpdateUser(
 ) {
   const session = await auth();
   if (!session) return sessionError;
-  if (session.user.role !== roles.admin) return userIsNotAdmin;
+  if (session.user.role !== Role.admin) return userIsNotAdmin;
 
   const formValidation = z.object({
     firstName: z.string().min(1).max(30).optional(),
@@ -132,7 +132,7 @@ export async function UpdateUser(
     studentNumber: z.number().min(100000000).max(999999999).optional(),
     cardNumber: z.number().min(100000).max(999999).optional(),
     study: z.string().min(6).max(30).optional(),
-    role: z.enum([roles.admin, roles.student]).optional(),
+    role: z.enum([Role.admin, Role.student]).optional(),
   });
 
   const result = formValidation.safeParse(data);

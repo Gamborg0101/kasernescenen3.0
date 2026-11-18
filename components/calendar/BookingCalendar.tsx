@@ -7,20 +7,16 @@ import { startOfWeek } from 'date-fns';
 import RoomSelector from './RoomSelector';
 import CreateBookingModal from '../modals/CreateBookingModal';
 import CreateBookingInfoModal from '../modals/CreateBookingInfoModal';
-import { Booking } from '@/lib/types';
-import { roles } from '@/lib/enums';
+import { Role } from '@/generated/prisma';
 
 
 export interface UserData {
   id: number,
-  role: roles,
-  googleId: string,
-  phone: number,
-  cardNumber: number,
-  bookings: Booking[]
+  role: Role,
   name: string,
   email: string,
 }
+
 export interface RoomData {
   number: string,
   name: string

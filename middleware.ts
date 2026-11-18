@@ -1,7 +1,7 @@
 import { auth } from '@/auth/authSetup';
 import { NextResponse } from 'next/server';
-import { roles } from '@/lib/enums'
 export const runtime = 'nodejs';
+import { Role } from "@/generated/prisma";
 
 export default auth((request) => {
   const session = request.auth;
@@ -16,7 +16,7 @@ export default auth((request) => {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  if (session.user.role !== roles.admin && pathname === '/users') {
+  if (session.user.role !== Role.admin && pathname === '/users') {
     return NextResponse.redirect(new URL('/', request.url));
   }
   if (!session.user.id && pathname !== '/register') {

@@ -2,7 +2,7 @@ import { auth } from '@/auth/authSetup';
 import AdminPanelGrid from '@/components/admin/AdminPanelGrid';
 import { adminRoleRequired, sessionError } from '@/lib/errorMessages';
 import { redirect } from 'next/navigation';
-import { roles } from '@/lib/enums';
+import { Role } from '@/generated/prisma';
 
 export default async function AdminPanel() {
   const session = await auth();
@@ -10,7 +10,7 @@ export default async function AdminPanel() {
     console.error(sessionError);
     redirect('/');
   }
-  if (session.user.role !== roles.admin) {
+  if (session.user.role !== Role.admin) {
     console.error(adminRoleRequired);
     redirect('/');
   }

@@ -4,7 +4,7 @@ import { differenceInMinutes } from 'date-fns';
 import { bookingColors } from '@/lib/colors';
 import { getBookingColor } from '@/lib/colors';
 import { deleteABooking } from '@/lib/actions/bookingActions';
-import { roles } from "@/lib/enums"
+import { Role } from "@/generated/prisma"
 import { BookingData, UserData } from './BookingCalendar';
 
 type Props = {
@@ -28,7 +28,7 @@ export default function BookingOverlay({ bookings, user }: Props) {
   }
 
   function bookingBelongsToUser(booking: BookingData) {
-    return booking.bookedBy.id === user.id || user.role === roles.admin;
+    return booking.bookedBy.id === user.id || user.role === Role.admin;
   }
 
   return (

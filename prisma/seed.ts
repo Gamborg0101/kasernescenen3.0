@@ -2,7 +2,7 @@ import { PrismaClient } from '../generated/prisma';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { faker } from '@faker-js/faker';
 import { AllClassroomsList } from './roomlist';
-import { roles } from "@/lib/enums";
+import { Role } from '@/generated/prisma';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -53,7 +53,7 @@ async function main() {
     data: {
       firstName: 'UVAEKA',
       lastName: '',
-      role: roles.admin,
+      role: Role.admin,
       googleId: faker.string.uuid(),
       phone: 12345678,
       studentNumber: 12345678,
@@ -69,7 +69,7 @@ async function main() {
       data: {
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),
-        role: roles.student,
+        role: Role.student,
         googleId: faker.string.uuid(),
         phone: faker.number.int({ min: 10000000, max: 99999999 }),
         studentNumber: faker.number.int({ min: 10000000, max: 99999999 }),

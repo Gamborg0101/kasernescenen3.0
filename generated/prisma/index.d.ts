@@ -30,6 +30,23 @@ export type Room = $Result.DefaultSelection<Prisma.$RoomPayload>
 export type Booking = $Result.DefaultSelection<Prisma.$BookingPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const Role: {
+  student: 'student',
+  admin: 'admin'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+}
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -1136,7 +1153,7 @@ export namespace Prisma {
     googleId: string | null
     firstName: string | null
     lastName: string | null
-    role: string | null
+    role: $Enums.Role | null
     phone: number | null
     email: string | null
     studentNumber: number | null
@@ -1150,7 +1167,7 @@ export namespace Prisma {
     googleId: string | null
     firstName: string | null
     lastName: string | null
-    role: string | null
+    role: $Enums.Role | null
     phone: number | null
     email: string | null
     studentNumber: number | null
@@ -1323,7 +1340,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
-    role: string
+    role: $Enums.Role
     phone: number
     email: string
     studentNumber: number
@@ -1427,7 +1444,7 @@ export namespace Prisma {
       googleId: string
       firstName: string
       lastName: string
-      role: string
+      role: $Enums.Role
       phone: number
       email: string
       studentNumber: number
@@ -1862,7 +1879,7 @@ export namespace Prisma {
     readonly googleId: FieldRef<"User", 'String'>
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
     readonly phone: FieldRef<"User", 'Int'>
     readonly email: FieldRef<"User", 'String'>
     readonly studentNumber: FieldRef<"User", 'Int'>
@@ -4640,6 +4657,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role[]'
+   */
+  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -4678,7 +4709,7 @@ export namespace Prisma {
     googleId?: StringFilter<"User"> | string
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
-    role?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     phone?: IntFilter<"User"> | number
     email?: StringFilter<"User"> | string
     studentNumber?: IntFilter<"User"> | number
@@ -4715,7 +4746,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
-    role?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     note?: StringNullableFilter<"User"> | string | null
     study?: StringFilter<"User"> | string
     bookings?: BookingListRelationFilter
@@ -4748,7 +4779,7 @@ export namespace Prisma {
     googleId?: StringWithAggregatesFilter<"User"> | string
     firstName?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
-    role?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     phone?: IntWithAggregatesFilter<"User"> | number
     email?: StringWithAggregatesFilter<"User"> | string
     studentNumber?: IntWithAggregatesFilter<"User"> | number
@@ -4883,7 +4914,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
-    role?: string
+    role?: $Enums.Role
     phone: number
     email: string
     studentNumber: number
@@ -4898,7 +4929,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
-    role?: string
+    role?: $Enums.Role
     phone: number
     email: string
     studentNumber: number
@@ -4912,7 +4943,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -4927,7 +4958,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -4942,7 +4973,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
-    role?: string
+    role?: $Enums.Role
     phone: number
     email: string
     studentNumber: number
@@ -4955,7 +4986,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -4969,7 +5000,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -5119,6 +5150,13 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -5237,6 +5275,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5383,6 +5431,10 @@ export namespace Prisma {
     set?: string
   }
 
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -5522,6 +5574,13 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -5578,6 +5637,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5751,7 +5820,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
-    role?: string
+    role?: $Enums.Role
     phone: number
     email: string
     studentNumber: number
@@ -5765,7 +5834,7 @@ export namespace Prisma {
     googleId: string
     firstName: string
     lastName: string
-    role?: string
+    role?: $Enums.Role
     phone: number
     email: string
     studentNumber: number
@@ -5820,7 +5889,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number
@@ -5834,7 +5903,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     phone?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     studentNumber?: IntFieldUpdateOperationsInput | number

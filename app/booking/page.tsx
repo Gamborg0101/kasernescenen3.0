@@ -1,26 +1,45 @@
-import { getUserInfoFromSession, getUserFromDb } from '../../lib/db/users';
-import { getRoomsFromDB } from '../../lib/db/rooms';
+import { getUserFromDb } from '../../lib/db/users';
 import { getBookings } from '../../lib/db/bookings';
 import BookingCalendar from '../../components/calendar/BookingCalendar';
-import type { Booking } from '../../lib/types';
+import type { UserData, BookingData, RoomData } from '../../components/calendar/BookingCalendar';
+import { getRoomsFromDB } from '@/lib/db/rooms';
+
 export default async function BookingPage() {
-  const userInfoSession = await getUserInfoFromSession();
   const allBookings = await getBookings();
-  const allRooms = await getRoomsFromDB();
   const userInfoDB = await getUserFromDb();
+  const allRooms = await getRoomsFromDB();
 
   const userData: UserData = {
-    googleId: userInfoDB.googleId,
-    phone: userInfoDB.phone,
-    cardNumber: userInfoDB.cardNumber,
-    bookings: allBookings,
+    id: userInfoDB.id,
+    role: userInfoDB.role,
     name: userInfoDB.firstName,
-    email: userInfoDB.email
+    email: userInfoDB.email,
   }
+  const bookings: BookingData[] = allBookings.map(booking => ({
+    id: booking.id,
+    startTime: booking.startTime,
+    endTime: booking.endTime,
+    roomNumber: booking.room.roomNumber,
+    reason: booking.reason,
+    bookedBy: {
+      id: booking.userId,
+      firstName: booking.user.firstName,
+      lastName: booking.user.lastName,
+      study: booking.user.study
+    }
+  })
+  )
+  const rooms: RoomData[] = allRooms.map(room => ({
+    number: room.roomNumber,
+    name: room.name
+  }))
 
   return (
     <BookingCalendar
       userData={userData}
+      bookingData={bookings}
+      roomData={rooms}
+
     />
   );
 }

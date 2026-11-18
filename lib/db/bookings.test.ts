@@ -2,7 +2,7 @@ import { expect, test, afterEach } from 'bun:test';
 import { prisma } from '@/db';
 import { createBooking, deleteBooking } from './bookings';
 import { getRoomByNum } from './rooms';
-import { roles } from "@/lib/enums"
+import { Role } from "@/generated/prisma"
 
 afterEach(async () => {
   await prisma.booking.deleteMany({
@@ -73,7 +73,7 @@ async function testCreateTempBooking() {
 test('A student cannot delete another user booking ', async () => {
   const bookingId = await testCreateTempBooking();
 
-  expect(deleteBooking(bookingId, 2, roles.student)).rejects.toThrow();
+  expect(deleteBooking(bookingId, 2, Role.student)).rejects.toThrow();
 
   const findBookingAfterAttempt = await prisma.booking.findUnique({
     where: {
@@ -87,7 +87,7 @@ test('A student cannot delete another user booking ', async () => {
 test('An admin can delete another user booking', async () => {
   const bookingId = await testCreateTempBooking();
 
-  await deleteBooking(bookingId, 2, roles.admin);
+  await deleteBooking(bookingId, 2, Role.admin);
 
   const findBookingAfterAttempt = await prisma.booking.findUnique({
     where: {
@@ -100,7 +100,7 @@ test('An admin can delete another user booking', async () => {
 test('A student can delete their own booking', async () => {
   const bookingId = await testCreateTempBooking();
 
-  await deleteBooking(bookingId, 1, roles.admin);
+  await deleteBooking(bookingId, 1, Role.admin);
 
   const findBookingAfterAttempt = await prisma.booking.findUnique({
     where: {

@@ -1,4 +1,4 @@
-import { User } from '@/generated/prisma';
+import { User, Role } from '@/generated/prisma';
 import { UpdateUser } from '@/lib/actions/userActions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -159,12 +159,11 @@ export default function ChangeUserModal({ onClose, user }: Props) {
                   id="role"
                   className={getClassName}
                   onChange={(e) => {
-                    setRole(e.target.value);
+                    setRole(e.target.value as Role);
                   }}
                 >
                   <option value="">Vælg en rolle</option>
-                  <option value="studerende">Studerende</option>
-                  <option value="superbruger">Superbruger</option>
+                  <option value="student">Student</option>
                   <option value="admin">Admin</option>
                 </select>
 

@@ -2,7 +2,7 @@ import 'server-only';
 import { prisma } from '@/db';
 import { User } from '@/generated/prisma';
 import { auth } from '@/auth/authSetup';
-
+import { Role } from '@/generated/prisma'
 export async function getUser(userId: number) {
   return prisma.user.findUnique({
     where: {
@@ -15,7 +15,7 @@ export async function createUser(data: {
   googleId: string;
   firstName: string;
   lastName: string;
-  role: string;
+  role: Role;
   phone: number;
   email: string;
   studentNumber: number;

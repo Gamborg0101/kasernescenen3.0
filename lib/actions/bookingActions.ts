@@ -13,7 +13,8 @@ import {
   failedToCleanupDb,
   unauthorizedAccess,
 } from '../errorMessages';
-import { roles } from "@/lib/enums";
+import { Role } from "@/generated/prisma";
+
 import ratelimitCheck from "@/lib/ratelimiter";
 
 export async function makeBooking(prevState: unknown, formData: FormData) {
@@ -110,7 +111,7 @@ export async function cleanDbFromOldBookingsAction() {
   const session = await auth();
   if (!session) return sessionError;
 
-  if (session.user.role !== roles.admin) return unauthorizedAccess;
+  if (session.user.role !== Role.admin) return unauthorizedAccess;
 
   const userId = Number(session.user.id);
   const rateLimited = await ratelimitCheck(`booking:delete:${userId}`)
