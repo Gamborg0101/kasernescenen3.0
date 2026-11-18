@@ -1,13 +1,22 @@
 import './globals.css';
 
 import { Navbar } from '@/components/misc/Navbar';
-import { Roboto } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const roboto = Roboto({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-});
+const roboto = localFont({
+  src: [
+    {
+      path: './fonts/roboto/static/roboto-latin-400-normal.woff2', weight: '400', style: 'normal'
+    },
+    {
+      path: './fonts/roboto/static/roboto-latin-500-normal.woff2', weight: '500', style: 'normal',
+    },
+    {
+      path: './fonts/roboto/static/roboto-latin-700-normal.woff2', weight: '700', style: 'normal'
+    }
+  ],
+  display: 'swap'
+})
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
