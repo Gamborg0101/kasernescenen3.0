@@ -38,7 +38,7 @@ form-action 'self';
       },
     })
     response.headers.set(
-      'Content-Security-Policy-Report-Only',
+      'Content-Security-Policy',
       contentSecurityPolicyHeaderValue
     )
     return response
