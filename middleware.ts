@@ -3,15 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 import { Role } from "@/generated/prisma";
 
-export default auth((request) => {
-  const session = request.auth;
-  const pathname = request.nextUrl.pathname;
 
-  function nextWithCsp(request: NextRequest) {
+function nextWithCsp(request: NextRequest) {
 
-    const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
-    const isDev = process.env.NODE_ENV === 'development'
-    const cspHeader = `
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  const isDev = process.env.NODE_ENV === 'development'
+  const cspHeader = `
 default-src 'self';
 script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval' " : ''};
 style-src 'self' 'unsafe-inline';
@@ -23,32 +20,32 @@ base-uri 'self';
 form-action 'self';
 `
 
-    const contentSecurityPolicyHeaderValue = cspHeader
-      .replace(/\s+/g, ' ')
-      .trim()
-    const requestHeaders = new Headers(request.headers)
-    requestHeaders.set('x-nonce', nonce)
-    requestHeaders.set(
-      'Content-Security-Policy',
-      contentSecurityPolicyHeaderValue
-    )
-    const response = NextResponse.next({
-      request: {
-        headers: requestHeaders,
-      },
-    })
-    response.headers.set(
-      'Content-Security-Policy',
-      contentSecurityPolicyHeaderValue
-    )
-    return response
-  }
+  const contentSecurityPolicyHeaderValue = cspHeader
+    .replace(/\s+/g, ' ')
+    .trim()
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-nonce', nonce)
+  requestHeaders.set(
+    'Content-Security-Policy',
+    contentSecurityPolicyHeaderValue
+  )
+  const response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
+  response.headers.set(
+    'Content-Security-Policy',
+    contentSecurityPolicyHeaderValue
+  )
+  return response
+}
 
-  if (pathname === '/login') {
-    return nextWithCsp(request);
-  }
+export default auth((request) => {
+  const session = request.auth;
+  const pathname = request.nextUrl.pathname;
 
-  if (!session) {
+  if (!session?.user) {
     if (pathname === '/') return nextWithCsp(request);
     return NextResponse.redirect(new URL('/', request.url));
   }
