@@ -139,7 +139,7 @@ export default async function Home() {
                     className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-stone-200 bg-white hover:bg-stone-50 hover:border-stone-300 transition-colors duration-150 text-sm text-stone-700 rounded-sm"
                   >
                     <Image
-                      src='../public/google-color.svg'
+                      src='/google-color.svg'
                       loading="lazy"
                       alt="Google logo"
                       width={18}
