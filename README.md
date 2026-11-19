@@ -53,6 +53,13 @@ The rate limiter fails open: if Redis is unavailable,
 requests are allowed and the failure is logged, 
 because a booking system that stays usable matters more than spam protection during a short outage.
 
+### CSP decision 
+The app sends a strict Content-Security-Policy with a fresh nonce on every request, generated in middleware. 
+With a nonce, the browser only runs scripts the server has accepted.
+It was first rolled out with Report-Only to find what breaks, and then enforced.
+Now every page has to be rendered on request, but at no cost because all routes were already dynamic. 
+
+
 ---
 
 ## 🚀 Getting Started
