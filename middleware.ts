@@ -1,5 +1,5 @@
 import { auth } from '@/auth/authSetup';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 import { Role } from "@/generated/prisma";
 
@@ -7,12 +7,49 @@ export default auth((request) => {
   const session = request.auth;
   const pathname = request.nextUrl.pathname;
 
+  function nextWithCsp(request: NextRequest) {
+
+    const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+    const isDev = process.env.NODE_ENV === 'development'
+    const cspHeader = `
+default-src 'self';
+script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval' " : ''};
+style-src 'self' 'unsafe-inline';
+img-src 'self' https://lh3.googleusercontent.com data:;
+font-src 'self';
+connect-src 'self';
+frame-ancestors 'none';
+base-uri 'self';
+form-action 'self';
+`
+
+    const contentSecurityPolicyHeaderValue = cspHeader
+      .replace(/\s+/g, ' ')
+      .trim()
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('x-nonce', nonce)
+    requestHeaders.set(
+      'Content-Security-Policy',
+      contentSecurityPolicyHeaderValue
+    )
+    const response = NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    })
+    response.headers.set(
+      'Content-Security-Policy-Report-Only',
+      contentSecurityPolicyHeaderValue
+    )
+    return response
+  }
+
   if (pathname === '/login') {
-    return NextResponse.next();
+    return nextWithCsp(request);
   }
 
   if (!session) {
-    if (pathname === '/') return NextResponse.next();
+    if (pathname === '/') return nextWithCsp(request);
     return NextResponse.redirect(new URL('/', request.url));
   }
 
@@ -31,7 +68,7 @@ export default auth((request) => {
     return NextResponse.redirect(registerUrl);
   }
 
-  return NextResponse.next();
+  return nextWithCsp(request);
 });
 
 export const config = {
